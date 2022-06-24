@@ -39,6 +39,7 @@ Create a new branch
 ```
 git checkout -b <branch-name>
 ```
+Commit to github
 ```
 git add
 git commit -m "<message of the commit>"
