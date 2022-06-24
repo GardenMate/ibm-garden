@@ -22,3 +22,8 @@ To stop the virtual environment
 ```
 deactivate
 ```
+### To set up django
+Head over to the git directory inside the activated venv and run
+```
+pip install django djangorestframework
+```
