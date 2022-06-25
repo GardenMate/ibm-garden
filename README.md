@@ -4,6 +4,12 @@
 
 # Onboarding
 
+Clone the git repo into local system
+```
+git init
+git clone git@github.com:Abemelech/ibm-garden.git
+```
+
 Create virutual environment
 ```
 py -m venv venv
@@ -27,3 +33,16 @@ Head over to the git directory inside the activated venv and run
 ```
 pip install django djangorestframework
 ```
+
+## To commit to git
+Create a new branch
+```
+git checkout -b <branch-name>
+```
+Commit to github
+```
+git add
+git commit -m "<message of the commit>"
+git push origin <branch-name>
+```
+
