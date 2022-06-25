@@ -33,6 +33,13 @@ Head over to the git directory inside the activated venv and run
 ```
 pip install django djangorestframework
 ```
+To Install necessary libraries for the framework, run these commands
+```
+pip install django-rest-framework
+pip install django-cors-headers
+pip install djangorestframework-simplejwt
+```
+
 
 ## To commit to git
 Create a new branch
