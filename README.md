@@ -39,6 +39,10 @@ pip install django-rest-framework
 pip install django-cors-headers
 pip install djangorestframework-simplejwt
 ```
+To migrate your enviornment, use this command
+```
+python manage.py migrate
+```
 
 
 ## To commit to git
