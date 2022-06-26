@@ -28,8 +28,8 @@ DEBUG = True
 
 # Adding localhost to the list of allowed host files
 CORS_ORIGIN_WHITELIST = [
-    "http://127.0.0.01:61106",
-    "http://localhost:61106"
+    "http://127.0.0.01:64277",
+    "http://localhost:64277"
 ]
 
 ALLOWED_HOSTS = ['localhost', '127.0.01']
@@ -90,8 +90,12 @@ WSGI_APPLICATION = 'build_my_garden_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'build_my_garden',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
