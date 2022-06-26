@@ -31,7 +31,7 @@ deactivate
 ### To set up django
 To run a django server, use this command in the terminal in the directory where the django app is setup
 ```
-python -m manage.py runserver
+python manage.py runserver
 ```
 
 Head over to the git directory inside the activated venv and run
