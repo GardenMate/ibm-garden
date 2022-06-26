@@ -29,10 +29,26 @@ To stop the virtual environment
 deactivate
 ```
 ### To set up django
+To run a django server, use this command in the terminal in the directory where the django app is setup
+```
+python manage.py runserver
+```
+
 Head over to the git directory inside the activated venv and run
 ```
 pip install django djangorestframework
 ```
+To Install necessary libraries for the framework, run these commands
+```
+pip install django-rest-framework
+pip install django-cors-headers
+pip install djangorestframework-simplejwt
+```
+To migrate your enviornment, use this command
+```
+python manage.py migrate
+```
+
 
 ## To commit to git
 Create a new branch
