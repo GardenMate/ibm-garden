@@ -28,8 +28,8 @@ DEBUG = True
 
 # Adding localhost to the list of allowed host files
 CORS_ORIGIN_WHITELIST = [
-    "http://127.0.0.01:64277",
-    "http://localhost:64277"
+    "http://127.0.0.1",
+    "http://localhost"
 ]
 
 ALLOWED_HOSTS = ['localhost', '127.0.01']

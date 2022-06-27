@@ -10,11 +10,11 @@ class PlantType(models.Model):
     PARTIAL_SUN = "PARTIAL_SUN"
     FULL_OR_PARTIAL = "PARTIAL _OR_FULL_SUN"
 
-    SUN_EXPOSER_CHOICES = (
+    SUN_EXPOSER_CHOICES = [
         (FULL_SUN, "Full Sunlight"),
         (PARTIAL_SUN, "Partial Sunlight"),
-        (FULL_OR_PARTIAL, "Full Sunlight or Partial Sunlight")
-    )
+        (FULL_OR_PARTIAL, "Full Sunlight or Partial Sunlight"),
+    ]
 
     plant_name = models.CharField(max_length=200)
     plant_type = models.CharField(max_length=200)
@@ -22,7 +22,7 @@ class PlantType(models.Model):
     plant_size_spread = models.IntegerField()
     plant_max_size_time = models.DurationField()
     plant_harvest_length = models.DurationField()
-    sun_exposer = models.CharField(max_length=50, choice=SUN_EXPOSER_CHOICES, default=FULL_OR_PARTIAL)
+    sun_exposer = models.CharField(max_length=50, choices=SUN_EXPOSER_CHOICES, default=FULL_OR_PARTIAL)
 
     def __str__(self) -> str:
         return self.plant_name
@@ -33,12 +33,12 @@ class Season(models.Model):
     SPRING = "SPRING"
     SUMMER = "SUMMER"
 
-    SEASON_CHOICES = (
+    SEASON_CHOICES = [
         (FALL, "Fall"),
         (WINTER, "Winter"),
         (SPRING, "Spring"),
         (SUMMER, "Summer"),
-    )
+    ]
 
     season = models.CharField(max_length=20, choices=SEASON_CHOICES, default=SPRING)
 
