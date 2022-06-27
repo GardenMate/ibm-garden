@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   // Connecting with the backend using http
   Future<http.Response> buttonPressed() async {
     http.Response returnedResult = await http.get(
-        Uri.parse('http://localhost:8000/app/IBMWelcomeGarden'),
+        Uri.parse('http://10.0.2.2:8000/app/IBMWelcomeGarden'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset-UTF-8'
         });

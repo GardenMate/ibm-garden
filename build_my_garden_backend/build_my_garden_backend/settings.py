@@ -28,11 +28,12 @@ DEBUG = True
 
 # Adding localhost to the list of allowed host files
 CORS_ORIGIN_WHITELIST = [
+    "http://10.0.2.2", #needed for andriod emulator
     "http://127.0.0.1",
     "http://localhost"
 ]
 
-ALLOWED_HOSTS = ['localhost', '127.0.01']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2"]
 
 
 # Application definition
