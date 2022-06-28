@@ -4,22 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // Connecting with the backend using http
-  Future<http.Response> buttonPressed() async {
-    http.Response returnedResult = await http.get(
-        Uri.parse('http://10.0.2.2:8000/app/IBMWelcomeGarden'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset-UTF-8'
-        });
-    print(returnedResult.body);
-    return returnedResult;
-  }
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int currentIndex = 0;
+  final screens = [
+    CenterWithButton(text: "Learn"),
+    CenterWithButton(text: "Your Plants"),
+    CenterWithButton(text: "Marketplace"),
+    CenterWithButton(text: "Account"),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -32,43 +34,28 @@ class MyApp extends StatelessWidget {
           appBar: AppBar(
               centerTitle: true,
               title: const Text('Build Your Garden')), //AppBar
-          body: Center(
-              child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(0.0),
-                child: Text("Welcome to Build Your Garden"),
-              ), //Padding
-
-              Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: ElevatedButton(
-                      onPressed: buttonPressed,
-                      child: Text('Click')) // ElevatedButton
-                  ) //Padding
-            ],
-          )),
-          bottomNavigationBar: BottomNav(),
+          body: screens[currentIndex],
+          bottomNavigationBar: BottomNav(
+            currentIndex: currentIndex,
+            onPress: (int index) => setState(() => currentIndex = index),
+          ),
         )); //Column //Center //Scaffold //MaterialApp
   }
 }
 
+// A bottom navigation app
 class BottomNav extends StatefulWidget {
-  const BottomNav({Key? key}) : super(key: key);
+  final int currentIndex;
+  final Function(int) onPress;
+
+  const BottomNav({Key? key, this.currentIndex = 0, required this.onPress})
+      : super(key: key);
 
   @override
   State<BottomNav> createState() => _BottomNavState();
 }
 
 class _BottomNavState extends State<BottomNav> {
-  int currentIndex = 0;
-  final screens = [
-    Center(child: Text('Learn', style: TextStyle(fontSize: 60))),
-    Center(child: Text('Your Plants', style: TextStyle(fontSize: 60))),
-    Center(child: Text('Marketplace', style: TextStyle(fontSize: 60))),
-    Center(child: Text('Account', style: TextStyle(fontSize: 60))),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -77,8 +64,8 @@ class _BottomNavState extends State<BottomNav> {
         selectedItemColor: Colors.white,
         unselectedItemColor: Color.fromARGB(255, 212, 225, 209),
         showUnselectedLabels: false,
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
+        currentIndex: widget.currentIndex,
+        onTap: widget.onPress,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.library_books),
@@ -101,5 +88,40 @@ class _BottomNavState extends State<BottomNav> {
             backgroundColor: Colors.green,
           ),
         ]); //Column //Center //Scaffold //MaterialApp
+  }
+}
+
+// A center app
+class CenterWithButton extends StatelessWidget {
+  final String text;
+
+  const CenterWithButton({Key? key, required this.text}) : super(key: key);
+
+  // Connecting with the backend using http
+  Future<http.Response> buttonPressed() async {
+    http.Response returnedResult = await http.get(
+        Uri.parse('http://10.0.2.2:8000/app/IBMWelcomeGarden'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset-UTF-8'
+        });
+    print(returnedResult.body);
+    return returnedResult;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.all(0.0),
+          child: Text(("Welcome to $text")),
+        ),
+        Padding(
+            padding: const EdgeInsets.all(0.0),
+            child:
+                ElevatedButton(onPressed: buttonPressed, child: Text('Click')))
+      ],
+    ));
   }
 }
