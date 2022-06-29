@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:build_my_garden/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -28,18 +29,10 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         title: 'Build Your Garden', //The title of the Flutter App
         theme: ThemeData(
+          scaffoldBackgroundColor: Color.fromARGB(255, 235, 224, 165),
           primarySwatch: Colors.green,
         ), //ThemeData
-        home: Scaffold(
-          appBar: AppBar(
-              centerTitle: true,
-              title: const Text('Build Your Garden')), //AppBar
-          body: screens[currentIndex],
-          bottomNavigationBar: BottomNav(
-            currentIndex: currentIndex,
-            onPress: (int index) => setState(() => currentIndex = index),
-          ),
-        )); //Column //Center //Scaffold //MaterialApp
+        home: WelcomePage()); //Column //Center //Scaffold //MaterialApp
   }
 }
 
