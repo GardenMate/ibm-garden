@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         title: 'Build Your Garden', //The title of the Flutter App
         theme: ThemeData(
-          scaffoldBackgroundColor: Color.fromARGB(255, 235, 224, 165),
+          scaffoldBackgroundColor: Color.fromARGB(255, 255, 228, 182),
           primarySwatch: Colors.green,
         ), //ThemeData
         home: WelcomePage()); //Column //Center //Scaffold //MaterialApp
