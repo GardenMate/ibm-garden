@@ -1,4 +1,5 @@
 import 'package:build_my_garden/widgets/app_large_text.dart';
+import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/material.dart';
 
 import '../sizes_helpers.dart';
@@ -88,7 +89,12 @@ class _WelcomePageState extends State<WelcomePage> {
                                 // Load the widget AppText for texts
                                 child: AppText(text: list_of_text[index]),
                               ),
-                              Container()
+                              Container(
+                                margin: const EdgeInsets.only(top: 80),
+                                child: ResponsiveButton(
+                                  text: "GET STARTED",
+                                ),
+                              )
                             ]),
                           );
                         }))
