@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:build_my_garden/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -28,6 +29,34 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         title: 'Build Your Garden', //The title of the Flutter App
         theme: ThemeData(
+          scaffoldBackgroundColor: Color.fromARGB(255, 255, 228, 182),
+          primarySwatch: Colors.green,
+        ), //ThemeData
+        home: WelcomePage()); //Column //Center //Scaffold //MaterialApp
+  }
+}
+
+class MainApp extends StatefulWidget {
+  const MainApp({Key? key}) : super(key: key);
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  int currentIndex = 0;
+  final screens = [
+    CenterWithButton(text: "Learn"),
+    CenterWithButton(text: "Your Plants"),
+    CenterWithButton(text: "Marketplace"),
+    CenterWithButton(text: "Account"),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Build Your Garden', //The title of the Flutter App
+        theme: ThemeData(
           primarySwatch: Colors.green,
         ), //ThemeData
         home: Scaffold(
@@ -39,7 +68,7 @@ class _MyAppState extends State<MyApp> {
             currentIndex: currentIndex,
             onPress: (int index) => setState(() => currentIndex = index),
           ),
-        )); //Column //Center //Scaffold //MaterialApp
+        ));
   }
 }
 
