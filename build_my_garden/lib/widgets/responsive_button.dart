@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ResponsiveButton extends StatelessWidget {
+  // A reusable button that takes in text,
+  // an onPress function and width (optional)
+  // to generate a button
   bool? isResponsive;
   double? width;
   String text;

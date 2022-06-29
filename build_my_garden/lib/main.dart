@@ -36,6 +36,42 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+class MainApp extends StatefulWidget {
+  const MainApp({Key? key}) : super(key: key);
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  int currentIndex = 0;
+  final screens = [
+    CenterWithButton(text: "Learn"),
+    CenterWithButton(text: "Your Plants"),
+    CenterWithButton(text: "Marketplace"),
+    CenterWithButton(text: "Account"),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Build Your Garden', //The title of the Flutter App
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ), //ThemeData
+        home: Scaffold(
+          appBar: AppBar(
+              centerTitle: true,
+              title: const Text('Build Your Garden')), //AppBar
+          body: screens[currentIndex],
+          bottomNavigationBar: BottomNav(
+            currentIndex: currentIndex,
+            onPress: (int index) => setState(() => currentIndex = index),
+          ),
+        ));
+  }
+}
+
 // A bottom navigation app
 class BottomNav extends StatefulWidget {
   final int currentIndex;

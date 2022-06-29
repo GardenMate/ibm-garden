@@ -1,3 +1,4 @@
+import 'package:build_my_garden/main.dart';
 import 'package:build_my_garden/widgets/app_large_text.dart';
 import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/material.dart';
@@ -101,10 +102,17 @@ class _WelcomePageState extends State<WelcomePage> {
                               ),
                               Container(
                                 margin: const EdgeInsets.only(top: 80),
+                                // A button that changes the page and goes to home page
                                 child: ResponsiveButton(
-                                  onPress: () => _pageController.nextPage(
-                                      duration: Duration(milliseconds: 200),
-                                      curve: Curves.bounceInOut),
+                                  onPress: index != 2
+                                      ? () => _pageController.nextPage(
+                                          duration: Duration(milliseconds: 200),
+                                          curve: Curves.bounceInOut)
+                                      : () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const MainApp())),
                                   text: "GET STARTED",
                                 ),
                               )
