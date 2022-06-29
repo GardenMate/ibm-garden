@@ -13,7 +13,10 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  List list_of_text = [
+  int pageIndex = 0;
+  PageController _pageController = PageController(initialPage: 0);
+
+  List listOfText = [
     "Identify you soil type to see what is best for your garden... ",
     "Keep status of your garden... ",
     "Sell it to a marketplace... ",
@@ -70,6 +73,12 @@ class _WelcomePageState extends State<WelcomePage> {
                     width: displayWidth(context) * 0.85,
                     height: 298,
                     child: PageView.builder(
+                        onPageChanged: (int index) {
+                          setState(() {
+                            pageIndex = index;
+                          });
+                        },
+                        controller: _pageController,
                         scrollDirection: Axis.horizontal,
                         itemCount: 3,
                         itemBuilder: (context, index) {
@@ -86,12 +95,16 @@ class _WelcomePageState extends State<WelcomePage> {
                               Container(
                                 margin: const EdgeInsets.only(
                                     top: 50, left: 50, right: 50),
+                                height: 60,
                                 // Load the widget AppText for texts
-                                child: AppText(text: list_of_text[index]),
+                                child: AppText(text: listOfText[index]),
                               ),
                               Container(
                                 margin: const EdgeInsets.only(top: 80),
                                 child: ResponsiveButton(
+                                  onPress: () => _pageController.nextPage(
+                                      duration: Duration(milliseconds: 200),
+                                      curve: Curves.bounceInOut),
                                   text: "GET STARTED",
                                 ),
                               )
