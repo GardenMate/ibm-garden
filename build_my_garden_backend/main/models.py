@@ -1,9 +1,18 @@
 from pyexpat import model
 from secrets import choice
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
+from django.core.validators import RegexValidator
 
 # Create your models here.
+# User model
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
+    phoneNumberRegex = RegexValidator(regex = r"^\+?1?\d{8,15}$")
+    phone_number = models.CharField(validators= [phoneNumberRegex], max_length= 16, unique= True)
+
+
+# The plant model
 class PlantType(models.Model):
     FULL_SUN = "FULL_SUN"
     PARTIAL_SUN = "PARTIAL_SUN"
@@ -26,6 +35,7 @@ class PlantType(models.Model):
     def __str__(self) -> str:
         return self.plant_name
 
+# Season model
 class Season(models.Model):
     FALL = "FALL"
     WINTER = "WINTER"
@@ -45,6 +55,7 @@ class Season(models.Model):
         return self.season
 
 
+# User plant model
 class Plant(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='plant', null=True)
     plant_type = models.ForeignKey(PlantType, on_delete=models.SET_NULL, related_name='plant', null= True)
@@ -53,6 +64,7 @@ class Plant(models.Model):
     planted_date = models.DateTimeField()
     ## planted_soil - create a relation between soiltype and plant
 
+# Relation between Plant and Season
 class PlantSupportingSeason(models.Model):
     plant_type = models.ForeignKey(PlantType, on_delete=models.SET_NULL, related_name='plant_supporting_season', null= True)
     season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='plant_supporting_season', null = True) 
