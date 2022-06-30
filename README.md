@@ -70,4 +70,5 @@ pip install markdown
 pip install django-filter
 pip install dj-rest-auth
 pip install 'dj-rest-auth[with_social]'
+pip install python-decouple
 ```

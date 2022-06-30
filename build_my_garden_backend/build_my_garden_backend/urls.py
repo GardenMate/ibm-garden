@@ -19,6 +19,7 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('app/',include('main.urls')),
+    path('auth/', include('authentication.urls')),
 ]
 
 # Paths with /app will be connected to the main app

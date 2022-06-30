@@ -7,4 +7,4 @@ from django.core.validators import RegexValidator
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     phoneNumberRegex = RegexValidator(regex = r"^\+?1?\d{8,15}$")
-    phone_number = models.CharField(validators= [phoneNumberRegex], max_length= 16, unique= True)
+    phone_number = models.CharField(validators= [phoneNumberRegex], max_length= 16, unique= False)
