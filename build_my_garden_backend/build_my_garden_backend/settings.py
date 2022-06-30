@@ -46,15 +46,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Internal mapping to the Main app
+    # Internal mapping to the all the app
     'main.apps.MainConfig',
+    'authentication.apps.AuthenticationConfig',
     # Adding the rest framework
     'rest_framework',
     # Corsheaders
-    'corsheaders'
+    'corsheaders',
+    # For user authentication
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
 ]
 
-AUTH_USER_MODEL = "main.User"
+SITE_ID = 1
+
+AUTH_USER_MODEL = "authentication.User"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
