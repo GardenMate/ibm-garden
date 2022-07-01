@@ -49,8 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Internal mapping to the all the app
     'main.apps.MainConfig',
-    'authentication.apps.AuthenticationConfig',
     'accounts.apps.AccountsConfig',
+    'authentication.apps.AuthenticationConfig',
     # Adding the rest framework
     'rest_framework',
     # Corsheaders
@@ -186,3 +186,5 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AUTHENTICATION_BACKENDS = ['accounts.models.EmailBackend']
