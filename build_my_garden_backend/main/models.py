@@ -1,5 +1,5 @@
 from django.db import models
-from authentication.models import User
+from accounts.models import User
 
 # Create your models here.
 # The plant model
