@@ -20,7 +20,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('app/',include('main.urls')),
     path('auth/', include('authentication.urls')),
+    path('accounts/', include('accounts.urls'))
 ]
 
 # Paths with /app will be connected to the main app
 # urlpatterns += urlpatterns[path('app/',include('main.urls'))]
+# sa;dslfkjwe
