@@ -64,3 +64,18 @@ git commit -m "<message of the commit>"
 git push origin <branch-name>
 ```
 
+For signup and authentication
+```
+pip install markdown
+pip install django-filter
+pip install dj-rest-auth
+pip install 'dj-rest-auth[with_social]'
+pip install python-decouple
+```
+
+Add a `.env` file under build_my_garden_backend and add the following:
+```
+EMAIL_HOST_USER = "ibm.garden@gmail.com"
+EMAIL_PASSWORD = "Welcometoibmgarden123"
+EMAIL_HOST_PASSWORD = "atjefnlzbkcdklep"
+```

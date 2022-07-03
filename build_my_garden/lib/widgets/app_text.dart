@@ -7,7 +7,10 @@ class AppText extends StatelessWidget {
   final Color color;
 
   const AppText(
-      {Key? key, this.size = 16, required this.text, this.color = Colors.black})
+      {Key? key,
+      this.size = 16,
+      required this.text,
+      this.color = const Color.fromARGB(255, 67, 61, 61)})
       : super(key: key);
 
   @override

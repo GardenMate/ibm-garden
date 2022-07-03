@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,13 +47,27 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Internal mapping to the Main app
+    # Internal mapping to the all the app
     'main.apps.MainConfig',
+    'accounts.apps.AccountsConfig',
+    'authentication.apps.AuthenticationConfig',
     # Adding the rest framework
     'rest_framework',
     # Corsheaders
-    'corsheaders'
+    'corsheaders',
+    # For user authentication
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
 ]
+
+SITE_ID = 1
+
+AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -153,15 +168,29 @@ REST_FRAMEWORK = {
 
     # Authentication for
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        #'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
 
-SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES': ('JWT',),
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-}
+# REST_USE_JWT = True
+# JWT_AUTH_COOKIE = 'my-app-auth'
+# JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
 
+# SIMPLE_JWT = {
+#     'AUTH_HEADER_TYPES': ('JWT',),
+#     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+#     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+# }
 
+# Authenticate Email
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AUTHENTICATION_BACKENDS = ['accounts.models.EmailBackend']
