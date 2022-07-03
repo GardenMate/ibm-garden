@@ -9,12 +9,16 @@ class ResponsiveButton extends StatelessWidget {
   bool? isResponsive;
   double? width;
   String text;
+  Color textColor;
+  Color buttonColor;
   Function() onPress;
   ResponsiveButton(
       {Key? key,
       this.text = "",
       this.width,
       this.isResponsive = false,
+      this.textColor = const Color.fromARGB(255, 59, 87, 48),
+      this.buttonColor = const Color.fromARGB(255, 181, 255, 180),
       required this.onPress})
       : super(key: key);
 
@@ -25,7 +29,7 @@ class ResponsiveButton extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Color.fromARGB(255, 181, 255, 180),
+        color: buttonColor,
       ),
       child: TextButton(
         onPressed: onPress,
@@ -33,7 +37,7 @@ class ResponsiveButton extends StatelessWidget {
           margin: const EdgeInsets.only(left: 30, right: 30),
           child: AppText(
             text: text,
-            color: Color.fromARGB(255, 59, 87, 48),
+            color: textColor,
           ),
         ),
       ),

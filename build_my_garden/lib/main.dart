@@ -1,29 +1,23 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:build_my_garden/pages/signin_page.dart';
 import 'package:build_my_garden/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(MyApp());
+  runApp(AuthApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+// The welcome app state
+class WelcomeApp extends StatefulWidget {
+  const WelcomeApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<WelcomeApp> createState() => _WelcomeAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  int currentIndex = 0;
-  final screens = [
-    CenterWithButton(text: "Learn"),
-    CenterWithButton(text: "Your Plants"),
-    CenterWithButton(text: "Marketplace"),
-    CenterWithButton(text: "Account"),
-  ];
-
+class _WelcomeAppState extends State<WelcomeApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,6 +30,27 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+class AuthApp extends StatefulWidget {
+  const AuthApp({Key? key}) : super(key: key);
+
+  @override
+  State<AuthApp> createState() => _AuthAppState();
+}
+
+class _AuthAppState extends State<AuthApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Build Your Garden', //The title of the Flutter App
+        theme: ThemeData(
+          scaffoldBackgroundColor: Color.fromARGB(255, 255, 228, 182),
+          primarySwatch: Colors.green,
+        ),
+        home: SignInPage());
+  }
+}
+
+// The main app state
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
 

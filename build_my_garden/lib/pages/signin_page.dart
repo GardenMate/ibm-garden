@@ -2,25 +2,143 @@
 // For signing up and logining in
 import 'dart:convert';
 
+import 'package:build_my_garden/sizes_helpers.dart';
+import 'package:build_my_garden/widgets/app_text.dart';
+import 'package:build_my_garden/widgets/responsive_button.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+class SignInPage extends StatefulWidget {
+  const SignInPage({Key? key}) : super(key: key);
+
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  bool _secureText = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          margin:
+              const EdgeInsets.only(top: 90, bottom: 90, left: 30, right: 30),
+          width: displayWidth(context),
+          height: displayHeight(context),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(20.0),
+            ),
+          ),
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText(text: "LOGIN"),
+                const SizedBox(height: 20),
+                AppText(text: "Username", size: 18),
+                const SizedBox(height: 5),
+                TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide:
+                            BorderSide(width: 0, style: BorderStyle.none)),
+                    fillColor: Color.fromARGB(20, 64, 42, 42),
+                    filled: true,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                AppText(text: "Password", size: 18),
+                const SizedBox(height: 5),
+                TextField(
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: Icon(_secureText
+                          ? Icons.remove_red_eye_outlined
+                          : Icons.remove_red_eye),
+                      onPressed: () {
+                        setState(() {
+                          _secureText = !_secureText;
+                        });
+                      },
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
+                    fillColor: const Color.fromARGB(20, 64, 42, 42),
+                    filled: true,
+                  ),
+                  obscureText: _secureText,
+                ),
+                const SizedBox(height: 10),
+                AppText(text: "Remeber me?"),
+                const SizedBox(height: 10),
+                ResponsiveButton(
+                  onPress: (() => null),
+                  text: "LOGIN",
+                  textColor: Colors.white,
+                  buttonColor: Color.fromARGB(255, 156, 222, 155),
+                  width: 300,
+                ),
+                const SizedBox(height: 10),
+                AppText(text: "Forgot Password?"),
+                const SizedBox(height: 10),
+                AppText(text: "OR", size: 18),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Icon(Icons.facebook),
+                    Icon(Icons.facebook),
+                    Icon(Icons.facebook),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                AppText(text: "New account? SIGN UP"),
+              ],
+            ),
+          ),
+        ));
+  }
+}
 
 main() async {
   AuthService authService = AuthService();
-  RegistrationResponse? registrationResponse = await authService.registration(
-      "abemelech", "alskd1235", "alskd1235[", "abemelech.mesfin.gmail.com");
-  if (registrationResponse != null) {
-    registrationResponse.email?.forEach((e) => print(e));
-    registrationResponse.username?.forEach((e) => print(e));
-    registrationResponse.non_field_errors?.forEach((e) => print(e));
-    registrationResponse.password1?.forEach((e) => print(e));
+  // RegistrationResponse? registrationResponse = await authService.registration(
+  //     "abemelech", "sa;dslfkjwe", "sa;dslfkjwe", "abemelech.mesfin.gmail.com");
+  // if (registrationResponse != null) {
+  //   registrationResponse.email?.forEach((e) => print(e));
+  //   registrationResponse.username?.forEach((e) => print(e));
+  //   registrationResponse.non_field_errors?.forEach((e) => print(e));
+  //   registrationResponse.password1?.forEach((e) => print(e));
+  //   if (registrationResponse != null) print(registrationResponse.key);
+  // }
+
+  LoginResponse? loginResponse =
+      await authService.login("abemelech", "sa;dslfkjwe");
+  if (loginResponse != null) {
+    if (loginResponse.key != null) print(loginResponse.key);
+    loginResponse.non_field_errors?.forEach((element) => print(element));
   }
+
+  // Get User data
+  // var response = await http
+  //     .get(Uri.parse("http://10.0.2.2:8000/accounts/user/"), headers: {
+  //   "Authorization": "Token e513b66ec1dc07ba3078aff736992115f81e706c"
+  // });
+  // print(response.body);
 }
 
 class AuthService {
   final registrationUrl = Uri.parse("http://10.0.2.2:8000/auth/registration/");
   final loginUrl = Uri.parse("http://10.0.2.2:8000/accounts/login/");
 
-  Future<RegistrationResponse> registration(
+  Future<RegistrationResponse?> registration(
       String username, String password1, String password2, String email) async {
     var response = await http.post(registrationUrl, body: {
       "username": username,
@@ -28,8 +146,15 @@ class AuthService {
       "password2": password2,
       "email": email,
     });
-    print(response.body);
     return RegistrationResponse.fromJson(jsonDecode(response.body));
+  }
+
+  Future<LoginResponse?> login(String usernameOrEmail, String password) async {
+    var response = await http.post(loginUrl, body: {
+      "username": usernameOrEmail,
+      "password": password,
+    });
+    return LoginResponse.fromJson(jsonDecode(response.body));
   }
 }
 
@@ -64,6 +189,19 @@ class RegistrationResponse {
       non_field_errors: mapOfBody["non_field_errors"],
       password1: mapOfBody["password1"],
       username: mapOfBody["username"],
+    );
+  }
+}
+
+class LoginResponse {
+  dynamic? key;
+  List<dynamic>? non_field_errors;
+  LoginResponse({this.key, this.non_field_errors});
+
+  factory LoginResponse.fromJson(mapOfBody) {
+    return LoginResponse(
+      key: mapOfBody['key'],
+      non_field_errors: mapOfBody['non_field_errors'],
     );
   }
 }

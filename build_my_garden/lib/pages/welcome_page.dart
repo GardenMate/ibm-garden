@@ -70,55 +70,54 @@ class _WelcomePageState extends State<WelcomePage> {
                       ],
                     )),
                 Container(
-                    // A container that is scrollable with information
-                    width: displayWidth(context) * 0.85,
-                    height: 298,
-                    child: PageView.builder(
-                        onPageChanged: (int index) {
-                          setState(() {
-                            pageIndex = index;
-                          });
-                        },
-                        controller: _pageController,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 3,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 255, 228, 182),
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(40.0),
-                                  topLeft: Radius.circular(40.0)),
-                            ),
-                            height: displayHeight(context) * 0.65,
-                            // The button and text are in a column inside the pageview
-                            child: Column(children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 50, left: 50, right: 50),
-                                height: 60,
-                                // Load the widget AppText for texts
-                                child: AppText(text: listOfText[index]),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(top: 80),
-                                // A button that changes the page and goes to home page
-                                child: ResponsiveButton(
-                                  onPress: index != 2
-                                      ? () => _pageController.nextPage(
-                                          duration: Duration(milliseconds: 200),
-                                          curve: Curves.bounceInOut)
-                                      : () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const MainApp())),
-                                  text: "GET STARTED",
-                                ),
-                              )
-                            ]),
-                          );
-                        }))
+                  // A container that is scrollable with information
+                  width: displayWidth(context) * 0.85,
+                  height: 298,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 255, 228, 182),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(40.0),
+                          topLeft: Radius.circular(40.0)),
+                    ),
+                    height: displayHeight(context) * 0.65,
+                    // The button and text are in a column inside the pageview
+                    child: Column(children: [
+                      Container(
+                          margin: const EdgeInsets.only(
+                              top: 50, left: 50, right: 50),
+                          height: 60,
+                          // Load the widget AppText for texts
+                          child: PageView.builder(
+                              onPageChanged: (int index) {
+                                setState(() {
+                                  pageIndex = index;
+                                });
+                              },
+                              controller: _pageController,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 3,
+                              itemBuilder: (context, index) {
+                                return AppText(text: listOfText[index]);
+                              })),
+                      Container(
+                        margin: const EdgeInsets.only(top: 80),
+                        // A button that changes the page and goes to home page
+                        child: ResponsiveButton(
+                          onPress: pageIndex != 2
+                              ? () => _pageController.nextPage(
+                                  duration: Duration(milliseconds: 200),
+                                  curve: Curves.bounceInOut)
+                              : () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const MainApp())),
+                          text: "GET STARTED",
+                        ),
+                      )
+                    ]),
+                  ),
+                )
               ],
             )),
       ],
