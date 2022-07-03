@@ -8,6 +8,9 @@ import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../main.dart';
+
+// The sign in page for the app
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
 
@@ -16,7 +19,11 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  // _securetext switches between show password and not
+  // _usernameController & _passwordController stores username and text
   bool _secureText = true;
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +50,7 @@ class _SignInPageState extends State<SignInPage> {
                 AppText(text: "Username", size: 18),
                 const SizedBox(height: 5),
                 TextField(
+                  controller: _usernameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15.0),
@@ -56,6 +64,8 @@ class _SignInPageState extends State<SignInPage> {
                 AppText(text: "Password", size: 18),
                 const SizedBox(height: 5),
                 TextField(
+                  controller: _passwordController,
+                  obscureText: _secureText,
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
                       icon: Icon(_secureText
@@ -74,13 +84,29 @@ class _SignInPageState extends State<SignInPage> {
                     fillColor: const Color.fromARGB(20, 64, 42, 42),
                     filled: true,
                   ),
-                  obscureText: _secureText,
                 ),
                 const SizedBox(height: 10),
                 AppText(text: "Remeber me?"),
                 const SizedBox(height: 10),
                 ResponsiveButton(
-                  onPress: (() => null),
+                  onPress: () async {
+                    AuthService authService = AuthService();
+                    LoginResponse? loginResponse = await authService.login(
+                        _usernameController.text, _passwordController.text);
+                    if (loginResponse != null) {
+                      if (loginResponse.key != null) {
+                        // print(loginResponse.key); Later store the key value
+                        // Fix added if we need to remove the ignore
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MainApp()));
+                      }
+                      loginResponse.non_field_errors
+                          ?.forEach((element) => print(element));
+                    }
+                  },
                   text: "LOGIN",
                   textColor: Colors.white,
                   buttonColor: Color.fromARGB(255, 156, 222, 155),
@@ -119,6 +145,7 @@ main() async {
   //   if (registrationResponse != null) print(registrationResponse.key);
   // }
 
+  // Check if the login endpoint works
   LoginResponse? loginResponse =
       await authService.login("abemelech", "sa;dslfkjwe");
   if (loginResponse != null) {
@@ -135,6 +162,7 @@ main() async {
 }
 
 class AuthService {
+  /// AuthService handles all authentications, currently supports login and signup
   final registrationUrl = Uri.parse("http://10.0.2.2:8000/auth/registration/");
   final loginUrl = Uri.parse("http://10.0.2.2:8000/accounts/login/");
 
@@ -168,6 +196,7 @@ class AuthService {
 // Email nothing {"email":["Enter a valid email address."]}
 
 class RegistrationResponse {
+  /// RegistrationResponse handles any error messages and confirmations messages
   List<dynamic>? non_field_errors;
   List<dynamic>? password1;
   List<dynamic>? username;
@@ -194,6 +223,7 @@ class RegistrationResponse {
 }
 
 class LoginResponse {
+  /// LoginResponse handles any error messages and confirmations messages
   dynamic? key;
   List<dynamic>? non_field_errors;
   LoginResponse({this.key, this.non_field_errors});

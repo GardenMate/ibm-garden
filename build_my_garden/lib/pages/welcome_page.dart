@@ -111,7 +111,7 @@ class _WelcomePageState extends State<WelcomePage> {
                               : () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const MainApp())),
+                                      builder: (context) => const AuthApp())),
                           text: "GET STARTED",
                         ),
                       )
