@@ -199,3 +199,11 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTHENTICATION_BACKENDS = ['accounts.models.EmailBackend']
+
+# API KEY for google maps
+LOCATION_FIELD = {
+    'provider.google.api': '//maps.google.com/maps/api/js?sensor=false',
+    'provider.google.api_key': config("GOOGLE_API_KEY"),
+    'provider.google.api_libraries': '',
+    'provider.google.map.type': 'ROADMAP',
+}

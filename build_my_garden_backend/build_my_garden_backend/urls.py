@@ -20,7 +20,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('app/',include('main.urls')),
     path('auth/', include('authentication.urls')),
-    path('accounts/', include('accounts.urls'))
+    path('accounts/', include('accounts.urls')),
+    path('api/', include('marketplace.urls'))
 ]
 
 # Paths with /app will be connected to the main app
