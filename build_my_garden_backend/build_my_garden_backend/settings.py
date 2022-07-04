@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'accounts.apps.AccountsConfig',
     'authentication.apps.AuthenticationConfig',
+    'marketplace.apps.MarketplaceConfig',
     # Adding the rest framework
     'rest_framework',
     # Corsheaders
@@ -63,6 +64,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+    # Location model
+    'location_field.apps.DefaultConfig',
+    # Money model
+    'djmoney',
 ]
 
 SITE_ID = 1

@@ -79,3 +79,10 @@ EMAIL_HOST_USER = "ibm.garden@gmail.com"
 EMAIL_PASSWORD = "Welcometoibmgarden123"
 EMAIL_HOST_PASSWORD = "atjefnlzbkcdklep"
 ```
+
+For the marketplace things to install
+```
+pip install django-location-field
+pip install Pillow
+pip install django-money
+``
