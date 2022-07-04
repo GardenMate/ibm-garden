@@ -71,11 +71,14 @@ class ListingImage(models.Model):
     # Model Save override to get the id for the get_image_path
     def save(self, *args, **kwargs):
         if self.id is None:
-            saved_image = self.profile_image
-            self.profile_image = None
+            saved_image = self.image
+            self.image = None
             super(ListingImage, self).save(*args, **kwargs)
-            self.profile_image = saved_image
+            self.image = saved_image
             if 'force_insert' in kwargs:
                 kwargs.pop('force_insert')
 
         super(ListingImage, self).save(*args, **kwargs)
+    
+    def __str__(self) -> str:
+        return str(self.image)

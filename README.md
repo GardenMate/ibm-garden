@@ -85,4 +85,5 @@ For the marketplace things to install
 pip install django-location-field
 pip install Pillow
 pip install django-money
+pip install geopy
 ``
