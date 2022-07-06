@@ -69,7 +69,7 @@ For signup and authentication
 pip install markdown
 pip install django-filter
 pip install dj-rest-auth
-pip install 'dj-rest-auth[with_social]'
+pip install dj-rest-auth[with_social]
 pip install python-decouple
 ```
 
@@ -91,3 +91,4 @@ In flutter files head to `lib/pages/sigin_page.dart` and import the following di
 ```
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 ```
+
