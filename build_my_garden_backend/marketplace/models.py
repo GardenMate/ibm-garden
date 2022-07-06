@@ -10,7 +10,7 @@ import os
 
 def get_image_path(instance, filename):
     '''Used to get the id of the listing to save the image file'''
-    return os.path.join(str(instance.id), filename)
+    return os.path.join("media","upload", str(instance.listing.id), filename)
 
 # Model for the seller, includes additional information
 class SellerInfromation(models.Model):
@@ -28,7 +28,7 @@ class SellerAddress(models.Model):
     location = PlainLocationField(based_fields=['street_address', 'city'], zoom=10)
 
     def __str__(self) -> str:
-        return str(self.location)
+        return str(self.city)
 
 # Model for the lisiting
 class Listing(models.Model):

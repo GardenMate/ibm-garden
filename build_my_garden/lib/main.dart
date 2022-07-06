@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 void main() {
   runApp(WelcomeApp());
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 }
 
 // The welcome app state

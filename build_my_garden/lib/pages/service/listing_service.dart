@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ListingService {
@@ -37,7 +38,7 @@ class Listing {
   int seller_rating;
   String plant_type;
   String address;
-  // Something for images
+  String image;
 
   Listing({
     required this.id,
@@ -53,6 +54,7 @@ class Listing {
     required this.seller_rating,
     required this.plant_type,
     required this.address,
+    required this.image,
   });
 
   factory Listing.fromJson(map) {
@@ -70,6 +72,7 @@ class Listing {
       location_id: map['location'],
       seller_rating: map['seller_rating'],
       address: map['address'],
+      image: map['image'],
     );
   }
 }

@@ -87,7 +87,11 @@ class _MarketPlaceHomeState extends State<MarketPlaceHome> {
                                   child: Row(
                                     children: [
                                       SizedBox(width: 10),
-                                      AppText(text: "______Image______"),
+                                      Container(
+                                        width: 150,
+                                        child: Image.network(
+                                            "http://10.0.2.2:8000/media/${listings[index].image}"),
+                                      ),
                                       SizedBox(width: 10),
                                       Column(
                                         crossAxisAlignment:
