@@ -1,6 +1,7 @@
 // Create the connection between the front and backend using API
 // For signing up and logining in
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
@@ -9,6 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../main.dart';
+
+// Import for a secured storage of the key
+// Docs: https://pub.dev/packages/flutter_secure_storage - may need further config
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+// Storage for encrypted values
+final storage = new FlutterSecureStorage();
 
 // The sign in page for the app
 class SignInPage extends StatefulWidget {
@@ -96,6 +104,8 @@ class _SignInPageState extends State<SignInPage> {
                     if (loginResponse != null) {
                       if (loginResponse.key != null) {
                         // print(loginResponse.key); Later store the key value
+                        await storage.write(
+                            key: 'token', value: loginResponse.key);
                         // Fix added if we need to remove the ignore
                         // ignore: use_build_context_synchronously
                         Navigator.push(

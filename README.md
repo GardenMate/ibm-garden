@@ -79,3 +79,16 @@ EMAIL_HOST_USER = "ibm.garden@gmail.com"
 EMAIL_PASSWORD = "Welcometoibmgarden123"
 EMAIL_HOST_PASSWORD = "atjefnlzbkcdklep"
 ```
+
+For the marketplace things to install
+```
+pip install django-location-field
+pip install Pillow
+pip install django-money
+pip install geopy
+``
+In flutter files head to `lib/pages/sigin_page.dart` and import the following directory, vs code auto instals if you click `quick fix` and click `install dependence`
+```
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+```
+

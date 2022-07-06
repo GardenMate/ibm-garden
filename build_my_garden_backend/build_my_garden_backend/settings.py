@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 from decouple import config
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'accounts.apps.AccountsConfig',
     'authentication.apps.AuthenticationConfig',
+    'marketplace.apps.MarketplaceConfig',
     # Adding the rest framework
     'rest_framework',
     # Corsheaders
@@ -63,6 +65,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+    # Location model
+    'location_field.apps.DefaultConfig',
+    # Money model
+    'djmoney',
 ]
 
 SITE_ID = 1
@@ -152,6 +158,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -161,10 +171,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     # Use Django's standard 'django.contrib.auth' permissions
-    'DEFAULT_PERMISSION_CLASSES' : [
-        'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.authentication.TokenAuthentication',
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES' : [
+    #     'rest_framework.permissions.IsAuthenticated',
+    #     'rest_framework.authentication.TokenAuthentication',
+    # ],
 
     # Authentication for
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -194,3 +204,11 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTHENTICATION_BACKENDS = ['accounts.models.EmailBackend']
+
+# API KEY for google maps
+LOCATION_FIELD = {
+    'provider.google.api': '//maps.google.com/maps/api/js?sensor=false',
+    'provider.google.api_key': config("GOOGLE_API_KEY"),
+    'provider.google.api_libraries': '',
+    'provider.google.map.type': 'ROADMAP',
+}
