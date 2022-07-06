@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:build_my_garden/pages/navpages/marketplace_listing.dart';
 import 'package:build_my_garden/pages/signin_page.dart';
 import 'package:build_my_garden/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
@@ -30,6 +32,7 @@ class _WelcomeAppState extends State<WelcomeApp> {
   }
 }
 
+// The Signin and Signup app state
 class AuthApp extends StatefulWidget {
   const AuthApp({Key? key}) : super(key: key);
 
@@ -63,7 +66,7 @@ class _MainAppState extends State<MainApp> {
   final screens = [
     CenterWithButton(text: "Learn"),
     CenterWithButton(text: "Your Plants"),
-    CenterWithButton(text: "Marketplace"),
+    MarketPlaceHome(),
     CenterWithButton(text: "Account"),
   ];
 
@@ -75,9 +78,7 @@ class _MainAppState extends State<MainApp> {
           primarySwatch: Colors.green,
         ), //ThemeData
         home: Scaffold(
-          appBar: AppBar(
-              centerTitle: true,
-              title: const Text('Build Your Garden')), //AppBar
+          appBar: null,
           body: screens[currentIndex],
           bottomNavigationBar: BottomNav(
             currentIndex: currentIndex,

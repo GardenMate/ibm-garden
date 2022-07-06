@@ -32,12 +32,12 @@ class SellerAddress(models.Model):
 
 # Model for the lisiting
 class Listing(models.Model):
-    ITEM = "ITEM"
-    LBS = "LBS"
-    OZ = "OZ"
-    KG = "KG"
-    G = "G"
-    ML = "ML"
+    ITEM = "Item"
+    LBS = "lbs"
+    OZ = "oz"
+    KG = "kg"
+    G = "g"
+    ML = "ml"
     # The different type of measurement for users to choose from
     QUANTITY_CHOICES = [
         (ITEM, "Item"),

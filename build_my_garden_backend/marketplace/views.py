@@ -3,7 +3,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status, generics
-from .models import Listing, SellerAddress
+from .models import Listing, SellerAddress, ListingImage
+from django.db.models import Prefetch
 from .serializers import ListingSerializer
 from geopy.geocoders import GoogleV3
 from decouple import config
