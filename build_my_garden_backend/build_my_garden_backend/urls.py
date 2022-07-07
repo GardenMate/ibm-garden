@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    path('api/mygarden/add',include('mygarden.urls')),
     path('admin/', admin.site.urls),
     path('app/',include('main.urls')),
     path('auth/', include('authentication.urls')),
