@@ -10,4 +10,16 @@ class SecureStorage {
       await _storage.write(key: 'token', value: token);
 
   static Future<String?> getToken() async => await _storage.read(key: 'token');
+
+  static Future setIsSignedIn(bool isSignedIn) async =>
+      await _storage.write(key: 'isSignedIn', value: isSignedIn.toString());
+
+  static Future<bool?> getIsSignedIn() async {
+    String? isSignedIn = await _storage.read(key: 'isSignedIn');
+    if (isSignedIn == "true") {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

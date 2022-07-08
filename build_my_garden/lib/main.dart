@@ -1,14 +1,21 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:build_my_garden/pages/navpages/marketplace_listing.dart';
+import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:build_my_garden/pages/signin_page.dart';
 import 'package:build_my_garden/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
-void main() {
-  runApp(WelcomeApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  bool? isSignedIn = await SecureStorage.getIsSignedIn();
+  if (isSignedIn != null) {
+    print(isSignedIn);
+    isSignedIn ? runApp(MainApp()) : runApp(WelcomeApp());
+  }
+  //runApp(WelcomeApp());
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 }
 
