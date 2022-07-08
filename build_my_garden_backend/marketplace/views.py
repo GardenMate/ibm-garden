@@ -17,7 +17,6 @@ geolocator = GoogleV3(api_key=config("GOOGLE_API_KEY"))
 # API endpoint for listing
 class ListingView(APIView):
     serializer_class = ListingPOSTSerializer
-    # permission_classes = [IsAuthenticated]
 
     def get(self, request: Request):
         '''
@@ -52,16 +51,24 @@ class ListingView(APIView):
         
 
     def post(self, request: Request):
-        self.serializer_class = ListingPOSTSerializer
-        serializer = ListingPOSTSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
-        
+        '''
+        Adds a new listing for the user
+        '''
 
-# class ListingView(generics.ListAPIView):
-#     address = SellerAddress.objects.filter(city="Sioux Falls")
-#     queryset = address[0].listing.all() | address[1].listing.all()
-#     serializer_class = ListingSerializer
+        # Get the seller id from user if exists
+        seller = request.user.seller_info.filter(id=1)
+        if seller.exists():
+            seller = seller.first()
+            # Save the seller id into the request data
+            request.data['seller'] = seller.id
+
+            # Serialize and save
+            self.serializer_class = ListingPOSTSerializer
+            serializer = ListingPOSTSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response({"Seller does not exist"}, status=status.HTTP_400_BAD_REQUEST)
