@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:build_my_garden/pages/service/listing_service.dart';
+import 'package:build_my_garden/service/listing_service.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_large_text.dart';
 import 'package:build_my_garden/widgets/app_text.dart';

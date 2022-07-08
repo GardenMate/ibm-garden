@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 
-import 'package:build_my_garden/pages/service/secure_storage.dart';
+import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
 import 'package:build_my_garden/widgets/responsive_button.dart';
@@ -97,8 +97,9 @@ class _SignInPageState extends State<SignInPage> {
                         _usernameController.text, _passwordController.text);
                     if (loginResponse != null) {
                       if (loginResponse.key != null) {
-                        // print(loginResponse.key); Later store the key value
+                        // Save the token in an encrpted storage and set app state as signedin
                         await SecureStorage.setToken(loginResponse.key);
+                        await SecureStorage.setIsSignedIn(true);
                         // Fix added if we need to remove the ignore
                         // ignore: use_build_context_synchronously
                         Navigator.push(

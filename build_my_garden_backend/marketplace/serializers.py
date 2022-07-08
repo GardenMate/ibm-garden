@@ -7,7 +7,7 @@ class ListingImageSerializer(serializers.ModelSerializer):
         model = ListingImage
         fields = '__all__'
 
-class ListingSerializer(serializers.ModelSerializer):
+class ListingGETSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listing
         fields = '__all__'
@@ -21,3 +21,14 @@ class ListingSerializer(serializers.ModelSerializer):
     address = serializers.CharField(source='location.street_address')
     # The following is for image
     image = serializers.CharField(source='image.first')
+
+class ListingPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Listing
+        fields = '__all__'
+
+    def create(self, validated_data):
+        '''
+        Creates and return Listing after validation
+        '''
+        return Listing.objects.create(**validated_data)
