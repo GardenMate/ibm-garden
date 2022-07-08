@@ -97,7 +97,7 @@ class _SignInPageState extends State<SignInPage> {
                         _usernameController.text, _passwordController.text);
                     if (loginResponse != null) {
                       if (loginResponse.key != null) {
-                        // print(loginResponse.key); Later store the key value
+                        // Save the token in an encrpted storage and set app state as signedin
                         await SecureStorage.setToken(loginResponse.key);
                         await SecureStorage.setIsSignedIn(true);
                         // Fix added if we need to remove the ignore
