@@ -1,8 +1,23 @@
-from main.models import Plant
+from accounts.models import User
+from main.models import Plant, PlantType
 from rest_framework import serializers
 
-class PlantSerializer(serializers.ModelSerializer):
+
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
+        model = User
+        fields = ["email","phone_number"]
+
+class PlantTypeSerializer:
+    class Meta:
+        model = PlantType
+        fields = ["plant_name","plant_type","plant_size_height","plant_size_spread","plant_max_size_time","plant_harvest_length","sun_exposer"]
+
+class PlantSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        user = UserSerializer()
+        plant_type = PlantTypeSerializer()
         model = Plant
         fields = ["user","plant_type","plant_current_size_height","plant_current_size_spread","planted_date",]
 
