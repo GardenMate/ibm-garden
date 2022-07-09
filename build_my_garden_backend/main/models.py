@@ -61,6 +61,7 @@ class PlantSupportingSeason(models.Model):
 
     def __str__(self) -> str:
         return self.plant_type +  "<->" + self.season
+
 # Soil type model
 class SoilType(models.Model):
     soil_name = models.CharField(max_length=200)

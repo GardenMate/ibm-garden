@@ -1,5 +1,5 @@
 from accounts.models import User
-from main.models import Plant, PlantType
+from main.models import Plant, PlantType, Soil
 from rest_framework import serializers
 
 
@@ -14,7 +14,6 @@ class PlantTypeSerializer:
         fields = ["plant_name","plant_type","plant_size_height","plant_size_spread","plant_max_size_time","plant_harvest_length","sun_exposer"]
 
 class PlantSerializer(serializers.ModelSerializer):
-    
     class Meta:
         user = UserSerializer()
         plant_type = PlantTypeSerializer()
@@ -32,3 +31,10 @@ class PlantSerializer(serializers.ModelSerializer):
             )
 
             return plant
+
+class SoilSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Soil
+        fields = "__all__"
+
+    
