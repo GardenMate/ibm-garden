@@ -5,9 +5,10 @@ from rest_framework.views import APIView
 from rest_framework import status, generics
 from .models import Listing, SellerAddress, ListingImage
 from django.db.models import Prefetch
-from .serializers import ListingSerializer
+from .serializers import ListingGETSerializer, ListingPOSTSerializer
 from geopy.geocoders import GoogleV3
 from decouple import config
+from rest_framework.permissions import IsAuthenticated
 
 # Create the class to use for geolocation
 geolocator = GoogleV3(api_key=config("GOOGLE_API_KEY"))
@@ -15,12 +16,13 @@ geolocator = GoogleV3(api_key=config("GOOGLE_API_KEY"))
 # Create your views here.
 # API endpoint for listing
 class ListingView(APIView):
-    serializer_class = ListingSerializer
-    
+    serializer_class = ListingPOSTSerializer
+
     def get(self, request: Request):
         '''
         Fetchs any listing found in a city
         '''
+        
         city = request.query_params.get("city")
         latitude = request.query_params.get("latitude")
         longitude = request.query_params.get("longitude")
@@ -40,7 +42,7 @@ class ListingView(APIView):
             for address in addresses:
                 listings = listings.union(address.listing.all())
 
-            serializer = ListingSerializer(listings, many=True)
+            serializer = ListingGETSerializer(listings, many=True)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
@@ -49,9 +51,24 @@ class ListingView(APIView):
         
 
     def post(self, request: Request):
-        pass
+        '''
+        Adds a new listing for the user
+        '''
 
-# class ListingView(generics.ListAPIView):
-#     address = SellerAddress.objects.filter(city="Sioux Falls")
-#     queryset = address[0].listing.all() | address[1].listing.all()
-#     serializer_class = ListingSerializer
+        # Get the seller id from user if exists
+        seller = request.user.seller_info.filter(id=1)
+        if seller.exists():
+            seller = seller.first()
+            # Save the seller id into the request data
+            request.data['seller'] = seller.id
+
+            # Serialize and save
+            self.serializer_class = ListingPOSTSerializer
+            serializer = ListingPOSTSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response({"Seller does not exist"}, status=status.HTTP_400_BAD_REQUEST)

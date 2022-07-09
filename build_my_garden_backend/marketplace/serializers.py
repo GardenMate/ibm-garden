@@ -1,13 +1,13 @@
-from dataclasses import field
 from rest_framework import serializers
 from .models import Listing, ListingImage
+from djmoney.contrib.django_rest_framework import MoneyField
 
 class ListingImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ListingImage
         fields = '__all__'
 
-class ListingSerializer(serializers.ModelSerializer):
+class ListingGETSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listing
         fields = '__all__'
@@ -21,3 +21,15 @@ class ListingSerializer(serializers.ModelSerializer):
     address = serializers.CharField(source='location.street_address')
     # The following is for image
     image = serializers.CharField(source='image.first')
+
+class ListingPOSTSerializer(serializers.ModelSerializer):
+    price = MoneyField(max_digits=10, decimal_places=2)
+    class Meta:
+        model = Listing
+        fields = '__all__' 
+
+    def create(self, validated_data):
+        '''
+        Creates and return Listing after validation
+        '''
+        return Listing.objects.create(**validated_data)

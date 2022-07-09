@@ -1,12 +1,21 @@
 import 'dart:convert';
+import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ListingService {
   Future<ListOfListing> getListing() async {
-    var response = await http.get(Uri.parse(
-        'http://10.0.2.2:8000/api/listing/?latitude=43.52694005203881&longitude=-96.73868318893787'));
+    // Store and reformate token correctly
+    String? token = await SecureStorage.getToken();
 
+    // Uri parse should always pass the token in the header for authentication
+    var response = await http.get(
+      Uri.parse(
+          'http://10.0.2.2:8000/api/listing/?latitude=43.52694005203881&longitude=-96.73868318893787'),
+      headers: {
+        'Authorization': 'Token $token',
+      },
+    );
     return ListOfListing.fromList(jsonDecode(response.body));
   }
 }
