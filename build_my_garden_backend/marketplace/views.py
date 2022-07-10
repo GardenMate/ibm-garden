@@ -1,3 +1,5 @@
+import re
+from django.http import QueryDict
 from django.shortcuts import render
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -54,21 +56,24 @@ class ListingView(APIView):
         '''
         Adds a new listing for the user
         '''
-
+        # Create a new QueryDictionary that is mutable
+        request_data = QueryDict(mutable=True)
+        request_data.update(request.data)
+        
         # Get the seller id from user if exists
         seller = request.user.seller_info.filter(id=1)
         if seller.exists():
             seller = seller.first()
             # Save the seller id into the request data
-            request.data['seller'] = seller.id
-
+            request_data.update({"seller": seller.id})
             # Serialize and save
             self.serializer_class = ListingPOSTSerializer
-            serializer = ListingPOSTSerializer(data=request.data)
+            serializer = ListingPOSTSerializer(data=request_data)
+
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
-        
+            
         return Response({"Seller does not exist"}, status=status.HTTP_400_BAD_REQUEST)

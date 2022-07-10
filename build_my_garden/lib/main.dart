@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:build_my_garden/pages/navpages/marketplace_listing.dart';
+import 'package:build_my_garden/pages/subpages/add_listing_page.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:build_my_garden/pages/signin_page.dart';
 import 'package:build_my_garden/pages/welcome_page.dart';
+import 'package:build_my_garden/widgets/app_large_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -19,7 +21,8 @@ void main() async {
     isSignedIn ? runApp(MainApp()) : runApp(WelcomeApp());
   }
   // Allows the app to be full screen
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
+      overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
 }
 
 // The welcome app state
@@ -78,7 +81,7 @@ class _MainAppState extends State<MainApp> {
     CenterWithButton(text: "Learn"),
     CenterWithButton(text: "Your Plants"),
     MarketPlaceHome(),
-    CenterWithButton(text: "Account"),
+    CenterWithButton(text: "Account", addListing: true),
   ];
 
   @override
@@ -89,6 +92,7 @@ class _MainAppState extends State<MainApp> {
           primarySwatch: Colors.green,
         ), //ThemeData
         home: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: null,
           body: screens[currentIndex],
           bottomNavigationBar: BottomNav(
@@ -150,8 +154,11 @@ class _BottomNavState extends State<BottomNav> {
 // A center app
 class CenterWithButton extends StatelessWidget {
   final String text;
+  final bool addListing;
 
-  const CenterWithButton({Key? key, required this.text}) : super(key: key);
+  const CenterWithButton(
+      {Key? key, required this.text, this.addListing = false})
+      : super(key: key);
 
   // Connecting with the backend using http
   Future<http.Response> buttonPressed() async {
@@ -175,8 +182,11 @@ class CenterWithButton extends StatelessWidget {
         ),
         Padding(
             padding: const EdgeInsets.all(0.0),
-            child:
-                ElevatedButton(onPressed: buttonPressed, child: Text('Click')))
+            child: ElevatedButton(
+                onPressed: addListing
+                    ? () => addListingDialog(context)
+                    : buttonPressed,
+                child: Text('Click')))
       ],
     ));
   }
