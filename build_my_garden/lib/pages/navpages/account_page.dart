@@ -103,7 +103,7 @@ class _AccountPageState extends State<AccountPage> {
             ),
           ),
           FutureBuilder<ListOfListing>(
-              future: listingService.getListing(),
+              future: listingService.getSellersListing(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   List<Listing> listings = snapshot.data!.listings;
