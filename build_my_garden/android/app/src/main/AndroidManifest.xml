@@ -1,5 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.build_my_garden">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />   <!-- Internet permission -->
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+
    <application
         android:label="build_my_garden"
         android:name="${applicationName}"
