@@ -15,7 +15,7 @@ def get_image_path(instance, filename):
 class SellerInfromation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller_info', null=True)
     seller_rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
-    
+    # Need to add profile picture and picture as a dashboard
     def __str__(self) -> str:
         return str(self.id)
 

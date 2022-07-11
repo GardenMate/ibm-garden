@@ -61,8 +61,7 @@ class _MarketPlaceHomeState extends State<MarketPlaceHome> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       List<Listing> listings = snapshot.data!.listings;
-                      return Container(
-                        height: 450,
+                      return Expanded(
                         child: ListView.builder(
                             padding: const EdgeInsets.all(8),
                             itemCount: listings.length, // Number of listing
