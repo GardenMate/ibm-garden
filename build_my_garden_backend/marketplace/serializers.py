@@ -1,7 +1,9 @@
+from django.forms import ImageField
 from rest_framework import serializers
 from .models import Listing, ListingImage
 from djmoney.contrib.django_rest_framework import MoneyField
 
+# Serializes the ListingImage Model for uploaded images from user
 class ListingImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ListingImage

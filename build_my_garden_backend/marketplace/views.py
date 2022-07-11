@@ -1,13 +1,15 @@
-import re
+import base64
 from django.http import QueryDict
 from django.shortcuts import render
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status, generics
+from rest_framework.exceptions import ParseError
+from rest_framework import status
+from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from .models import Listing, SellerAddress, ListingImage
 from django.db.models import Prefetch
-from .serializers import ListingGETSerializer, ListingPOSTSerializer
+from .serializers import ListingGETSerializer, ListingImageSerializer, ListingPOSTSerializer
 from geopy.geocoders import GoogleV3
 from decouple import config
 from rest_framework.permissions import IsAuthenticated
@@ -77,3 +79,26 @@ class ListingView(APIView):
                 return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
             
         return Response({"Seller does not exist"}, status=status.HTTP_400_BAD_REQUEST)
+
+class ImageAPI(APIView):
+    # serializer_class = ListingImageSerializer
+    parser_classes = [MultiPartParser, FormParser]
+
+    def post(self, request: Request):
+        '''
+        Upload listing image from the user
+        '''        
+        # request_data = QueryDict(mutable=True)
+        # request_data.update(request.data)
+        # # request_data.update({"listing": 7})
+        # print(request_data)
+
+        serializer = ListingImageSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+         

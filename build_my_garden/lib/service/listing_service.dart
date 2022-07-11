@@ -19,7 +19,7 @@ class ListingService {
     return ListOfListing.fromList(jsonDecode(response.body));
   }
 
-  Future postListing(
+  Future<AddListingResponse> postListing(
       String title,
       String desc,
       String price,
@@ -44,7 +44,8 @@ class ListingService {
       "location": location,
       "distance_from_location": distanceFromLocation
     });
-    return response.body;
+    print(response.body);
+    return AddListingResponse.fromJson(jsonDecode(response.body));
   }
 }
 
@@ -111,5 +112,15 @@ class Listing {
       address: map['address'],
       image: map['image'],
     );
+  }
+}
+
+class AddListingResponse {
+  dynamic id;
+
+  AddListingResponse({this.id});
+
+  factory AddListingResponse.fromJson(mapOfBody) {
+    return AddListingResponse(id: mapOfBody['id']);
   }
 }
