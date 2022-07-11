@@ -173,7 +173,7 @@ REST_FRAMEWORK = {
     # Use Django's standard 'django.contrib.auth' permissions
     'DEFAULT_PERMISSION_CLASSES' : [
         'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
     ],
 
     # Authentication for
