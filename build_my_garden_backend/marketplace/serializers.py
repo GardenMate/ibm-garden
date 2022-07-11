@@ -1,6 +1,5 @@
-from django.forms import ImageField
 from rest_framework import serializers
-from .models import Listing, ListingImage
+from .models import Listing, ListingImage, SellerInfromation
 from djmoney.contrib.django_rest_framework import MoneyField
 
 # Serializes the ListingImage Model for uploaded images from user
@@ -35,3 +34,16 @@ class ListingPOSTSerializer(serializers.ModelSerializer):
         Creates and return Listing after validation
         '''
         return Listing.objects.create(**validated_data)
+
+class SellerInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SellerInfromation
+        fields = '__all__'
+    # Maybe a need to combine first and last name
+    # or should be done on flutter side
+    username = serializers.CharField(source='user.username')
+    first_name = serializers.CharField(source='user.first_name')
+    last_name = serializers.CharField(source='user.last_name')
+    city = serializers.CharField(source='address.first')
+    # [To Do] Handle rating differently - change datamodel need to 
+    # show how many people rated and calculate average
