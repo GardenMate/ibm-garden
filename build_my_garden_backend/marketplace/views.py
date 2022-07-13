@@ -1,11 +1,15 @@
+from django.http import QueryDict
 from django.shortcuts import render
+from requests import request
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status, generics
+from rest_framework.exceptions import ParseError
+from rest_framework import status
+from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from .models import Listing, SellerAddress, ListingImage
 from django.db.models import Prefetch
-from .serializers import ListingGETSerializer, ListingPOSTSerializer
+from .serializers import ListingGETSerializer, ListingImageSerializer, ListingPOSTSerializer, SellerInfoSerializer
 from geopy.geocoders import GoogleV3
 from decouple import config
 from rest_framework.permissions import IsAuthenticated
@@ -50,25 +54,93 @@ class ListingView(APIView):
             status=status.HTTP_404_NOT_FOUND)
         
 
+    
+
+class ImageAPI(APIView):
+    # serializer_class = ListingImageSerializer
+    parser_classes = [MultiPartParser, FormParser]
+
+    def post(self, request: Request):
+        '''
+        Upload listing image from the user
+        '''        
+        # request_data = QueryDict(mutable=True)
+        # request_data.update(request.data)
+        # # request_data.update({"listing": 7})
+        # print(request_data)
+
+        serializer = ListingImageSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SellerInfoAPI(APIView):
+
+    def get(self, request:Request):
+        '''
+        Fetch all the information of the seller
+        '''
+        # Get the seller id from the token authentication
+        seller = request.user.seller_info.filter(id=1)
+        if seller.exists():
+            # Save the seller model
+            seller = seller.first()
+            serializer = SellerInfoSerializer(seller)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({'No Seller':'User has no seller account'}, status=status.HTTP_404_NOT_FOUND)
+
+class SellerListing(APIView):
+
+    def get(self, request: Request):
+        '''
+        Fetch all the listing of the seller's
+        '''
+        # Get the seller id from the token authentication
+        seller = request.user.seller_info.filter(id=1)
+        if seller.exists():
+            # Save the seller model
+            seller = seller.first()
+            listing = Listing.objects.filter(seller=seller)
+
+            if listing.exists():
+                serializer = ListingGETSerializer(listing, many=True)
+
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response({'No Listing': 'User has no listing'}, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({'No Seller':'User has no seller account'}, status=status.HTTP_404_NOT_FOUND)
+
+
+    # [TO DO - Done] Move the post from ListingView to here
     def post(self, request: Request):
         '''
         Adds a new listing for the user
         '''
-
+        # Create a new QueryDictionary that is mutable
+        request_data = QueryDict(mutable=True)
+        request_data.update(request.data)
+        
         # Get the seller id from user if exists
         seller = request.user.seller_info.filter(id=1)
         if seller.exists():
             seller = seller.first()
             # Save the seller id into the request data
-            request.data['seller'] = seller.id
-
+            request_data.update({"seller": seller.id})
             # Serialize and save
             self.serializer_class = ListingPOSTSerializer
-            serializer = ListingPOSTSerializer(data=request.data)
+            serializer = ListingPOSTSerializer(data=request_data)
+
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
-        
+            
         return Response({"Seller does not exist"}, status=status.HTTP_400_BAD_REQUEST)

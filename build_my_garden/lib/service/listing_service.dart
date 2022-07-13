@@ -18,6 +18,35 @@ class ListingService {
     );
     return ListOfListing.fromList(jsonDecode(response.body));
   }
+
+  Future<AddListingResponse> postListing(
+      String title,
+      String desc,
+      String price,
+      String type,
+      String qty,
+      String unit,
+      String location,
+      String distanceFromLocation) async {
+    // POST request for the listing
+    String? token = await SecureStorage.getToken();
+
+    var response = await http
+        .post(Uri.parse("http://10.0.2.2:8000/api/seller/listing"), headers: {
+      'Authorization': 'Token $token',
+    }, body: {
+      "title": title,
+      "description": desc,
+      "price": price,
+      "plant_type": type,
+      "quantity": qty,
+      "quantity_type": unit,
+      "location": location,
+      "distance_from_location": distanceFromLocation
+    });
+    print(response.body);
+    return AddListingResponse.fromJson(jsonDecode(response.body));
+  }
 }
 
 class ListOfListing {
@@ -83,5 +112,15 @@ class Listing {
       address: map['address'],
       image: map['image'],
     );
+  }
+}
+
+class AddListingResponse {
+  dynamic id;
+
+  AddListingResponse({this.id});
+
+  factory AddListingResponse.fromJson(mapOfBody) {
+    return AddListingResponse(id: mapOfBody['id']);
   }
 }
