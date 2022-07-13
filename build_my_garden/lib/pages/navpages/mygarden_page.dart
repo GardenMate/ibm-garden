@@ -35,8 +35,13 @@ class _MyGardenPageState extends State<MyGardenPage> {
                   ),
               ),
             ),
-            Column(
-              
+            Container(
+              padding: EdgeInsets.all(4),
+              child: Column(
+                children: <Widget>[
+                  Image.asset("assets/images/potatoes.png")
+                ],
+              ),
             )
 
           ],
