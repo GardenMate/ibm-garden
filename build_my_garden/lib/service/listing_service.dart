@@ -30,7 +30,6 @@ class ListingService {
         'Authorization': 'Token $token',
       },
     );
-    print(response.body);
     return ListOfListing.fromList(jsonDecode(response.body));
   }
 
@@ -59,7 +58,6 @@ class ListingService {
       "location": location,
       "distance_from_location": distanceFromLocation
     });
-    print(response.body);
     return AddListingResponse.fromJson(jsonDecode(response.body));
   }
 }
