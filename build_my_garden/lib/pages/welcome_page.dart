@@ -55,7 +55,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 Container(
                     // Margin for the text inside the white box
                     margin: const EdgeInsets.only(top: 40),
-                    height: 106,
+                    height: 100,
                     child: Column(
                       children: const [
                         // Load the widget AppLargeText
@@ -69,10 +69,11 @@ class _WelcomePageState extends State<WelcomePage> {
                             color: Color.fromARGB(255, 59, 87, 48)),
                       ],
                     )),
+                Spacer(),
                 Container(
                   // A container that is scrollable with information
                   width: displayWidth(context) * 0.85,
-                  height: 298,
+                  height: 300,
                   child: Container(
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 255, 228, 182),
@@ -101,7 +102,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                 return AppText(text: listOfText[index]);
                               })),
                       Container(
-                        margin: const EdgeInsets.only(top: 80),
+                        margin: const EdgeInsets.only(top: 90),
                         // A button that changes the page and goes to home page
                         child: ResponsiveButton(
                           onPress: pageIndex != 2

@@ -19,6 +19,20 @@ class ListingService {
     return ListOfListing.fromList(jsonDecode(response.body));
   }
 
+  Future<ListOfListing> getSellersListing() async {
+    // Store and reformate token correctly
+    String? token = await SecureStorage.getToken();
+
+    // Uri parse should always pass the token in the header for authentication
+    var response = await http.get(
+      Uri.parse('http://10.0.2.2:8000/api/seller/listing/'),
+      headers: {
+        'Authorization': 'Token $token',
+      },
+    );
+    return ListOfListing.fromList(jsonDecode(response.body));
+  }
+
   Future<AddListingResponse> postListing(
       String title,
       String desc,
@@ -32,7 +46,7 @@ class ListingService {
     String? token = await SecureStorage.getToken();
 
     var response = await http
-        .post(Uri.parse("http://10.0.2.2:8000/api/seller/listing"), headers: {
+        .post(Uri.parse("http://10.0.2.2:8000/api/seller/listing/"), headers: {
       'Authorization': 'Token $token',
     }, body: {
       "title": title,
@@ -44,7 +58,6 @@ class ListingService {
       "location": location,
       "distance_from_location": distanceFromLocation
     });
-    print(response.body);
     return AddListingResponse.fromJson(jsonDecode(response.body));
   }
 }
