@@ -15,7 +15,6 @@ class SellerInfoService {
         'Authorization': 'Token $token',
       },
     );
-    print(response.body);
     return SellerInfo.fromJson(jsonDecode(response.body));
   }
 
@@ -29,18 +28,16 @@ class SellerInfoService {
     // POST request for the SellerInfo
     String? token = await SecureStorage.getToken();
 
-    var response = await http.post(
-        Uri.parse("http://10.0.2.2:8000/api/seller/SellerInfo"),
-        headers: {
-          'Authorization': 'Token $token',
-        },
-        body: {
-          "username": username,
-          "first_name": last_name,
-          "last_name": last_name,
-          "city": city,
-          "seller_rating": seller_rating,
-        });
+    var response = await http
+        .post(Uri.parse("http://10.0.2.2:8000/api/seller/"), headers: {
+      'Authorization': 'Token $token',
+    }, body: {
+      "username": username,
+      "first_name": last_name,
+      "last_name": last_name,
+      "city": city,
+      "seller_rating": seller_rating,
+    });
     return AddSellerInfoResponse.fromJson(jsonDecode(response.body));
   }
 }

@@ -46,7 +46,7 @@ class ListingService {
     String? token = await SecureStorage.getToken();
 
     var response = await http
-        .post(Uri.parse("http://10.0.2.2:8000/api/seller/listing"), headers: {
+        .post(Uri.parse("http://10.0.2.2:8000/api/seller/listing/"), headers: {
       'Authorization': 'Token $token',
     }, body: {
       "title": title,

@@ -84,7 +84,7 @@ class _AccountPageState extends State<AccountPage> {
                 ),
                 AppText(text: seller.city),
                 RatingBarIndicator(
-                  rating: 4.5,
+                  rating: seller.seller_rating.toDouble(),
                   itemBuilder: (context, index) => Icon(
                     Icons.star,
                     color: Colors.amber,
