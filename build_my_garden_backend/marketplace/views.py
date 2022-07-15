@@ -10,7 +10,7 @@ from rest_framework import status
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from .models import Listing, SellerAddress, ListingImage
 from django.db.models import Prefetch
-from .serializers import ListingGETSerializer, ListingImageSerializer, ListingPOSTSerializer, SellerInfoSerializer
+from .serializers import ListingGETSerializer, ListingImageSerializer, ListingPOSTSerializer, SellerInfoSerializer, SingleListingGETSerializer
 from geopy.geocoders import GoogleV3
 from decouple import config
 from rest_framework.permissions import IsAuthenticated
@@ -163,3 +163,23 @@ class SellerListing(APIView):
                 return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
             
         return Response({"Seller does not exist"}, status=status.HTTP_400_BAD_REQUEST)
+    
+class SingleListing(APIView):
+    serializer_class = ListingGETSerializer
+
+    def get(self, request: Request):
+        '''
+        Get the detailed information of a single listing
+        '''
+        id = request.query_params.get('id')
+
+        if id:
+            listing = Listing.objects.filter(id=id)
+
+            if listing.exists():
+                serializer = SingleListingGETSerializer(listing.first())
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response({'No Listing':'Not Listing Existing'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)

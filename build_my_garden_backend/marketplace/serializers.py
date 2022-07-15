@@ -23,6 +23,21 @@ class ListingGETSerializer(serializers.ModelSerializer):
     # The following is for image
     image = serializers.CharField(source='image.first')
 
+class SingleListingGETSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Listing
+        fields = '__all__'
+        #depth = 1
+
+    # The following is the seller's rating
+    seller_rating = serializers.IntegerField(source='seller.seller_rating')
+    # The following is for the plant's type
+    plant_type = serializers.CharField(source='plant_type.plant_name')
+    # The following is for the location address
+    address = serializers.CharField(source='location.street_address')
+    # The following is for image
+    image = ListingImageSerializer(many=True)
+
 class ListingPOSTSerializer(serializers.ModelSerializer):
     price = MoneyField(max_digits=10, decimal_places=2)
     class Meta:
