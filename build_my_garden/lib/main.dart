@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:build_my_garden/pages/navpages/account_page.dart';
 import 'package:build_my_garden/pages/navpages/marketplace_listing.dart';
 import 'package:build_my_garden/pages/navpages/mygarden_page.dart';
 import 'package:build_my_garden/pages/subpages/add_listing_page.dart';
@@ -82,7 +83,8 @@ class _MainAppState extends State<MainApp> {
     CenterWithButton(text: "Learn"),
     MyGardenPage(),
     MarketPlaceHome(),
-    CenterWithButton(text: "Account", addListing: true),
+    AccountPage(),
+    // CenterWithButton(text: "Account", addListing: true),
   ];
 
   @override
