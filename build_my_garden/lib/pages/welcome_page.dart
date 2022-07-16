@@ -1,4 +1,4 @@
-import 'package:build_my_garden/main.dart';
+import 'package:build_my_garden/app/auth_app.dart';
 import 'package:build_my_garden/widgets/app_large_text.dart';
 import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/material.dart';

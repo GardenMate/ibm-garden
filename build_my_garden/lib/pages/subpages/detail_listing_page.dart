@@ -32,15 +32,9 @@ class _DetailListingState extends State<DetailListing> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: Container(
-          color: Colors.black,
-        ),
-      ),
-      bottomNavigationBar: BottomNav(
-        currentIndex: currentIndex,
-        onPress: (int index) => setState(() => currentIndex = index),
+    return Container(
+      child: Container(
+        color: Colors.black,
       ),
     );
   }
