@@ -83,7 +83,6 @@ class _MainAppState extends State<MainApp> {
     CenterWithButton(text: "Your Plants"),
     MarketPlaceHome(),
     AccountPage(),
-    // CenterWithButton(text: "Account", addListing: true),
   ];
 
   @override
