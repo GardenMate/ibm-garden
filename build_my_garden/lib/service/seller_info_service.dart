@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class SellerInfoService {
-  Future<SellerInfo> getSellerInfo() async {
+  Future<dynamic> getSellerInfo() async {
     // Store and reformate token correctly
     String? token = await SecureStorage.getToken();
 
@@ -15,10 +15,16 @@ class SellerInfoService {
         'Authorization': 'Token $token',
       },
     );
-    return SellerInfo.fromJson(jsonDecode(response.body));
+    print(response.body);
+    if (jsonDecode(response.body)['no_seller'] != null) {
+      print(jsonDecode(response.body)['no_seller']);
+      return SellerInfoError.fromJson(jsonDecode(response.body));
+    } else {
+      return SellerInfo.fromJson(jsonDecode(response.body));
+    }
   }
 
-  Future<AddSellerInfoResponse> postSellerInfo(
+  Future<SellerInfo> postSellerInfo(
     String username,
     String first_name,
     String last_name,
@@ -38,9 +44,11 @@ class SellerInfoService {
       "city": city,
       "seller_rating": seller_rating,
     });
-    return AddSellerInfoResponse.fromJson(jsonDecode(response.body));
+    return SellerInfo.fromJson(jsonDecode(response.body));
   }
 }
+
+// asdlkjglaj
 
 // class ListOfSellerInfo {
 //   List<SellerInfo> SellerInfos;
@@ -87,12 +95,49 @@ class SellerInfo {
   }
 }
 
-class AddSellerInfoResponse {
-  dynamic id;
+class SellerInfoError {
+  dynamic no_seller;
 
-  AddSellerInfoResponse({this.id});
+  SellerInfoError({
+    this.no_seller,
+  });
 
-  factory AddSellerInfoResponse.fromJson(mapOfBody) {
-    return AddSellerInfoResponse(id: mapOfBody['id']);
+  factory SellerInfoError.fromJson(map) {
+    return SellerInfoError(no_seller: map['no_seller']);
   }
 }
+
+// class SellerInfoResponse {
+//   dynamic id;
+//   dynamic username;
+//   dynamic first_name;
+//   dynamic last_name;
+//   dynamic city;
+//   dynamic user;
+//   dynamic seller_rating;
+//   dynamic no_seller;
+
+//   SellerInfoResponse({
+//     this.id,
+//     this.username,
+//     this.first_name,
+//     this.last_name,
+//     this.city,
+//     this.user,
+//     this.seller_rating,
+//     this.no_seller,
+//   });
+
+//   factory SellerInfoResponse.fromJson(mapOfBody) {
+//     return SellerInfoResponse(
+//       id: mapOfBody['id'],
+//       username: mapOfBody['uesrname'],
+//       first_name: mapOfBody['first_name'],
+//       last_name: mapOfBody['last_name'],
+//       city: mapOfBody['city'],
+//       user: mapOfBody['user'],
+//       seller_rating: mapOfBody['seller_rating'],
+//       no_seller: mapOfBody['no_seller'],
+//     );
+//   }
+// }
