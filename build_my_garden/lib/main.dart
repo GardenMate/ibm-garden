@@ -2,6 +2,7 @@
 
 import 'package:build_my_garden/pages/navpages/account_page.dart';
 import 'package:build_my_garden/pages/navpages/marketplace_listing.dart';
+import 'package:build_my_garden/pages/navpages/mygarden_page.dart';
 import 'package:build_my_garden/pages/subpages/add_listing_page.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:build_my_garden/pages/signin_page.dart';
@@ -80,7 +81,7 @@ class _MainAppState extends State<MainApp> {
   int currentIndex = 0;
   final screens = [
     CenterWithButton(text: "Learn"),
-    CenterWithButton(text: "Your Plants"),
+    MyGardenPage(),
     MarketPlaceHome(),
     AccountPage(),
     // CenterWithButton(text: "Account", addListing: true),

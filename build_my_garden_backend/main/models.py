@@ -1,5 +1,12 @@
+from email.mime import image
 from django.db import models
 from accounts.models import User
+import os
+
+def get_image_path(instance, filename):
+    '''Used to get the id of the plants to save the image file'''
+    return os.path.join("upload", "Plants",str(instance.id), filename)
+
 
 # Create your models here.
 # The plant model
@@ -52,7 +59,24 @@ class Plant(models.Model):
     plant_current_size_height = models.IntegerField()
     plant_current_size_spread = models.IntegerField()
     planted_date = models.DateTimeField()
+    image = models.ImageField(upload_to=get_image_path, blank=True, null=True)
+
+    # Model Save override to save the image file with the id of the plant
+    def save(self, *args, **kwargs):
+        if self.id is None:
+            saved_image = self.image
+            self.image = None
+            super(Plant, self).save(*args, **kwargs)
+            self.image = saved_image
+            if 'force_insert' in kwargs:
+                del kwargs['force_insert']
+            
+        super(Plant, self).save(*args, **kwargs)
+        
     ## planted_soil - create a relation between soiltype and plant
+
+    def __str__(self) -> str:
+        return self.plant_type.plant_name
 
 # Relation between Plant and Season
 class PlantSupportingSeason(models.Model):
@@ -74,4 +98,7 @@ class Soil(models.Model):
     account_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='soil_account', null=True)
     soil_type_id = models.ForeignKey(SoilType, on_delete=models.CASCADE, related_name='soil_type', null= True)
     soil_current_degradation = models.FloatField()
+
+
+    
 
