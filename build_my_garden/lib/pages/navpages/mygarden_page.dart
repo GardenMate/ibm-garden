@@ -145,7 +145,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                               child: AppText(
                                 // ignore: prefer_interpolation_to_compose_strings
                                 text:
-                                    "Planted: ${months[date.month.toString()]} ${date.day}\nWater Need: Daily",
+                                    "Planted: ${months[date.month.toString()]} ${date.day} ${date.year}\nWater Need: Daily",
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
                             ),

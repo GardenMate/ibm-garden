@@ -50,6 +50,13 @@ class _PlantFormState extends State<PlantForm> {
   late DateTime _date;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    _date = DateTime.now();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: displayWidth(context),
