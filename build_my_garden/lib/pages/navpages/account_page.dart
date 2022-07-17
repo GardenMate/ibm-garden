@@ -1,4 +1,5 @@
 import 'package:build_my_garden/pages/subpages/add_listing_page.dart';
+import 'package:build_my_garden/pages/subpages/detail_listing_page.dart';
 import 'package:build_my_garden/service/listing_service.dart';
 import 'package:build_my_garden/service/seller_info_service.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
@@ -134,93 +135,109 @@ class _AccountPageState extends State<AccountPage> {
                               padding: const EdgeInsets.all(8),
                               itemCount: listings.length, // Number of listing
                               itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  height: 200,
-                                  color: const Color.fromARGB(0, 0, 0, 0),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.all(5),
-                                        height: 160,
-                                        width: 300,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey
-                                                    .withOpacity(0.5),
-                                                spreadRadius: 1,
-                                                blurRadius: 2,
-                                                offset: Offset(0, 0),
-                                              )
-                                            ]),
-                                        child: Stack(
-                                          children: [
-                                            Container(
-                                              height: 160,
-                                              width: 300,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                child: Image.network(
-                                                  "http://10.0.2.2:8000/media/${listings[index].image}",
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            Positioned(
-                                              top: 10,
-                                              left: 10,
-                                              child: Container(
-                                                height: 35,
-                                                width: 60,
-                                                decoration: const BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                20)),
-                                                    color: Color.fromARGB(
-                                                        255, 34, 49, 29)),
-                                                child: Center(
-                                                  child: AppText(
-                                                    text:
-                                                        "\$ ${listings[index].price}",
-                                                    size: 15,
-                                                    color: Colors.white,
+                                return InkWell(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => DetailListing(
+                                                  listingId: listings[index].id,
+                                                )));
+                                  },
+                                  child: Container(
+                                    height: 200,
+                                    color: const Color.fromARGB(0, 0, 0, 0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.all(5),
+                                          height: 160,
+                                          width: 300,
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.5),
+                                                  spreadRadius: 1,
+                                                  blurRadius: 2,
+                                                  offset: Offset(0, 0),
+                                                )
+                                              ]),
+                                          child: Stack(
+                                            children: [
+                                              Container(
+                                                height: 160,
+                                                width: 300,
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  child: Image.network(
+                                                    "http://10.0.2.2:8000/media/${listings[index].image}",
+                                                    fit: BoxFit.cover,
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            Positioned(
-                                              top: 110,
-                                              left: 110,
-                                              child: Container(
-                                                height: 35,
-                                                width: 60,
-                                                decoration: const BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                20)),
-                                                    color: Color.fromARGB(
-                                                        255, 34, 49, 29)),
-                                                child: Center(
-                                                  child: AppText(
-                                                    text:
-                                                        "${listings[index].quantity} ${listings[index].quantity_type}",
-                                                    size: 15,
-                                                    color: Colors.white,
+                                              Positioned(
+                                                top: 10,
+                                                left: 10,
+                                                child: Container(
+                                                  height: 35,
+                                                  width: 60,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          20)),
+                                                          color: Color.fromARGB(
+                                                              255, 34, 49, 29)),
+                                                  child: Center(
+                                                    child: AppText(
+                                                      text:
+                                                          "\$ ${listings[index].price}",
+                                                      size: 15,
+                                                      color: Colors.white,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                              Positioned(
+                                                top: 110,
+                                                left: 110,
+                                                child: Container(
+                                                  height: 35,
+                                                  width: 60,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          20)),
+                                                          color: Color.fromARGB(
+                                                              255, 34, 49, 29)),
+                                                  child: Center(
+                                                    child: AppText(
+                                                      text:
+                                                          "${listings[index].quantity} ${listings[index].quantity_type}",
+                                                      size: 15,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      AppText(text: listings[index].title),
-                                    ],
+                                        AppText(text: listings[index].title),
+                                      ],
+                                    ),
                                   ),
                                 );
                               }),

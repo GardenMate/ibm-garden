@@ -20,16 +20,7 @@ class SearchBar extends StatelessWidget {
     return CupertinoSearchTextField(
       controller: searchController,
       onSubmitted: onSubmit,
-      // _searchResult = search;
-      // _searched = true;
-      // setState(() {});
-
       onSuffixTap: onXMarkPress,
-      // _searchResult = "";
-      // _searched = false;
-      // _searchController.clear();
-      // setState(() {});
-
       placeholderStyle: const TextStyle(
         color: Color.fromARGB(255, 157, 151, 112),
       ),

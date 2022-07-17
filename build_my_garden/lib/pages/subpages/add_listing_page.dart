@@ -76,7 +76,7 @@ class _ListingFormState extends State<ListingForm> {
                   height: 200,
                   width: 200,
 
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       addImageService.getImage().then((value) {
                         setState(() {});
