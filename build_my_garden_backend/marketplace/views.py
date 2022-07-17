@@ -1,5 +1,6 @@
 from django.http import QueryDict
 from django.shortcuts import render
+from django.db.models import Q
 from requests import request
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -14,13 +15,14 @@ from geopy.geocoders import GoogleV3
 from decouple import config
 from rest_framework.permissions import IsAuthenticated
 
+
 # Create the class to use for geolocation
 geolocator = GoogleV3(api_key=config("GOOGLE_API_KEY"))
 
 # Create your views here.
 # API endpoint for listing
 class ListingView(APIView):
-    serializer_class = ListingPOSTSerializer
+    serializer_class = ListingGETSerializer
 
     def get(self, request: Request):
         '''
@@ -54,6 +56,23 @@ class ListingView(APIView):
             status=status.HTTP_404_NOT_FOUND)
         
 
+class ListingSearchView(APIView):
+    serializer_class = ListingGETSerializer
+
+    def get(self, request: Request):
+        '''
+        Fetchs search result for listing
+        '''
+        print(request.query_params)
+        search = request.query_params.get('search')
+        if search:
+            listings = Listing.objects.filter(Q(title__icontains=search) | Q(plant_type__plant_name__icontains=search) | Q(description__icontains = search))
+            serializer = ListingGETSerializer(listings, many=True)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+        return Response({'No search':'No search result'}, status=status.HTTP_200_OK)
     
 
 class ImageAPI(APIView):
