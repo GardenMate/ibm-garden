@@ -31,10 +31,16 @@ class SingleListingGETSerializer(serializers.ModelSerializer):
 
     # The following is the seller's rating
     seller_rating = serializers.IntegerField(source='seller.seller_rating')
+    # The following is the seller's username
+    seller_username = serializers.CharField(source='seller.user.username')
+    # The following is the seller's first name
+    seller_first_name = serializers.CharField(source='seller.user.first_name')
+    # The following is the seller's first name
+    seller_last_name = serializers.CharField(source='seller.user.last_name')
     # The following is for the plant's type
     plant_type = serializers.CharField(source='plant_type.plant_name')
     # The following is for the location address
-    address = serializers.CharField(source='location.street_address')
+    city = serializers.CharField(source='location.city')
     # The following is for image
     image = ListingImageSerializer(many=True)
 

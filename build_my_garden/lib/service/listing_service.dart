@@ -48,6 +48,20 @@ class ListingService {
     return ListOfListing.fromList(jsonDecode(response.body));
   }
 
+  Future<SingleListing> getDetailListing(int id) async {
+    // Store and reformate token correctly
+    String? token = await SecureStorage.getToken();
+
+    // Uri parse should always pass the token in the header for authentication
+    var response = await http.get(
+      Uri.parse('http://10.0.2.2:8000/api/listing/details/?id=$id'),
+      headers: {
+        'Authorization': 'Token $token',
+      },
+    );
+    return SingleListing.fromJson(jsonDecode(response.body));
+  }
+
   Future<AddListingResponse> postListing(
       String title,
       String desc,
@@ -150,5 +164,67 @@ class AddListingResponse {
 
   factory AddListingResponse.fromJson(mapOfBody) {
     return AddListingResponse(id: mapOfBody['id']);
+  }
+}
+
+class SingleListing {
+  int id;
+  String title;
+  String description;
+  int quantity;
+  String quantity_type;
+  String price;
+  String price_currency;
+  int distance_from_location;
+  int seller_id;
+  String seller_username;
+  String seller_first_name;
+  String seller_last_name;
+  int location_id;
+  int seller_rating;
+  String plant_type;
+  String city;
+  List<dynamic> image;
+
+  SingleListing({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.quantity,
+    required this.quantity_type,
+    required this.price,
+    required this.price_currency,
+    required this.distance_from_location,
+    required this.seller_id,
+    required this.seller_username,
+    required this.seller_first_name,
+    required this.seller_last_name,
+    required this.location_id,
+    required this.seller_rating,
+    required this.plant_type,
+    required this.city,
+    required this.image,
+  });
+
+  factory SingleListing.fromJson(map) {
+    return SingleListing(
+      id: map['id'],
+      title: map['title'],
+      description: map['description'],
+      quantity: map['quantity'],
+      quantity_type: map['quantity_type'],
+      price: map['price'],
+      price_currency: map['price_currency'],
+      distance_from_location: map['distance_from_location'],
+      seller_id: map['seller'],
+      seller_username: map['seller_username'],
+      seller_first_name: map['seller_first_name'],
+      seller_last_name: map['seller_last_name'],
+      plant_type: map['plant_type'],
+      location_id: map['location'],
+      city: map['city'],
+      seller_rating: map['seller_rating'],
+      image: map['image'],
+    );
   }
 }
