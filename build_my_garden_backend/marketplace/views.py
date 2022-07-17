@@ -112,7 +112,7 @@ class SellerInfoAPI(APIView):
 
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response({'No Seller':'User has no seller account'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'no_seller':'User has no seller account'}, status=status.HTTP_404_NOT_FOUND)
 
 class SellerListing(APIView):
 
