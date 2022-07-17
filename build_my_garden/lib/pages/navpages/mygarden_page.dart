@@ -4,6 +4,7 @@ import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_large_text.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
 import 'package:build_my_garden/widgets/responsive_button.dart';
+import 'package:build_my_garden/widgets/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -20,8 +21,8 @@ class MyGardenPage extends StatefulWidget {
 
 class _MyGardenPageState extends State<MyGardenPage> {
   PlantService plantService = PlantService();
-
   late List<Plant> plants;
+  TextEditingController _searchController = TextEditingController();
 
   // @override
   // void initState() {
@@ -63,10 +64,16 @@ class _MyGardenPageState extends State<MyGardenPage> {
         padding: EdgeInsets.zero,
         child: Column(
           children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.only(bottom: 18),
-              child: AppLargeText(text: "Search Bar"),
-            ),
+            Padding(
+                padding: EdgeInsets.only(bottom: 18),
+                child: Container(
+                  width: displayWidth(context) * 0.8,
+                  margin: const EdgeInsets.symmetric(vertical: 15),
+                  child: SearchBar(
+                      searchController: _searchController,
+                      onSubmit: (search) {},
+                      onXMarkPress: () {}),
+                )),
             const Align(
               alignment: Alignment.topLeft,
               child: Padding(
