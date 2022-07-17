@@ -1,6 +1,7 @@
 import 'package:build_my_garden/app/welcome_app.dart';
 import 'package:build_my_garden/pages/navpages/account_page.dart';
 import 'package:build_my_garden/pages/navpages/marketplace_listing.dart';
+import 'package:build_my_garden/pages/navpages/mygarden_page.dart';
 import 'package:build_my_garden/pages/subpages/add_listing_page.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:flutter/material.dart';
@@ -137,7 +138,7 @@ class TabNavigator extends StatelessWidget {
     Widget child = Container();
 
     if (tabItem == "Learn") child = CenterWithButton(text: "Learn");
-    if (tabItem == "MyGarden") child = CenterWithButton(text: "Your Plants");
+    if (tabItem == "MyGarden") child = MyGardenPage();
     if (tabItem == "Marketplace") child = MarketPlaceHome();
     if (tabItem == "Account") child = AccountPage();
 
