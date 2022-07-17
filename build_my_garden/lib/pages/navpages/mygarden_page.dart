@@ -1,13 +1,16 @@
+import 'package:build_my_garden/pages/subpages/add_plants_page.dart';
 import 'package:build_my_garden/service/mygarden_service.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_large_text.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
+import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:build_my_garden/widgets/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:build_my_garden/service/mygarden_service.dart';
+
 
 class MyGardenPage extends StatefulWidget {
   const MyGardenPage({Key? key}) : super(key: key);
@@ -81,6 +84,19 @@ class _MyGardenPageState extends State<MyGardenPage> {
                 ),
               ),
             ),
+            //Add a new plus icon button to the top right of the page
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: EdgeInsets.only(right: 8),
+                child: ResponsiveButton(
+                  onPress: () => addPlantDialog(context),
+                  text: "+",
+                  width: 50,
+                  size: 20,
+                ),
+              ),
+            ),
             FutureBuilder<ListOfPlants>(
               future: plantService.getPlant(),
               builder: (context, snapshot) {
@@ -118,7 +134,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                               height: 135,
                               width: displayWidth(context),
                               decoration: const BoxDecoration(
-                                  color: Color.fromARGB(63, 184, 188, 115),
+                                  color: Color.fromARGB(79, 34, 35, 31),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(25))),
                             )),
