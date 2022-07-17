@@ -105,6 +105,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         margin: const EdgeInsets.only(top: 90),
                         // A button that changes the page and goes to home page
                         child: ResponsiveButton(
+                          width: 200,
                           onPress: pageIndex != 2
                               ? () => _pageController.nextPage(
                                   duration: Duration(milliseconds: 200),
