@@ -1,29 +1,32 @@
 // Create the connection between the front and backend using API
 // For signing up and logining in
-import 'package:build_my_garden/pages/signup_page.dart';
+import 'dart:convert';
+import 'dart:ffi';
+
+import 'package:build_my_garden/pages/signin_page.dart';
 import 'package:build_my_garden/service/auth_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
 import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import '../main.dart';
 
-// The sign in page for the app
-class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
-  // _securetext switches between show password and not
-  // _usernameController & _passwordController stores username and text
+class _SignUpPageState extends State<SignUpPage> {
   bool _secureText = true;
   TextEditingController _usernameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,7 @@ class _SignInPageState extends State<SignInPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppText(text: "LOGIN"),
+                AppText(text: "SIGN UP"),
                 const SizedBox(height: 20),
                 AppText(text: "Username", size: 18),
                 const SizedBox(height: 5),
@@ -60,8 +63,22 @@ class _SignInPageState extends State<SignInPage> {
                     filled: true,
                   ),
                 ),
+                const SizedBox(height: 5),
+                AppText(text: "Email", size: 18),
+                const SizedBox(height: 5),
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide:
+                            BorderSide(width: 0, style: BorderStyle.none)),
+                    fillColor: Color.fromARGB(20, 64, 42, 42),
+                    filled: true,
+                  ),
+                ),
                 const SizedBox(height: 15),
-                AppText(text: "Password", size: 18),
+                AppText(text: "New Password", size: 18),
                 const SizedBox(height: 5),
                 TextField(
                   controller: _passwordController,
@@ -85,18 +102,46 @@ class _SignInPageState extends State<SignInPage> {
                     filled: true,
                   ),
                 ),
-                const SizedBox(height: 10),
-                AppText(text: "Remeber me?"),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
+                AppText(text: "Confirm Password", size: 18),
+                const SizedBox(height: 5),
+                TextField(
+                  controller: _confirmPasswordController,
+                  obscureText: _secureText,
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: Icon(_secureText
+                          ? Icons.remove_red_eye_outlined
+                          : Icons.remove_red_eye),
+                      onPressed: () {
+                        setState(() {
+                          _secureText = !_secureText;
+                        });
+                      },
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
+                    fillColor: const Color.fromARGB(20, 64, 42, 42),
+                    filled: true,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                // Sign up button
                 ResponsiveButton(
                   onPress: () async {
                     AuthService authService = AuthService();
-                    LoginResponse? loginResponse = await authService.login(
-                        _usernameController.text, _passwordController.text);
-                    if (loginResponse != null) {
-                      if (loginResponse.key != null) {
+                    RegistrationResponse? registrationResponse =
+                        await authService.registration(
+                            _usernameController.text,
+                            _emailController.text,
+                            _passwordController.text,
+                            _confirmPasswordController.text);
+                    if (registrationResponse != null) {
+                      if (registrationResponse.key != null) {
                         // Save the token in an encrpted storage and set app state as signedin
-                        await SecureStorage.setToken(loginResponse.key);
+                        await SecureStorage.setToken(registrationResponse.key);
                         await SecureStorage.setIsSignedIn(true);
                         // Fix added if we need to remove the ignore
                         // ignore: use_build_context_synchronously
@@ -105,19 +150,23 @@ class _SignInPageState extends State<SignInPage> {
                             MaterialPageRoute(
                                 builder: (context) => const MainApp()));
                       }
-                      loginResponse.non_field_errors
+                      registrationResponse.email
+                          ?.forEach((element) => print(element));
+                      registrationResponse.username
+                          ?.forEach((element) => print(element));
+                      registrationResponse.password1
+                          ?.forEach((element) => print(element));
+                      registrationResponse.non_field_errors
                           ?.forEach((element) => print(element));
                     }
                   },
-                  text: "LOGIN",
+                  text: "SIGN UP",
                   textColor: Colors.white,
                   buttonColor: Color.fromARGB(255, 156, 222, 155),
                   width: 300,
                 ),
                 const SizedBox(height: 10),
-                AppText(text: "Forgot Password?"),
-                const SizedBox(height: 10),
-                AppText(text: "OR", size: 18),
+                AppText(text: "SIGN IN USING:"),
                 const SizedBox(height: 10),
                 Row(
                   children: [
@@ -129,17 +178,17 @@ class _SignInPageState extends State<SignInPage> {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    AppText(text: "New account? "),
+                    AppText(text: "Already have account? "),
                     GestureDetector(
                       child: AppText(
-                        text: "SIGN UP",
+                        text: "LOGIN",
                         color: Color.fromARGB(255, 105, 154, 104),
                       ),
                       onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const SignUpPage()));
+                                builder: (context) => const SignInPage()));
                       },
                     ),
                   ],
@@ -148,26 +197,5 @@ class _SignInPageState extends State<SignInPage> {
             ),
           ),
         ));
-  }
-}
-
-main() async {
-  AuthService authService = AuthService();
-  // RegistrationResponse? registrationResponse = await authService.registration(
-  //     "abemelech", "sa;dslfkjwe", "sa;dslfkjwe", "abemelech.mesfin.gmail.com");
-  // if (registrationResponse != null) {
-  //   registrationResponse.email?.forEach((e) => print(e));
-  //   registrationResponse.username?.forEach((e) => print(e));
-  //   registrationResponse.non_field_errors?.forEach((e) => print(e));
-  //   registrationResponse.password1?.forEach((e) => print(e));
-  //   if (registrationResponse != null) print(registrationResponse.key);
-  // }
-
-  // Check if the login endpoint works
-  LoginResponse? loginResponse =
-      await authService.login("abemelech", "sa;dslfkjwe");
-  if (loginResponse != null) {
-    if (loginResponse.key != null) print(loginResponse.key);
-    loginResponse.non_field_errors?.forEach((element) => print(element));
   }
 }
