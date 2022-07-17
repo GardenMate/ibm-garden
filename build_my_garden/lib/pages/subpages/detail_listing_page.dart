@@ -1,4 +1,5 @@
 import 'package:build_my_garden/service/listing_service.dart';
+import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_large_text.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +17,7 @@ class DetailListing extends StatefulWidget {
 
 class _DetailListingState extends State<DetailListing> {
   ListingService listingService = ListingService();
+  int _currentImageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +30,68 @@ class _DetailListingState extends State<DetailListing> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20)),
-                      color: Colors.green,
-                    ),
-                    height: 350,
-                    child: AppText(text: "Images"),
+                  Stack(
+                    children: [
+                      Container(
+                        height: 350,
+                        // [To Do] To improve the image functionality use https://pub.dev/packages/photo_view
+                        child: PageView.builder(
+                            onPageChanged: (value) {
+                              setState(() {
+                                _currentImageIndex = value;
+                              });
+                            },
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: listing.image.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 0),
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(20),
+                                      bottomRight: Radius.circular(20)),
+                                  color: Colors.green,
+                                ),
+                                height: 350,
+                                width: displayWidth(context),
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(20),
+                                      bottomRight: Radius.circular(20)),
+                                  child: Image.network(
+                                    "http://10.0.2.2:8000${listing.image[index]["image"]}",
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                      // Widget below are the dots to represent the image
+                      Positioned(
+                        top: 335,
+                        left: displayWidth(context) * 0.5,
+                        child: Row(
+                            children:
+                                List.generate(listing.image.length, (indexDot) {
+                          return Container(
+                            width: 8,
+                            height: 8,
+                            margin: const EdgeInsets.symmetric(horizontal: 2),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: _currentImageIndex == indexDot
+                                  ? Colors.white
+                                  : Colors.grey,
+                            ),
+                          );
+                        })),
+                      )
+                    ],
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 10, left: 15, right: 15),
+                    margin: const EdgeInsets.only(top: 10, left: 15, right: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -77,7 +129,7 @@ class _DetailListingState extends State<DetailListing> {
                         const SizedBox(
                           height: 50,
                         ),
-                        AppText(
+                        const AppText(
                             text: "Customer question & answer and other stuff"),
                       ],
                     ),
