@@ -1,5 +1,5 @@
-from email.mime import image
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 from accounts.models import User
 import os
 
@@ -9,29 +9,6 @@ def get_image_path(instance, filename):
 
 
 # Create your models here.
-# The plant model
-class PlantType(models.Model):
-    FULL_SUN = "FULL_SUN"
-    PARTIAL_SUN = "PARTIAL_SUN"
-    FULL_OR_PARTIAL = "PARTIAL _OR_FULL_SUN"
-
-    SUN_EXPOSER_CHOICES = [
-        (FULL_SUN, "Full Sunlight"),
-        (PARTIAL_SUN, "Partial Sunlight"),
-        (FULL_OR_PARTIAL, "Full Sunlight or Partial Sunlight"),
-    ]
-
-    plant_name = models.CharField(max_length=200)
-    plant_type = models.CharField(max_length=200)
-    plant_size_height = models.IntegerField()
-    plant_size_spread = models.IntegerField()
-    plant_max_size_time = models.DurationField()
-    plant_harvest_length = models.DurationField()
-    sun_exposer = models.CharField(max_length=50, choices=SUN_EXPOSER_CHOICES, default=FULL_OR_PARTIAL)
-
-    def __str__(self) -> str:
-        return self.plant_name
-
 # Season model
 class Season(models.Model):
     FALL = "FALL"
@@ -50,6 +27,56 @@ class Season(models.Model):
 
     def __str__(self) -> str:
         return self.season
+
+
+# The plant model
+class PlantType(models.Model):
+    # Sun Exposer Lookup
+    FULL_SUN = "FULL_SUN"
+    PARTIAL_SUN = "PARTIAL_SUN"
+    FULL_OR_PARTIAL = "PARTIAL _OR_FULL_SUN"
+
+    SUN_EXPOSER_CHOICES = [
+        (FULL_SUN, "Full Sunlight"),
+        (PARTIAL_SUN, "Partial Sunlight"),
+        (FULL_OR_PARTIAL, "Full Sunlight or Partial Sunlight"),
+    ]
+
+    # Wearther Expose Lookup
+    EXPOSED = "EXPOSED"
+    SHELTERED = "SHELTERED"
+
+    WEATHER_EXPOSER_CHOICES = [
+        (EXPOSED, "Exposed"),
+        (SHELTERED, "Sheltered"),
+    ]
+
+    plant_name = models.CharField(max_length=255)
+    plant_scientific_name = models.CharField(max_length=255)
+    plant_description = models.TextField()
+    plant_type = models.CharField(max_length=200)
+    plant_size_max_height_lowest = models.DecimalField()
+    plant_size_max_height_highest = models.DecimalField()
+    plant_size_max_spread_lowest = models.DecimalField()
+    plant_size_max_spread_highest = models.DecimalField()
+    plant_max_size_time = models.DurationField()
+    plant_harvest_length = models.DurationField()
+    planting_season = models.ManyToManyField(Season, related_name='plant_planting_season')
+    plant_harvest_season = models.ManyToManyField(Season, related_name="plant_harvest_season")
+    sun_exposer = models.CharField(max_length=50, choices=SUN_EXPOSER_CHOICES, default=FULL_OR_PARTIAL)
+    weather_exposer = models.CharField(max_length=50, choices=WEATHER_EXPOSER_CHOICES, default=EXPOSED)
+    # The following temperature is stored in degree celicius
+    temperature_tolarence = models.DecimalField(validators=[MinValueValidator(-273.15), MaxValueValidator(56.7)]) 
+    # The following field are steps to grow
+    plant_how_to_cultivate = models.TextField()
+    plant_how_to_propagate = models.TextField()
+    plant_how_to_garden_type = models.TextField()
+    plant_how_to_pruning = models.TextField()
+    plant_how_to_pests = models.TextField()
+    plant_how_to_diseases = models.TextField()
+
+    def __str__(self) -> str:
+        return self.plant_name
 
 
 # User plant model
