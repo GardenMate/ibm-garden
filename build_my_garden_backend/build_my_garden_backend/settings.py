@@ -31,10 +31,11 @@ DEBUG = True
 CORS_ORIGIN_WHITELIST = [
     "http://10.0.2.2", #needed for andriod emulator
     "http://127.0.0.1",
-    "http://localhost"
+    "http://localhost",
+    "ec2-52-55-157-28.compute-1.amazonaws.com", # aws server address
 ]
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28"]
 
 
 # Application definition
