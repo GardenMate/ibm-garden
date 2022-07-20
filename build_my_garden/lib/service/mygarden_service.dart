@@ -29,7 +29,8 @@ class PlantService {
     }
   }
 
-  Future<void> uploadPlant(String plant_type, String plant_current_size_height, String plant_current_size_spread, String planted_date ) async {
+  Future<void> uploadPlant(String plant_type, String plant_current_size_height,
+      String plant_current_size_spread, String planted_date) async {
     var stream = image!.readAsBytes().asStream();
     stream.cast();
     var length = await image!.length();
@@ -89,8 +90,8 @@ class ListOfPlants {
 class Plant {
   int user;
   int plant_type;
-  int plant_current_size_height;
-  int plant_current_size_spread;
+  double plant_current_size_height;
+  double plant_current_size_spread;
   String planted_date;
   String image;
 
@@ -107,8 +108,8 @@ class Plant {
     return Plant(
         user: map['user'],
         plant_type: map['plant_type'],
-        plant_current_size_height: map['plant_current_size_height'],
-        plant_current_size_spread: map['plant_current_size_spread'],
+        plant_current_size_height: map['plant_current_size_height'].toDouble(),
+        plant_current_size_spread: map['plant_current_size_spread'].toDouble(),
         planted_date: map['planted_date'],
         image: map['image']);
   }

@@ -108,14 +108,14 @@ class Listing {
   int id;
   String title;
   String description;
-  int quantity;
+  double quantity;
   String quantity_type;
-  String price;
+  double price;
   String price_currency;
-  int distance_from_location;
+  double distance_from_location;
   int seller_id;
   int location_id;
-  int seller_rating;
+  double seller_rating;
   String plant_type;
   String address;
   String image;
@@ -142,15 +142,15 @@ class Listing {
       id: map['id'],
       title: map['title'],
       description: map['description'],
-      quantity: map['quantity'],
+      quantity: map['quantity'].toDouble(),
       quantity_type: map['quantity_type'],
-      price: map['price'],
+      price: map['price'].toDouble(),
       price_currency: map['price_currency'],
-      distance_from_location: map['distance_from_location'],
+      distance_from_location: map['distance_from_location'].toDouble(),
       seller_id: map['seller'],
       plant_type: map['plant_type'],
       location_id: map['location'],
-      seller_rating: map['seller_rating'],
+      seller_rating: map['seller_rating'].toDouble(),
       address: map['address'],
       image: map['image'],
     );
@@ -171,17 +171,17 @@ class SingleListing {
   int id;
   String title;
   String description;
-  int quantity;
+  double quantity;
   String quantity_type;
-  String price;
+  double price;
   String price_currency;
-  int distance_from_location;
+  double distance_from_location;
   int seller_id;
   String seller_username;
   String seller_first_name;
   String seller_last_name;
   int location_id;
-  int seller_rating;
+  double seller_rating;
   String plant_type;
   String city;
   List<dynamic> image;
@@ -211,11 +211,11 @@ class SingleListing {
       id: map['id'],
       title: map['title'],
       description: map['description'],
-      quantity: map['quantity'],
+      quantity: map['quantity'].toDouble(),
       quantity_type: map['quantity_type'],
-      price: map['price'],
+      price: map['price'].toDouble(),
       price_currency: map['price_currency'],
-      distance_from_location: map['distance_from_location'],
+      distance_from_location: map['distance_from_location'].toDouble(),
       seller_id: map['seller'],
       seller_username: map['seller_username'],
       seller_first_name: map['seller_first_name'],
@@ -223,7 +223,7 @@ class SingleListing {
       plant_type: map['plant_type'],
       location_id: map['location'],
       city: map['city'],
-      seller_rating: map['seller_rating'],
+      seller_rating: map['seller_rating'].toDouble(),
       image: map['image'],
     );
   }

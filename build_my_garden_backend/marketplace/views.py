@@ -126,13 +126,10 @@ class SellerListing(APIView):
             # Save the seller model
             seller = seller.first()
             listing = Listing.objects.filter(seller=seller)
-
-            if listing.exists():
-                serializer = ListingGETSerializer(listing, many=True)
-
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response({'No Listing': 'User has no listing'}, status=status.HTTP_204_NO_CONTENT)
+            serializer = ListingGETSerializer(listing, many=True)
+            # If no listing, can display an error or show a different view
+            return Response(serializer.data, status=status.HTTP_200_OK)
+            
         else:
             return Response({'No Seller':'User has no seller account'}, status=status.HTTP_404_NOT_FOUND)
 

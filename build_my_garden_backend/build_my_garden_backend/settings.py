@@ -172,6 +172,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
+    # Allow decimal to be sent as decimal instead of strings
+    'COERCE_DECIMAL_TO_STRING': False,
     # Use Django's standard 'django.contrib.auth' permissions
     'DEFAULT_PERMISSION_CLASSES' : [
         'rest_framework.permissions.IsAuthenticated',
