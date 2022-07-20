@@ -1,4 +1,3 @@
-from distutils.command.upload import upload
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from location_field.models.plain import PlainLocationField
