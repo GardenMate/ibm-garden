@@ -25,14 +25,16 @@ class SellerInfromation(models.Model):
     # Model Save override to get the id for the get_image_path
     def save(self, *args, **kwargs):
         if self.id is None:
-            saved_image = self.image
+            saved_image = self.profile_picture
+            saved_image_2 = self.dashboard_image
             self.image = None
-            super(ListingImage, self).save(*args, **kwargs)
-            self.image = saved_image
+            super(SellerInfromation, self).save(*args, **kwargs)
+            self.profile_picture = saved_image
+            self.dashboard_image = saved_image_2
             if 'force_insert' in kwargs:
                 kwargs.pop('force_insert')
 
-        super(ListingImage, self).save(*args, **kwargs)
+        super(SellerInfromation, self).save(*args, **kwargs)
 
     def __str__(self) -> str:
         return str(self.id)

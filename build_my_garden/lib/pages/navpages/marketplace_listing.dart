@@ -170,9 +170,8 @@ class _MarketPlaceHomeState extends State<MarketPlaceHome> {
                                             //     text: listings[index].plant_type,
                                             //     size: 12),
                                             RatingBarIndicator(
-                                              rating: listings[index]
-                                                  .seller_rating
-                                                  .toDouble(),
+                                              rating:
+                                                  listings[index].seller_rating,
                                               itemBuilder: (context, index) =>
                                                   Icon(
                                                 Icons.star,
@@ -310,8 +309,7 @@ class _MarketPlaceHomeState extends State<MarketPlaceHome> {
                                                           RatingBarIndicator(
                                                             rating: listings[
                                                                     index]
-                                                                .seller_rating
-                                                                .toDouble(),
+                                                                .seller_rating,
                                                             itemBuilder:
                                                                 (context,
                                                                         index) =>

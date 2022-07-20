@@ -105,7 +105,7 @@ class _DetailListingState extends State<DetailListing> {
                           height: 10,
                         ),
                         RatingBarIndicator(
-                          rating: listing.seller_rating.toDouble(),
+                          rating: listing.seller_rating,
                           itemBuilder: (context, index) => const Icon(
                             Icons.star,
                             color: Colors.amber,

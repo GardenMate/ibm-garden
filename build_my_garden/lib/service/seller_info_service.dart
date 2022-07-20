@@ -69,7 +69,7 @@ class SellerInfo {
   String first_name;
   String last_name;
   String city;
-  int seller_rating;
+  double seller_rating;
   int user;
 
   SellerInfo({
