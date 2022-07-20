@@ -29,6 +29,13 @@ class Season(models.Model):
         return self.season
 
 
+# Soil type model
+class SoilType(models.Model):
+    soil_name = models.CharField(max_length=200)
+    soil_description = models.TextField(max_length=200)
+    soil_degradation_duration = models.DurationField()
+
+
 # The plant model
 class PlantType(models.Model):
     # Sun Exposer Lookup
@@ -51,6 +58,28 @@ class PlantType(models.Model):
         (SHELTERED, "Sheltered"),
     ]
 
+    # Moister Level Type
+    MOIST_BUT_WELL_DRAINED = "MOIST_BUT_WELL_DRAINED"
+    POORLY_DRAINED = "POORLY_DRAINED"
+    WELL_DRAINED = "WELL_DRAINED"
+
+    MOISTURE_LEVEL_CHOICE = [
+        (MOIST_BUT_WELL_DRAINED, "Moist But Well Drained"),
+        (POORLY_DRAINED, "Poorly Drained"),
+        (WELL_DRAINED, "Well Drained"),
+    ]
+
+    # PH Level
+    ACIDIC = "ACIDIC"
+    ALKALINE = "ALKALINE"
+    NEUTRAL = "NEUTRAL"
+
+    PH_LEVEL_CHOICE = [
+        (ACIDIC, "Acidic"),
+        (ALKALINE, "Alkaline"),
+        (NEUTRAL, "Neutral")
+    ]
+
     plant_name = models.CharField(max_length=255)
     plant_scientific_name = models.CharField(max_length=255)
     plant_description = models.TextField()
@@ -67,6 +96,10 @@ class PlantType(models.Model):
     weather_exposer = models.CharField(max_length=50, choices=WEATHER_EXPOSER_CHOICES, default=EXPOSED)
     # The following temperature is stored in degree celicius
     temperature_tolarence = models.DecimalField(validators=[MinValueValidator(-273.15), MaxValueValidator(56.7)]) 
+    # The following fields are information about soil
+    soil = models.ManyToManyField(SoilType, related_name="plant")
+    plant_moisture_level = models.CharField(max_length=50, choices=MOISTURE_LEVEL_CHOICE, default=WELL_DRAINED)
+    ph_level = models.CharField(max_length=20, choices=PH_LEVEL_CHOICE, default=NEUTRAL)
     # The following field are steps to grow
     plant_how_to_cultivate = models.TextField()
     plant_how_to_propagate = models.TextField()
@@ -79,13 +112,22 @@ class PlantType(models.Model):
         return self.plant_name
 
 
+# Soil model
+class Soil(models.Model):
+    # Account ID
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='soil', null=True)
+    soil_type = models.ForeignKey(SoilType, on_delete=models.CASCADE, related_name='soil', null= True)
+    soil_current_degradation = models.FloatField()
+
+
 # User plant model
 class Plant(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='plant', null=True)
-    plant_type = models.ForeignKey(PlantType, on_delete=models.SET_NULL, related_name='plant', null= True)
-    plant_current_size_height = models.IntegerField()
-    plant_current_size_spread = models.IntegerField()
-    planted_date = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='plant')
+    plant_type = models.ForeignKey(PlantType, on_delete=models.SET_NULL, related_name='plant')
+    plant_current_size_height = models.DecimalField(default=0)
+    plant_current_size_spread = models.DecimalField(default=0)
+    planted_date = models.DateField()
+    soil_planted = models.ForeignKey(Soil, on_delete=models.PROTECT, related_name='plant')
     image = models.ImageField(upload_to=get_image_path, blank=True, null=True)
 
     # Model Save override to save the image file with the id of the plant
@@ -112,20 +154,4 @@ class PlantSupportingSeason(models.Model):
 
     def __str__(self) -> str:
         return self.plant_type +  "<->" + self.season
-
-# Soil type model
-class SoilType(models.Model):
-    soil_name = models.CharField(max_length=200)
-    soil_description = models.TextField(max_length=200)
-    soil_degradation_duration = models.DurationField()
-
-# Soil model
-class Soil(models.Model):
-    # Account ID
-    account_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='soil_account', null=True)
-    soil_type_id = models.ForeignKey(SoilType, on_delete=models.CASCADE, related_name='soil_type', null= True)
-    soil_current_degradation = models.FloatField()
-
-
-    
 
