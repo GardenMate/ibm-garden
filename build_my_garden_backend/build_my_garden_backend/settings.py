@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
-from datetime import timedelta
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -114,7 +113,7 @@ WSGI_APPLICATION = 'build_my_garden_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'build_my_garden',
+        'NAME': 'build_your_garden',
         'USER': 'postgres',
         'PASSWORD': 'postgres123',
         'HOST': 'localhost',

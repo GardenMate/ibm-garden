@@ -19,7 +19,7 @@ def get_profile_image_path(instance, filename):
 # Model for the seller, includes additional information
 class SellerInfromation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller_info', null=True)
-    seller_rating = models.DecimalField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    seller_rating = models.DecimalField(max_digits=3, decimal_places=2, validators=[MinValueValidator(0), MaxValueValidator(5)])
     profile_picture = models.ImageField(upload_to = get_profile_image_path)
     dashboard_image = models.ImageField(upload_to = get_profile_image_path)
 
@@ -70,11 +70,11 @@ class Listing(models.Model):
     seller = models.ForeignKey(SellerInfromation, on_delete=models.CASCADE, related_name='listing', null=False)
     # Make the distance from interval to have metrics system such as mile and such
     # Use KM and depending on the metric system, later convert
-    distance_from_location = models.DecimalField()
+    distance_from_location = models.DecimalField(max_digits=6, decimal_places=2)
     title = models.CharField(max_length=255)
     plant_type = models.ForeignKey(PlantType, on_delete=models.SET_NULL, related_name="listing", null= True)
     description = models.TextField()
-    quantity = models.DecimalField(validators=[MinValueValidator(0)])
+    quantity = models.DecimalField(max_digits=7, decimal_places=2, validators=[MinValueValidator(0)])
     quantity_type = models.CharField(max_length=20, choices=QUANTITY_CHOICES, default=ITEM)
     # djmoney was used to set the moenyfield doc at https://github.com/django-money/django-money
     price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', validators=[MinMoneyValidator(0)])

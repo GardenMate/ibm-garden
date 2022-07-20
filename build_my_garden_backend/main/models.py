@@ -97,10 +97,10 @@ class PlantType(models.Model):
     plant_scientific_name = models.CharField(max_length=255)
     plant_description = models.TextField()
     plant_type = models.CharField(max_length=200)
-    plant_size_max_height_lowest = models.DecimalField()
-    plant_size_max_height_highest = models.DecimalField()
-    plant_size_max_spread_lowest = models.DecimalField()
-    plant_size_max_spread_highest = models.DecimalField()
+    plant_size_max_height_lowest = models.DecimalField(max_digits=5, decimal_places=2)
+    plant_size_max_height_highest = models.DecimalField(max_digits=5, decimal_places=2)
+    plant_size_max_spread_lowest = models.DecimalField(max_digits=5, decimal_places=2)
+    plant_size_max_spread_highest = models.DecimalField(max_digits=5, decimal_places=2)
     plant_max_size_time = models.DurationField()
     plant_harvest_length = models.DurationField()
     planting_season = models.ManyToManyField(Season, related_name='plant_planting_season')
@@ -108,7 +108,7 @@ class PlantType(models.Model):
     sun_exposer = models.CharField(max_length=50, choices=SUN_EXPOSER_CHOICES, default=FULL_OR_PARTIAL)
     weather_exposer = models.CharField(max_length=50, choices=WEATHER_EXPOSER_CHOICES, default=EXPOSED)
     # The following temperature is stored in degree celicius
-    temperature_tolarence = models.DecimalField(validators=[MinValueValidator(-273.15), MaxValueValidator(56.7)]) 
+    temperature_tolarence = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(-273.15), MaxValueValidator(56.7)]) 
     # The following fields are information about soil
     soil = models.ManyToManyField(SoilType, related_name="plant")
     plant_moisture_level = models.CharField(max_length=50, choices=MOISTURE_LEVEL_CHOICE, default=WELL_DRAINED)
@@ -137,9 +137,9 @@ class Soil(models.Model):
 # User plant model
 class Plant(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='plant')
-    plant_type = models.ForeignKey(PlantType, on_delete=models.SET_NULL, related_name='plant')
-    plant_current_size_height = models.DecimalField(default=0)
-    plant_current_size_spread = models.DecimalField(default=0)
+    plant_type = models.ForeignKey(PlantType, on_delete=models.SET_NULL, related_name='plant', null=True)
+    plant_current_size_height = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    plant_current_size_spread = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     planted_date = models.DateField()
     soil_planted = models.ForeignKey(Soil, on_delete=models.PROTECT, related_name='plant')
     image = models.ImageField(upload_to=get_image_path, blank=True, null=True)
