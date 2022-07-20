@@ -31,10 +31,23 @@ class Season(models.Model):
 
 # Soil type model
 class SoilType(models.Model):
-    soil_name = models.CharField(max_length=200)
-    soil_description = models.TextField(max_length=200)
-    soil_degradation_duration = models.DurationField()
+    LOAM = "LOAM"
+    SAND = "SAND"
+    CLAY = "CLAY"
+    CHALK = "CHALK"
 
+    SOIL_CHOICES = [
+        (LOAM, "Loam"),
+        (SAND, "Sand"),
+        (CLAY, "Clay"),
+        (CHALK, "Chalk"),
+    ]
+
+    soil_name = models.CharField(max_length=20, choices=SOIL_CHOICES)
+    soil_description = models.TextField()
+
+    def __str__(self) -> str:
+        return self.soil_name
 
 # The plant model
 class PlantType(models.Model):
@@ -117,8 +130,9 @@ class Soil(models.Model):
     # Account ID
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='soil', null=True)
     soil_type = models.ForeignKey(SoilType, on_delete=models.CASCADE, related_name='soil', null= True)
-    soil_current_degradation = models.FloatField()
 
+    def __str__(self) -> str:
+        return self.user +  "<->" + self.soil_type
 
 # User plant model
 class Plant(models.Model):
@@ -146,12 +160,3 @@ class Plant(models.Model):
 
     def __str__(self) -> str:
         return self.plant_type.plant_name
-
-# Relation between Plant and Season
-class PlantSupportingSeason(models.Model):
-    plant_type = models.ForeignKey(PlantType, on_delete=models.SET_NULL, related_name='plant_supporting_season', null= True)
-    season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='plant_supporting_season', null = True) 
-
-    def __str__(self) -> str:
-        return self.plant_type +  "<->" + self.season
-
