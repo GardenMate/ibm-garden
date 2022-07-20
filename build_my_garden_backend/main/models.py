@@ -132,7 +132,7 @@ class Soil(models.Model):
     soil_type = models.ForeignKey(SoilType, on_delete=models.CASCADE, related_name='soil', null= True)
 
     def __str__(self) -> str:
-        return self.user +  "<->" + self.soil_type
+        return str(self.user) +  "<->" + str(self.soil_type)
 
 # User plant model
 class Plant(models.Model):
