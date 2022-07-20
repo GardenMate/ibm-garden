@@ -108,8 +108,8 @@ class Plant {
     return Plant(
         user: map['user'],
         plant_type: map['plant_type'],
-        plant_current_size_height: map['plant_current_size_height'],
-        plant_current_size_spread: map['plant_current_size_spread'],
+        plant_current_size_height: map['plant_current_size_height'].toDouble(),
+        plant_current_size_spread: map['plant_current_size_spread'].toDouble(),
         planted_date: map['planted_date'],
         image: map['image']);
   }

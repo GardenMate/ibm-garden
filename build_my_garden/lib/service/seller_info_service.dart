@@ -90,7 +90,7 @@ class SellerInfo {
       last_name: map['last_name'],
       city: map['city'],
       user: map['user'],
-      seller_rating: map['seller_rating'],
+      seller_rating: map['seller_rating'].toDouble(),
     );
   }
 }
