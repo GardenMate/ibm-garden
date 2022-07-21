@@ -276,23 +276,21 @@ class _ListingFormState extends State<ListingForm> {
                           _locationController.text,
                           _distanceFromLocationController.text);
                   // [To Do] Manage error, to not let it post if image isn't uploaded
-                  print("---------------------TEST-----------");
-                  print(response.id!);
+
                   if (response != null) {
-                    print("----YES----");
                     var imageResponse = addImageService
                         .uploadImage((response.id).toString())
-                        .then((value) => print('----MUST---'));
-                    print("----ID----");
-                    Navigator.pop(context, true);
-                    _titleController.clear();
-                    _descController.clear();
-                    _priceController.clear();
-                    _typeController.clear();
-                    _qtyController.clear();
-                    _unitController.clear();
-                    _locationController.clear();
-                    _distanceFromLocationController.clear();
+                        .then((value) {
+                      Navigator.pop(context, true);
+                      _titleController.clear();
+                      _descController.clear();
+                      _priceController.clear();
+                      _typeController.clear();
+                      _qtyController.clear();
+                      _unitController.clear();
+                      _locationController.clear();
+                      _distanceFromLocationController.clear();
+                    });
                   }
                 },
                 text: "Add",
