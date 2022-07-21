@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:build_my_garden/pages/navpages/categorylistpage.dart';
 import 'package:build_my_garden/pages/navpages/marketplace_listing.dart';
 import 'package:build_my_garden/pages/signin_page.dart';
 import 'package:build_my_garden/pages/welcome_page.dart';
@@ -65,7 +66,7 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   int currentIndex = 0;
   final screens = [
-    CenterWithButton(text: "Learn"),
+    CategoryListPage(),
     CenterWithButton(text: "Your Plants"),
     MarketPlaceHome(),
     CenterWithButton(text: "Account"),
