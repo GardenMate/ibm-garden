@@ -1,3 +1,4 @@
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/listing_service.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_large_text.dart';
@@ -61,7 +62,7 @@ class _DetailListingState extends State<DetailListing> {
                                       bottomLeft: Radius.circular(20),
                                       bottomRight: Radius.circular(20)),
                                   child: Image.network(
-                                    "http://10.0.2.2:8000${listing.image[index]["image"]}",
+                                    "$baseUrl${listing.image[index]["image"]}",
                                     fit: BoxFit.cover,
                                   ),
                                 ),

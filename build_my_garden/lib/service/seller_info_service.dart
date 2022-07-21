@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +11,7 @@ class SellerInfoService {
 
     // Uri parse should always pass the token in the header for authentication
     var response = await http.get(
-      Uri.parse('http://10.0.2.2:8000/api/seller/'),
+      Uri.parse('$baseUrl/api/seller/'),
       headers: {
         'Authorization': 'Token $token',
       },
@@ -34,8 +35,7 @@ class SellerInfoService {
     // POST request for the SellerInfo
     String? token = await SecureStorage.getToken();
 
-    var response = await http
-        .post(Uri.parse("http://10.0.2.2:8000/api/seller/"), headers: {
+    var response = await http.post(Uri.parse("$baseUrl/api/seller/"), headers: {
       'Authorization': 'Token $token',
     }, body: {
       "username": username,

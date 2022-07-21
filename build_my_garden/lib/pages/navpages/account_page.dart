@@ -1,5 +1,6 @@
 import 'package:build_my_garden/pages/subpages/add_listing_page.dart';
 import 'package:build_my_garden/pages/subpages/detail_listing_page.dart';
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/listing_service.dart';
 import 'package:build_my_garden/service/seller_info_service.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
@@ -190,7 +191,7 @@ class _AccountPageState extends State<AccountPage> {
                                                         BorderRadius.circular(
                                                             10),
                                                     child: Image.network(
-                                                      "http://10.0.2.2:8000/media/${listings[index].image}",
+                                                      "$baseUrl/media/${listings[index].image}",
                                                       fit: BoxFit.cover,
                                                     ),
                                                   ),

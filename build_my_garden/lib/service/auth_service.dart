@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
   /// AuthService handles all authentications, currently supports login and signup
-  final registrationUrl = Uri.parse("http://10.0.2.2:8000/auth/registration/");
-  final loginUrl = Uri.parse("http://10.0.2.2:8000/accounts/login/");
+  final registrationUrl = Uri.parse("$baseUrl/auth/registration/");
+  final loginUrl = Uri.parse("$baseUrl/accounts/login/");
 
   Future<RegistrationResponse?> registration(
       String username, String email, String password1, String password2) async {

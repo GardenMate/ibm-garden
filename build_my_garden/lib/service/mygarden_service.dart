@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:build_my_garden/service/secure_storage.dart';
@@ -34,7 +35,7 @@ class PlantService {
     var stream = image!.readAsBytes().asStream();
     stream.cast();
     var length = await image!.length();
-    var uri = Uri.parse("http://10.0.2.2:8000/api/mygarden/plant/");
+    var uri = Uri.parse("$baseUrl/api/mygarden/plant/");
     String filename = pickedFile!.path.split("/").last;
 
     var multiport =
@@ -66,8 +67,8 @@ class PlantService {
   Future<ListOfPlants> getPlant() async {
     String? token = await SecureStorage.getToken();
 
-    var response = await http
-        .get(Uri.parse("http://10.0.2.2:8000/api/mygarden/plant"), headers: {
+    var response =
+        await http.get(Uri.parse("$baseUrl/api/mygarden/plant"), headers: {
       'Authorization': 'Token $token',
     });
     print(jsonDecode(response.body));

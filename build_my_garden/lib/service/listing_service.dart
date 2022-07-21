@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +12,7 @@ class ListingService {
     // Uri parse should always pass the token in the header for authentication
     var response = await http.get(
       Uri.parse(
-          'http://10.0.2.2:8000/api/listing/?latitude=43.52694005203881&longitude=-96.73868318893787'),
+          '$baseUrl/api/listing/?latitude=43.52694005203881&longitude=-96.73868318893787'),
       headers: {
         'Authorization': 'Token $token',
       },
@@ -25,7 +26,7 @@ class ListingService {
 
     // Uri parse should always pass the token in the header for authentication
     var response = await http.get(
-      Uri.parse('http://10.0.2.2:8000/api/seller/listing/'),
+      Uri.parse('$baseUrl/api/seller/listing/'),
       headers: {
         'Authorization': 'Token $token',
       },
@@ -39,7 +40,7 @@ class ListingService {
 
     // Uri parse should always pass the token in the header for authentication
     var response = await http.get(
-      Uri.parse('http://10.0.2.2:8000/api/listing/search/?search=$search'),
+      Uri.parse('$baseUrl/api/listing/search/?search=$search'),
       headers: {
         'Authorization': 'Token $token',
       },
@@ -54,7 +55,7 @@ class ListingService {
 
     // Uri parse should always pass the token in the header for authentication
     var response = await http.get(
-      Uri.parse('http://10.0.2.2:8000/api/listing/details/?id=$id'),
+      Uri.parse('$baseUrl/api/listing/details/?id=$id'),
       headers: {
         'Authorization': 'Token $token',
       },
@@ -74,8 +75,8 @@ class ListingService {
     // POST request for the listing
     String? token = await SecureStorage.getToken();
 
-    var response = await http
-        .post(Uri.parse("http://10.0.2.2:8000/api/seller/listing/"), headers: {
+    var response =
+        await http.post(Uri.parse("$baseUrl/api/seller/listing/"), headers: {
       'Authorization': 'Token $token',
     }, body: {
       "title": title,

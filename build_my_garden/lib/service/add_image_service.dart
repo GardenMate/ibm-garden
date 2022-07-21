@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -35,7 +36,7 @@ class AddImageService {
     var stream = image!.readAsBytes().asStream();
     stream.cast();
     var length = await image!.length();
-    var uri = Uri.parse("http://10.0.2.2:8000/api/image/add/");
+    var uri = Uri.parse("$baseUrl/api/image/add/");
     String filename = pickedFile!.path.split("/").last;
 
     // Multiport=Packages the image into a movable packet - removed await

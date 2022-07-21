@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:build_my_garden/pages/subpages/detail_listing_page.dart';
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/listing_service.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_large_text.dart';
@@ -152,7 +153,7 @@ class _MarketPlaceHomeState extends State<MarketPlaceHome> {
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                             child: Image.network(
-                                              "http://10.0.2.2:8000/media/${listings[index].image}",
+                                              "$baseUrl/media/${listings[index].image}",
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -284,7 +285,7 @@ class _MarketPlaceHomeState extends State<MarketPlaceHome> {
                                                               BorderRadius
                                                                   .circular(10),
                                                           child: Image.network(
-                                                            "http://10.0.2.2:8000/media/${listings[index].image}",
+                                                            "$baseUrl/media/${listings[index].image}",
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ),

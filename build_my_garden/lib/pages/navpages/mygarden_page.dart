@@ -1,4 +1,5 @@
 import 'package:build_my_garden/pages/subpages/add_plants_page.dart';
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/mygarden_service.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_large_text.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:build_my_garden/service/mygarden_service.dart';
-
 
 class MyGardenPage extends StatefulWidget {
   const MyGardenPage({Key? key}) : super(key: key);
@@ -124,7 +124,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                         Radius.circular(25)),
                                     image: DecorationImage(
                                       image: NetworkImage(
-                                          "http://10.0.2.2:8000${plants[index].image}"),
+                                          "$baseUrl${plants[index].image}"),
                                     )),
                               ),
                             ),

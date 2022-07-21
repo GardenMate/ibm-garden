@@ -3,6 +3,7 @@ import 'package:build_my_garden/pages/navpages/account_page.dart';
 import 'package:build_my_garden/pages/navpages/marketplace_listing.dart';
 import 'package:build_my_garden/pages/navpages/mygarden_page.dart';
 import 'package:build_my_garden/pages/subpages/add_listing_page.dart';
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -211,7 +212,7 @@ class CenterWithButton extends StatelessWidget {
   // Connecting with the backend using http
   Future<http.Response> buttonPressed() async {
     http.Response returnedResult = await http.get(
-        Uri.parse('http://10.0.2.2:8000/app/IBMWelcomeGarden'),
+        Uri.parse('$baseUrl/app/IBMWelcomeGarden'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset-UTF-8'
         });
