@@ -67,6 +67,7 @@ flutter:
     - assets/images/CategoryPageImg/img2.gif
     - assets/images/CategoryPageImg/img3.gif
     - assets/images/CategoryPageImg/img4.gif
+    - assets/images/CategoryPageImg/img5.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
