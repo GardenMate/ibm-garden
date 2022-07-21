@@ -49,6 +49,39 @@ class SoilType(models.Model):
     def __str__(self) -> str:
         return self.soil_name
 
+
+# The MOISTURE LEVEL model
+class MoistureLevel(models.Model):
+    # Moister Level Type
+    MOIST_BUT_WELL_DRAINED = "MOIST_BUT_WELL_DRAINED"
+    POORLY_DRAINED = "POORLY_DRAINED"
+    WELL_DRAINED = "WELL_DRAINED"
+
+    MOISTURE_LEVEL_CHOICE = [
+        (MOIST_BUT_WELL_DRAINED, "Moist But Well Drained"),
+        (POORLY_DRAINED, "Poorly Drained"),
+        (WELL_DRAINED, "Well Drained"),
+    ]
+
+    plant_moisture_level = models.CharField(max_length=50, choices=MOISTURE_LEVEL_CHOICE, default=WELL_DRAINED)
+
+    def __str__(self) -> str:
+        return self.plant_moisture_level 
+
+# The PH level model
+class PhLevel(models.Model):
+    # PH Level
+    ACIDIC = "ACIDIC"
+    ALKALINE = "ALKALINE"
+    NEUTRAL = "NEUTRAL"
+
+    PH_LEVEL_CHOICE = [
+        (ACIDIC, "Acidic"),
+        (ALKALINE, "Alkaline"),
+        (NEUTRAL, "Neutral")
+    ]
+    ph_level = models.CharField(max_length=20, choices=PH_LEVEL_CHOICE, default=NEUTRAL)
+
 # The plant model
 class PlantType(models.Model):
     # Sun Exposer Lookup
@@ -71,28 +104,6 @@ class PlantType(models.Model):
         (SHELTERED, "Sheltered"),
     ]
 
-    # Moister Level Type
-    MOIST_BUT_WELL_DRAINED = "MOIST_BUT_WELL_DRAINED"
-    POORLY_DRAINED = "POORLY_DRAINED"
-    WELL_DRAINED = "WELL_DRAINED"
-
-    MOISTURE_LEVEL_CHOICE = [
-        (MOIST_BUT_WELL_DRAINED, "Moist But Well Drained"),
-        (POORLY_DRAINED, "Poorly Drained"),
-        (WELL_DRAINED, "Well Drained"),
-    ]
-
-    # PH Level
-    ACIDIC = "ACIDIC"
-    ALKALINE = "ALKALINE"
-    NEUTRAL = "NEUTRAL"
-
-    PH_LEVEL_CHOICE = [
-        (ACIDIC, "Acidic"),
-        (ALKALINE, "Alkaline"),
-        (NEUTRAL, "Neutral")
-    ]
-
     plant_name = models.CharField(max_length=255)
     plant_scientific_name = models.CharField(max_length=255)
     plant_description = models.TextField()
@@ -101,7 +112,8 @@ class PlantType(models.Model):
     plant_size_max_height_highest = models.DecimalField(max_digits=5, decimal_places=2)
     plant_size_max_spread_lowest = models.DecimalField(max_digits=5, decimal_places=2)
     plant_size_max_spread_highest = models.DecimalField(max_digits=5, decimal_places=2)
-    plant_max_size_time = models.DurationField()
+    plant_max_size_time_lowest = models.DurationField()
+    plant_max_size_time_highest = models.DurationField()
     plant_harvest_length = models.DurationField()
     planting_season = models.ManyToManyField(Season, related_name='plant_planting_season')
     plant_harvest_season = models.ManyToManyField(Season, related_name="plant_harvest_season")
@@ -111,8 +123,8 @@ class PlantType(models.Model):
     temperature_tolarence = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(-273.15), MaxValueValidator(56.7)]) 
     # The following fields are information about soil
     soil = models.ManyToManyField(SoilType, related_name="plant")
-    plant_moisture_level = models.CharField(max_length=50, choices=MOISTURE_LEVEL_CHOICE, default=WELL_DRAINED)
-    ph_level = models.CharField(max_length=20, choices=PH_LEVEL_CHOICE, default=NEUTRAL)
+    plant_moisture_level = models.ManyToManyField(MoistureLevel, related_name="plant")
+    ph_level = models.ManyToManyField(PhLevel, related_name="plant")
     # The following field are steps to grow
     plant_how_to_cultivate = models.TextField()
     plant_how_to_propagate = models.TextField()

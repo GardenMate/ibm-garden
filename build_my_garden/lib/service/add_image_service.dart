@@ -12,8 +12,10 @@ class AddImageService {
   XFile? pickedFile;
 
   Future getImage() async {
-    pickedFile =
-        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
 
     if (pickedFile != null) {
       image = File(pickedFile!.path);
