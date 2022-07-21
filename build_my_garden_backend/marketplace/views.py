@@ -88,6 +88,7 @@ class ImageAPI(APIView):
         # # request_data.update({"listing": 7})
         # print(request_data)
 
+        print('Test')
         serializer = ListingImageSerializer(data=request.data)
 
         if serializer.is_valid():

@@ -276,8 +276,14 @@ class _ListingFormState extends State<ListingForm> {
                           _locationController.text,
                           _distanceFromLocationController.text);
                   // [To Do] Manage error, to not let it post if image isn't uploaded
+                  print("---------------------TEST-----------");
+                  print(response.id!);
                   if (response != null) {
-                    addImageService.uploadImage((response.id).toString());
+                    print("----YES----");
+                    var imageResponse = addImageService
+                        .uploadImage((response.id).toString())
+                        .then((value) => print('----MUST---'));
+                    print("----ID----");
                     Navigator.pop(context, true);
                     _titleController.clear();
                     _descController.clear();

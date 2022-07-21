@@ -57,12 +57,13 @@ class AddImageService {
     // Add the header to the request
     request.headers.addAll(headers);
     var response = await request.send();
-
+    print("------IT LOOKS---");
     if (response.statusCode == 201) {
       print('Image Uploaded');
       print(await response.stream.bytesToString());
     } else {
       print(await response.stream.bytesToString());
     }
+    print("------LIKE IT WORKS---");
   }
 }
