@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ListingService {
-  Future<ListOfListing> getListing() async {
+  Future<ListOfListing> getListing(String latitude, String longitude) async {
     // Store and reformate token correctly
     String? token = await SecureStorage.getToken();
 
     // Uri parse should always pass the token in the header for authentication
     var response = await http.get(
       Uri.parse(
-          '$baseUrl/api/listing/?latitude=43.52694005203881&longitude=-96.73868318893787'),
+          '$baseUrl/api/listing/?latitude=$latitude&longitude=$longitude'),
       headers: {
         'Authorization': 'Token $token',
       },
@@ -32,6 +32,7 @@ class ListingService {
         'Authorization': 'Token $token',
       },
     );
+    print(response.body);
     return ListOfListing.fromList(jsonDecode(response.body));
   }
 

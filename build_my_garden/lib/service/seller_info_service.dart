@@ -1,10 +1,85 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class SellerInfoService {
+  File? profileImage;
+  File? dashboardImage;
+  final _picker = ImagePicker();
+  bool showSpinner = false;
+  XFile? pickedProfileImage;
+  XFile? pickedDashboardImage;
+  Future getProfileImage() async {
+    pickedProfileImage =
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+
+    if (pickedProfileImage != null) {
+      profileImage = File(pickedProfileImage!.path);
+      print("Profile Image selected");
+      // setState(() {});
+    } else {
+      print('No image selected');
+    }
+  }
+
+  Future getDashboardImage() async {
+    pickedDashboardImage =
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+
+    if (pickedDashboardImage != null) {
+      dashboardImage = File(pickedDashboardImage!.path);
+      print("Dashboard Image selected");
+      // setState(() {});
+    } else {
+      print('No image selected');
+    }
+  }
+
+  Future<void> postSeller(String first_name, String last_name) async {
+    var uri = Uri.parse("$baseUrl/api/seller/");
+
+    var stream = profileImage!.readAsBytes().asStream();
+    stream.cast();
+    var length = await profileImage!.length();
+    String filename = pickedProfileImage!.path.split("/").last;
+    var profileMultiport = http.MultipartFile('profile_picture', stream, length,
+        filename: filename);
+
+    stream = dashboardImage!.readAsBytes().asStream();
+    stream.cast();
+    length = await dashboardImage!.length();
+    filename = pickedDashboardImage!.path.split("/").last;
+    var dashboardMultiport = http.MultipartFile(
+        'dashboard_image', stream, length,
+        filename: filename);
+
+    var request = http.MultipartRequest('POST', uri);
+    request.fields.addAll({
+      'first_name': first_name.toString(),
+      'last_name': last_name.toString(),
+    });
+    request.files.add(profileMultiport);
+    request.files.add(dashboardMultiport);
+
+    String? token = await SecureStorage.getToken();
+    final headers = {
+      'Authorization': 'Token $token',
+    };
+    request.headers.addAll(headers);
+
+    var response = await request.send();
+    if (response.statusCode == 201) {
+      print("Plant added");
+      print(await response.stream.bytesToString());
+    } else {
+      print(await response.stream.bytesToString());
+    }
+  }
+
   Future<dynamic> getSellerInfo() async {
     // Store and reformate token correctly
     String? token = await SecureStorage.getToken();
@@ -47,7 +122,6 @@ class SellerInfoService {
     return SellerInfo.fromJson(jsonDecode(response.body));
   }
 }
-
 // asdlkjglaj
 
 // class ListOfSellerInfo {

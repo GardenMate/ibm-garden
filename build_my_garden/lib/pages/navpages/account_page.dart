@@ -1,4 +1,5 @@
 import 'package:build_my_garden/pages/subpages/add_listing_page.dart';
+import 'package:build_my_garden/pages/subpages/create_new_seller.dart';
 import 'package:build_my_garden/pages/subpages/detail_listing_page.dart';
 import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/listing_service.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:build_my_garden/pages/navpages/account_page.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -41,9 +43,18 @@ class _AccountPageState extends State<AccountPage> {
             if (seller.runtimeType == SellerInfoError) {
               return Center(
                 child: Container(
-                  child: Center(
-                      child:
-                          AppLargeText(text: "No Seller Connected to Account")),
+                  child: Column(
+                    children: [
+                      Center(
+                          child: AppLargeText(
+                              text: "No Seller Connected to Account")),
+                      ResponsiveButton(
+                        onPress: () => addSellerDialog(context),
+                        text: "Create Listing Account",
+                        width: 200,
+                      )
+                    ],
+                  ),
                 ),
               );
             } else {
