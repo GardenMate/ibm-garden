@@ -163,7 +163,7 @@ class SellerListing(APIView):
         request_data.update(request.data)
         
         # Get the seller id from user if exists
-        seller = request.user.seller_info.filter(id=1)
+        seller = request.user.seller_info.all()
         if seller.exists():
             seller = seller.first()
             # Save the seller id into the request data
