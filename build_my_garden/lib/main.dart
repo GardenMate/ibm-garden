@@ -80,11 +80,13 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return new MaterialApp(
         title: 'Build Your Garden', //The title of the Flutter App
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ), //ThemeData
+        theme: new ThemeData(primaryColor: Color.fromARGB(255, 8, 78, 83)
+
+            // primaryColor: Color.fromARGB(255, 8, 78, 83)
+            // primarySwatch: Color.fromARGB(255, 8, 78, 83),
+            ), //ThemeData
         home: WillPopScope(
           onWillPop: () async {
             /// OnWillPop handles the function of what will happen when the back
@@ -171,7 +173,7 @@ class _BottomNavState extends State<BottomNav> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color.fromARGB(255, 91, 178, 94),
+        backgroundColor: Color.fromARGB(255, 8, 78, 83),
         selectedItemColor: Colors.white,
         unselectedItemColor: Color.fromARGB(255, 212, 225, 209),
         showUnselectedLabels: false,

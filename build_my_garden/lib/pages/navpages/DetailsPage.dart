@@ -2,6 +2,16 @@ import 'package:build_my_garden/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 
 class DetailsPage extends StatelessWidget {
+  int index;
+  DetailsPage({Key? key, required this.index}) : super(key: key);
+  List title = [
+    "Sustainable Farming Practices",
+    "Homemade Compost from your Kitchen",
+    "Planting and monitoring your produce",
+    "Save your Soil"
+  ];
+  List info = ["Alec", "prana", "Deepak", "Manu"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +26,7 @@ class DetailsPage extends StatelessWidget {
                   child: Container(
                     child: Center(
                         child: AppText(
-                      text: "Sustainable Farming Practices",
+                      text: title[index],
                       size: 20,
                     )),
                     width: double.maxFinite,
@@ -48,13 +58,12 @@ class DetailsPage extends StatelessWidget {
                     child: Column(
               children: [
                 Container(
-                    child: Center(
-                      child: AppText(
-                          text:
-                              "Rotating crops and embracing diversity. Planting a variety of crops can have many benefits, including healthier soil and improved pest control. Crop diversity practices include intercropping (growing a mix of crops in the same area) and complex multiyear crop rotations.Rotating crops and embracing diversity. Planting a variety of crops can have many benefits, including healthier soil and improved pest control. Crop diversity practices include intercropping (growing a mix of crops in the same area) and complex multiyear crop rotations.Rotating crops and embracing diversity. Planting a variety of crops can have many benefits, including healthier soil and improved pest control. Crop diversity practices include intercropping (growing a mix of crops in the same area) and complex multiyear crop rotations.Rotating crops and embracing diversity. Planting a variety of crops can have many benefits, including healthier soil and improved pest control. Crop diversity practices include intercropping (growing a mix of crops in the same area) and complex multiyear crop rotations.Rotating crops and embracing diversity. Planting a variety of crops can have many benefits, including healthier soil and improved pest control. Crop diversity practices include intercropping (growing a mix of crops in the same area) and complex multiyear crop rotations.Rotating crops and embracing diversity. Planting a variety of crops can have many benefits, including healthier soil and improved pest control. Crop diversity practices include intercropping (growing a mix of crops in the same area) and complex multiyear crop rotations.Rotating crops and embracing diversity. Planting a variety of crops can have many benefits, including healthier soil and improved pest control. Crop diversity practices include intercropping (growing a mix of crops in the same area) and complex multiyear crop rotations.Rotating crops and embracing diversity. Planting a variety of crops can have many benefits, including healthier soil and improved pest control. Crop diversity practices include intercropping (growing a mix of crops in the same area) and complex multiyear crop rotations.Rotating crops and embracing diversity. Planting a variety of crops can have many benefits, including healthier soil and improved pest control. Crop diversity practices include intercropping (growing a mix of crops in the same area) and complex multiyear crop rotations.Rotating crops and embracing diversity. Planting a variety of crops can have many benefits, including healthier soil and improved pest control. Crop diversity practices include intercropping (growing a mix of crops in the same area) and complex multiyear crop rotations.Rotating crops and embracing diversity. Planting a variety of crops can have many benefits, including healthier soil and improved pest control. Crop diversity practices include intercropping (growing a mix of crops in the same area) and complex multiyear crop rotations."),
-                    ),
-                    margin: EdgeInsets.only(left: 40, right: 40, top: 20),
-                    )
+                  child: Center(
+                    child:
+                        AppText(fontWeight: FontWeight.w300, text: info[index]),
+                  ),
+                  margin: EdgeInsets.only(left: 40, right: 40, top: 20),
+                )
               ],
             )))
           ],

@@ -29,6 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  auto_size_text: ^3.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -65,10 +66,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/front_page.png
-    - assets/images/CategoryPageImg/img1.gif
-    - assets/images/CategoryPageImg/img2.gif
-    - assets/images/CategoryPageImg/img3.gif
-    - assets/images/CategoryPageImg/img4.gif
+    - assets/images/CategoryPageImg/img1.png
+    - assets/images/CategoryPageImg/img2.png
+    - assets/images/CategoryPageImg/img3.png
+    - assets/images/CategoryPageImg/img4.png
     - assets/images/CategoryPageImg/img5.gif
     - assets/images/potatoes.png
     - assets/images/tomatoes.png
