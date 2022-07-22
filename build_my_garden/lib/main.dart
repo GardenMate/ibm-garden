@@ -1,4 +1,3 @@
-
 // ignore_for_file: prefer_const_constructors
 import 'package:build_my_garden/pages/navpages/categorylistpage.dart';
 import 'package:build_my_garden/app/welcome_app.dart';
@@ -20,7 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   bool? isSignedIn = await SecureStorage.getIsSignedIn();
   if (isSignedIn != null) {
-    isSignedIn ? runApp(MainApp()) : runApp(WelcomeApp());
+    isSignedIn ? runApp(WelcomeApp()) : runApp(WelcomeApp());
   }
   // Allows the app to be full screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
