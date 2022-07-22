@@ -76,7 +76,7 @@ class _AccountPageState extends State<AccountPage> {
                           width: displayWidth(context),
                           height: 180,
                           child: Image.network(
-                            "$baseUrl/media/${seller.profile_picture}",
+                            "$baseUrl${seller.profile_picture}",
                             fit: BoxFit.cover,
                           ),
                           // child: Image(
@@ -99,7 +99,7 @@ class _AccountPageState extends State<AccountPage> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(90),
                                 child: Image.network(
-                                  "$baseUrl/media/${seller.profile_picture}",
+                                  "$baseUrl${seller.profile_picture}",
                                   fit: BoxFit.cover,
                                 ),
                                 // child: Image(
