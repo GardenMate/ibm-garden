@@ -1,4 +1,4 @@
-import 'package:build_my_garden/main.dart';
+import 'package:build_my_garden/app/auth_app.dart';
 import 'package:build_my_garden/widgets/app_large_text.dart';
 import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +55,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 Container(
                     // Margin for the text inside the white box
                     margin: const EdgeInsets.only(top: 40),
-                    height: 106,
+                    height: 100,
                     child: Column(
                       children: const [
                         // Load the widget AppLargeText
@@ -69,10 +69,11 @@ class _WelcomePageState extends State<WelcomePage> {
                             color: Color.fromARGB(255, 59, 87, 48)),
                       ],
                     )),
+                Spacer(),
                 Container(
                   // A container that is scrollable with information
                   width: displayWidth(context) * 0.85,
-                  height: 298,
+                  height: 300,
                   child: Container(
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 255, 228, 182),
@@ -101,9 +102,10 @@ class _WelcomePageState extends State<WelcomePage> {
                                 return AppText(text: listOfText[index]);
                               })),
                       Container(
-                        margin: const EdgeInsets.only(top: 80),
+                        margin: const EdgeInsets.only(top: 90),
                         // A button that changes the page and goes to home page
                         child: ResponsiveButton(
+                          width: 200,
                           onPress: pageIndex != 2
                               ? () => _pageController.nextPage(
                                   duration: Duration(milliseconds: 200),

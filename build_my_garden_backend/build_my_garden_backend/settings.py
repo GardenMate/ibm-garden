@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
-from datetime import timedelta
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,10 +31,11 @@ DEBUG = True
 CORS_ORIGIN_WHITELIST = [
     "http://10.0.2.2", #needed for andriod emulator
     "http://127.0.0.1",
-    "http://localhost"
+    "http://localhost",
+    "http://ec2-52-55-157-28.compute-1.amazonaws.com", # aws server address
 ]
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28"]
 
 
 # Application definition
@@ -114,7 +114,7 @@ WSGI_APPLICATION = 'build_my_garden_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'build_my_garden',
+        'NAME': 'build_your_garden',
         'USER': 'postgres',
         'PASSWORD': 'postgres123',
         'HOST': 'localhost',
@@ -157,9 +157,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static_in_env'),)
+# Previously staticfiles - changed for AWS
+# Double check if it affects image upload
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -170,6 +172,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
+    # Allow decimal to be sent as decimal instead of strings
+    'COERCE_DECIMAL_TO_STRING': False,
     # Use Django's standard 'django.contrib.auth' permissions
     'DEFAULT_PERMISSION_CLASSES' : [
         'rest_framework.permissions.IsAuthenticated',

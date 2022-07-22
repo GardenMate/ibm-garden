@@ -1,5 +1,6 @@
 from django.http import QueryDict
 from django.shortcuts import render
+from django.db.models import Q
 from requests import request
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -9,10 +10,11 @@ from rest_framework import status
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from .models import Listing, SellerAddress, ListingImage
 from django.db.models import Prefetch
-from .serializers import ListingGETSerializer, ListingImageSerializer, ListingPOSTSerializer, SellerInfoSerializer
+from .serializers import ListingGETSerializer, ListingImageSerializer, ListingPOSTSerializer, SellerInfoSerializer, SingleListingGETSerializer
 from geopy.geocoders import GoogleV3
 from decouple import config
 from rest_framework.permissions import IsAuthenticated
+
 
 # Create the class to use for geolocation
 geolocator = GoogleV3(api_key=config("GOOGLE_API_KEY"))
@@ -20,7 +22,7 @@ geolocator = GoogleV3(api_key=config("GOOGLE_API_KEY"))
 # Create your views here.
 # API endpoint for listing
 class ListingView(APIView):
-    serializer_class = ListingPOSTSerializer
+    serializer_class = ListingGETSerializer
 
     def get(self, request: Request):
         '''
@@ -54,6 +56,23 @@ class ListingView(APIView):
             status=status.HTTP_404_NOT_FOUND)
         
 
+class ListingSearchView(APIView):
+    serializer_class = ListingGETSerializer
+
+    def get(self, request: Request):
+        '''
+        Fetchs search result for listing
+        '''
+        print(request.query_params)
+        search = request.query_params.get('search')
+        if search:
+            listings = Listing.objects.filter(Q(title__icontains=search) | Q(plant_type__plant_name__icontains=search) | Q(description__icontains = search))
+            serializer = ListingGETSerializer(listings, many=True)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+        return Response({'No search':'No search result'}, status=status.HTTP_200_OK)
     
 
 class ImageAPI(APIView):
@@ -69,6 +88,7 @@ class ImageAPI(APIView):
         # # request_data.update({"listing": 7})
         # print(request_data)
 
+        print('Test')
         serializer = ListingImageSerializer(data=request.data)
 
         if serializer.is_valid():
@@ -93,7 +113,7 @@ class SellerInfoAPI(APIView):
 
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response({'No Seller':'User has no seller account'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'no_seller':'User has no seller account'}, status=status.HTTP_404_NOT_FOUND)
 
 class SellerListing(APIView):
 
@@ -107,13 +127,10 @@ class SellerListing(APIView):
             # Save the seller model
             seller = seller.first()
             listing = Listing.objects.filter(seller=seller)
-
-            if listing.exists():
-                serializer = ListingGETSerializer(listing, many=True)
-
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response({'No Listing': 'User has no listing'}, status=status.HTTP_204_NO_CONTENT)
+            serializer = ListingGETSerializer(listing, many=True)
+            # If no listing, can display an error or show a different view
+            return Response(serializer.data, status=status.HTTP_200_OK)
+            
         else:
             return Response({'No Seller':'User has no seller account'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -144,3 +161,23 @@ class SellerListing(APIView):
                 return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
             
         return Response({"Seller does not exist"}, status=status.HTTP_400_BAD_REQUEST)
+    
+class SingleListing(APIView):
+    serializer_class = ListingGETSerializer
+
+    def get(self, request: Request):
+        '''
+        Get the detailed information of a single listing
+        '''
+        id = request.query_params.get('id')
+
+        if id:
+            listing = Listing.objects.filter(id=id)
+
+            if listing.exists():
+                serializer = SingleListingGETSerializer(listing.first())
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response({'No Listing':'Not Listing Existing'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)

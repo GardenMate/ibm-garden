@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -11,8 +12,10 @@ class AddImageService {
   XFile? pickedFile;
 
   Future getImage() async {
-    pickedFile =
-        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
 
     if (pickedFile != null) {
       image = File(pickedFile!.path);
@@ -35,7 +38,7 @@ class AddImageService {
     var stream = image!.readAsBytes().asStream();
     stream.cast();
     var length = await image!.length();
-    var uri = Uri.parse("http://10.0.2.2:8000/api/image/add");
+    var uri = Uri.parse("$baseUrl/api/image/add/");
     String filename = pickedFile!.path.split("/").last;
 
     // Multiport=Packages the image into a movable packet - removed await
@@ -56,12 +59,13 @@ class AddImageService {
     // Add the header to the request
     request.headers.addAll(headers);
     var response = await request.send();
-
+    print("------IT LOOKS---");
     if (response.statusCode == 201) {
       print('Image Uploaded');
       print(await response.stream.bytesToString());
     } else {
       print(await response.stream.bytesToString());
     }
+    print("------LIKE IT WORKS---");
   }
 }

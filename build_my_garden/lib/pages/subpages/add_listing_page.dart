@@ -76,7 +76,7 @@ class _ListingFormState extends State<ListingForm> {
                   height: 200,
                   width: 200,
 
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       addImageService.getImage().then((value) {
                         setState(() {});
@@ -276,17 +276,21 @@ class _ListingFormState extends State<ListingForm> {
                           _locationController.text,
                           _distanceFromLocationController.text);
                   // [To Do] Manage error, to not let it post if image isn't uploaded
+
                   if (response != null) {
-                    addImageService.uploadImage((response.id).toString());
-                    Navigator.pop(context, true);
-                    _titleController.clear();
-                    _descController.clear();
-                    _priceController.clear();
-                    _typeController.clear();
-                    _qtyController.clear();
-                    _unitController.clear();
-                    _locationController.clear();
-                    _distanceFromLocationController.clear();
+                    var imageResponse = addImageService
+                        .uploadImage((response.id).toString())
+                        .then((value) {
+                      Navigator.pop(context, true);
+                      _titleController.clear();
+                      _descController.clear();
+                      _priceController.clear();
+                      _typeController.clear();
+                      _qtyController.clear();
+                      _unitController.clear();
+                      _locationController.clear();
+                      _distanceFromLocationController.clear();
+                    });
                   }
                 },
                 text: "Add",

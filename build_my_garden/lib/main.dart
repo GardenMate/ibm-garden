@@ -1,12 +1,13 @@
-// ignore_for_file: prefer_const_constructors
 
+// ignore_for_file: prefer_const_constructors
 import 'package:build_my_garden/pages/navpages/categorylistpage.dart';
+import 'package:build_my_garden/app/welcome_app.dart';
+import 'package:build_my_garden/pages/navpages/account_page.dart';
 import 'package:build_my_garden/pages/navpages/marketplace_listing.dart';
+import 'package:build_my_garden/pages/navpages/mygarden_page.dart';
 import 'package:build_my_garden/pages/subpages/add_listing_page.dart';
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
-import 'package:build_my_garden/pages/signin_page.dart';
-import 'package:build_my_garden/pages/welcome_page.dart';
-import 'package:build_my_garden/widgets/app_large_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -26,48 +27,6 @@ void main() async {
       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
 }
 
-// The welcome app state
-class WelcomeApp extends StatefulWidget {
-  const WelcomeApp({Key? key}) : super(key: key);
-
-  @override
-  State<WelcomeApp> createState() => _WelcomeAppState();
-}
-
-class _WelcomeAppState extends State<WelcomeApp> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Build Your Garden', //The title of the Flutter App
-        theme: ThemeData(
-          scaffoldBackgroundColor: Color.fromARGB(255, 255, 228, 182),
-          primarySwatch: Colors.green,
-        ), //ThemeData
-        home: WelcomePage()); //Column //Center //Scaffold //MaterialApp
-  }
-}
-
-// The Signin and Signup app state
-class AuthApp extends StatefulWidget {
-  const AuthApp({Key? key}) : super(key: key);
-
-  @override
-  State<AuthApp> createState() => _AuthAppState();
-}
-
-class _AuthAppState extends State<AuthApp> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Build Your Garden', //The title of the Flutter App
-        theme: ThemeData(
-          scaffoldBackgroundColor: Color.fromARGB(255, 255, 228, 182),
-          primarySwatch: Colors.green,
-        ),
-        home: SignInPage());
-  }
-}
-
 // The main app state
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -77,13 +36,48 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  int currentIndex = 0;
-  final screens = [
-    CategoryListPage(),
-    CenterWithButton(text: "Your Plants"),
-    MarketPlaceHome(),
-    CenterWithButton(text: "Account", addListing: true),
-  ];
+  int _selectedIndex = 0;
+  String _currentPage = "Learn";
+
+  // The following list is to access the navigatorkey map
+  List<String> pageKeys = ["Learn", "MyGarden", "Marketplace", "Account"];
+  // Every new page will need a navigator state
+  final Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
+    "Learn": GlobalKey<NavigatorState>(),
+    "MyGarden": GlobalKey<NavigatorState>(),
+    "Marketplace": GlobalKey<NavigatorState>(),
+    "Account": GlobalKey<NavigatorState>(),
+  };
+
+  void _selectTab(String tabItem, int index) {
+    /// The function takes in the what page it wants to switch to and
+    /// sets the current page as to the needed page
+
+    // If the tabItem is already in current page, it will go backwards
+    if (tabItem == _currentPage) {
+      _navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
+    } else {
+      setState(() {
+        _currentPage = pageKeys[index];
+        _selectedIndex = index;
+      });
+    }
+  }
+
+  Widget _buildOffstageNavigator(String tabItem) {
+    /// The widget creates an offstage widget based on the required
+    /// page.
+    /// Offstage widget - if not mistaken is a widget that loads everything but hides it
+    /// until it is called.
+
+    return Offstage(
+      offstage: _currentPage != tabItem,
+      child: TabNavigator(
+        navigatorKey: _navigatorKeys[tabItem],
+        tabItem: tabItem,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,15 +86,72 @@ class _MainAppState extends State<MainApp> {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ), //ThemeData
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: null,
-          body: screens[currentIndex],
-          bottomNavigationBar: BottomNav(
-            currentIndex: currentIndex,
-            onPress: (int index) => setState(() => currentIndex = index),
+        home: WillPopScope(
+          onWillPop: () async {
+            /// OnWillPop handles the function of what will happen when the back
+            /// button is pressed.
+            /// The following function will allow the back button instead of exiting the app
+            /// make it go back one page or go back to the home page
+
+            final isFirstRouteInCurrentTab =
+                !await _navigatorKeys[_currentPage]!.currentState!.maybePop();
+            if (isFirstRouteInCurrentTab) {
+              if (_currentPage != "Learn") {
+                _selectTab("Learn", 0);
+
+                return false;
+              }
+            }
+            // Let system handle back button if we are on the first route
+            return isFirstRouteInCurrentTab;
+          },
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: null,
+            body: Stack(
+              children: <Widget>[
+                _buildOffstageNavigator("Learn"),
+                _buildOffstageNavigator("MyGarden"),
+                _buildOffstageNavigator("Marketplace"),
+                _buildOffstageNavigator("Account"),
+              ],
+            ),
+            bottomNavigationBar: BottomNav(
+              currentIndex: _selectedIndex,
+              onPress: (int index) {
+                _selectTab(pageKeys[index], index);
+              },
+            ),
           ),
         ));
+  }
+}
+
+class TabNavigator extends StatelessWidget {
+  /// TabNavigator depending on the accepted navigator and key name
+  /// will create a widget of the pages
+  final GlobalKey<NavigatorState>? navigatorKey;
+  final String tabItem;
+
+  const TabNavigator({Key? key, this.navigatorKey, required this.tabItem})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    /// If new tab is added, must add in TabNavigator, _navigatorkey, and pageKeys
+    Widget child = Container();
+
+    if (tabItem == "Learn") child = CategoryListPage();
+    if (tabItem == "MyGarden") child = MyGardenPage();
+    if (tabItem == "Marketplace") child = MarketPlaceHome();
+    if (tabItem == "Account") child = AccountPage();
+
+    return Navigator(
+      key: navigatorKey,
+      onGenerateRoute: (routeSettings) {
+        return MaterialPageRoute(builder: (context) => child);
+      },
+    );
   }
 }
 
@@ -148,11 +199,11 @@ class _BottomNavState extends State<BottomNav> {
             label: 'Account',
             backgroundColor: Colors.green,
           ),
-        ]); //Column //Center //Scaffold //MaterialApp
+        ]);
   }
 }
 
-// A center app
+// A center app - soon to be removed
 class CenterWithButton extends StatelessWidget {
   final String text;
   final bool addListing;
@@ -164,7 +215,7 @@ class CenterWithButton extends StatelessWidget {
   // Connecting with the backend using http
   Future<http.Response> buttonPressed() async {
     http.Response returnedResult = await http.get(
-        Uri.parse('http://10.0.2.2:8000/app/IBMWelcomeGarden'),
+        Uri.parse('$baseUrl/app/IBMWelcomeGarden'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset-UTF-8'
         });

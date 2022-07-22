@@ -4,6 +4,7 @@ from main.models import Plant, Soil
 from .serializers import PlantSerializer, SoilSerializer
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 
 
 # Create your views here.
@@ -56,5 +57,3 @@ class SoilViews(APIView):
         soils = Soil.objects.filter(account_id = request_user)
         serializer = SoilSerializer(soils,many=True)
         return Response(serializer.data)
-
-

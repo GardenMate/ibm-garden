@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -11,12 +12,55 @@ class ListingService {
     // Uri parse should always pass the token in the header for authentication
     var response = await http.get(
       Uri.parse(
-          'http://10.0.2.2:8000/api/listing/?latitude=43.52694005203881&longitude=-96.73868318893787'),
+          '$baseUrl/api/listing/?latitude=43.52694005203881&longitude=-96.73868318893787'),
       headers: {
         'Authorization': 'Token $token',
       },
     );
     return ListOfListing.fromList(jsonDecode(response.body));
+  }
+
+  Future<ListOfListing> getSellersListing() async {
+    // Store and reformate token correctly
+    String? token = await SecureStorage.getToken();
+
+    // Uri parse should always pass the token in the header for authentication
+    var response = await http.get(
+      Uri.parse('$baseUrl/api/seller/listing/'),
+      headers: {
+        'Authorization': 'Token $token',
+      },
+    );
+    return ListOfListing.fromList(jsonDecode(response.body));
+  }
+
+  Future<ListOfListing> getSearchListing(String search) async {
+    // Store and reformate token correctly
+    String? token = await SecureStorage.getToken();
+
+    // Uri parse should always pass the token in the header for authentication
+    var response = await http.get(
+      Uri.parse('$baseUrl/api/listing/search/?search=$search'),
+      headers: {
+        'Authorization': 'Token $token',
+      },
+    );
+    print(response.body);
+    return ListOfListing.fromList(jsonDecode(response.body));
+  }
+
+  Future<SingleListing> getDetailListing(int id) async {
+    // Store and reformate token correctly
+    String? token = await SecureStorage.getToken();
+
+    // Uri parse should always pass the token in the header for authentication
+    var response = await http.get(
+      Uri.parse('$baseUrl/api/listing/details/?id=$id'),
+      headers: {
+        'Authorization': 'Token $token',
+      },
+    );
+    return SingleListing.fromJson(jsonDecode(response.body));
   }
 
   Future<AddListingResponse> postListing(
@@ -31,8 +75,8 @@ class ListingService {
     // POST request for the listing
     String? token = await SecureStorage.getToken();
 
-    var response = await http
-        .post(Uri.parse("http://10.0.2.2:8000/api/seller/listing"), headers: {
+    var response =
+        await http.post(Uri.parse("$baseUrl/api/seller/listing/"), headers: {
       'Authorization': 'Token $token',
     }, body: {
       "title": title,
@@ -44,7 +88,6 @@ class ListingService {
       "location": location,
       "distance_from_location": distanceFromLocation
     });
-    print(response.body);
     return AddListingResponse.fromJson(jsonDecode(response.body));
   }
 }
@@ -66,14 +109,14 @@ class Listing {
   int id;
   String title;
   String description;
-  int quantity;
+  double quantity;
   String quantity_type;
-  String price;
+  double price;
   String price_currency;
-  int distance_from_location;
+  double distance_from_location;
   int seller_id;
   int location_id;
-  int seller_rating;
+  double seller_rating;
   String plant_type;
   String address;
   String image;
@@ -100,15 +143,15 @@ class Listing {
       id: map['id'],
       title: map['title'],
       description: map['description'],
-      quantity: map['quantity'],
+      quantity: map['quantity'].toDouble(),
       quantity_type: map['quantity_type'],
-      price: map['price'],
+      price: map['price'].toDouble(),
       price_currency: map['price_currency'],
-      distance_from_location: map['distance_from_location'],
+      distance_from_location: map['distance_from_location'].toDouble(),
       seller_id: map['seller'],
       plant_type: map['plant_type'],
       location_id: map['location'],
-      seller_rating: map['seller_rating'],
+      seller_rating: map['seller_rating'].toDouble(),
       address: map['address'],
       image: map['image'],
     );
@@ -122,5 +165,67 @@ class AddListingResponse {
 
   factory AddListingResponse.fromJson(mapOfBody) {
     return AddListingResponse(id: mapOfBody['id']);
+  }
+}
+
+class SingleListing {
+  int id;
+  String title;
+  String description;
+  double quantity;
+  String quantity_type;
+  double price;
+  String price_currency;
+  double distance_from_location;
+  int seller_id;
+  String seller_username;
+  String seller_first_name;
+  String seller_last_name;
+  int location_id;
+  double seller_rating;
+  String plant_type;
+  String city;
+  List<dynamic> image;
+
+  SingleListing({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.quantity,
+    required this.quantity_type,
+    required this.price,
+    required this.price_currency,
+    required this.distance_from_location,
+    required this.seller_id,
+    required this.seller_username,
+    required this.seller_first_name,
+    required this.seller_last_name,
+    required this.location_id,
+    required this.seller_rating,
+    required this.plant_type,
+    required this.city,
+    required this.image,
+  });
+
+  factory SingleListing.fromJson(map) {
+    return SingleListing(
+      id: map['id'],
+      title: map['title'],
+      description: map['description'],
+      quantity: map['quantity'].toDouble(),
+      quantity_type: map['quantity_type'],
+      price: map['price'].toDouble(),
+      price_currency: map['price_currency'],
+      distance_from_location: map['distance_from_location'].toDouble(),
+      seller_id: map['seller'],
+      seller_username: map['seller_username'],
+      seller_first_name: map['seller_first_name'],
+      seller_last_name: map['seller_last_name'],
+      plant_type: map['plant_type'],
+      location_id: map['location'],
+      city: map['city'],
+      seller_rating: map['seller_rating'].toDouble(),
+      image: map['image'],
+    );
   }
 }

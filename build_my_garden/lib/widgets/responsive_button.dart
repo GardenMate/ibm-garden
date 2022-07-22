@@ -7,19 +7,21 @@ class ResponsiveButton extends StatelessWidget {
   // an onPress function and width (optional)
   // to generate a button
   bool? isResponsive;
-  double? width;
+  double width;
   String text;
   Color textColor;
   Color buttonColor;
+  double size;
   Function() onPress;
   ResponsiveButton(
       {Key? key,
       this.text = "",
-      this.width,
+      this.width = 120,
       this.isResponsive = false,
       this.textColor = const Color.fromARGB(255, 59, 87, 48),
       this.buttonColor = const Color.fromARGB(255, 181, 255, 180),
-      required this.onPress})
+      this.size = 16,
+      required this.onPress, })
       : super(key: key);
 
   @override
@@ -34,10 +36,13 @@ class ResponsiveButton extends StatelessWidget {
       child: TextButton(
         onPressed: onPress,
         child: Container(
-          margin: const EdgeInsets.only(left: 30, right: 30),
-          child: AppText(
-            text: text,
-            color: textColor,
+          margin: EdgeInsets.only(left: 5, right: 5),
+          child: Center(
+            child: AppText(
+              text: text,
+              color: textColor,
+              size: size,
+            ),
           ),
         ),
       ),

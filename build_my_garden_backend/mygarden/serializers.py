@@ -3,6 +3,7 @@ from main.models import Plant, PlantType, Soil
 from rest_framework import serializers
 
 
+        
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -18,7 +19,7 @@ class PlantSerializer(serializers.ModelSerializer):
         user = UserSerializer()
         plant_type = PlantTypeSerializer()
         model = Plant
-        fields = ["user","plant_type","plant_current_size_height","plant_current_size_spread","planted_date",]
+        fields = '__all__'
 
         def create(self, validated_data):
             # create Plant
