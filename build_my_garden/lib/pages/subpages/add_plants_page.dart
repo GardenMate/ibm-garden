@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:build_my_garden/service/mygarden_service.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
@@ -187,8 +186,16 @@ class _PlantFormState extends State<PlantForm> {
           Row(
             children: [
               AppText(text: "Plant's Date:"),
-              SizedBox(width: 5,),
-              AppText(text: _date == Null ? "No date selected" : "${_date.month}/${_date.day}/${_date.year}", color: Colors.black, fontWeight: FontWeight.bold,),
+              SizedBox(
+                width: 5,
+              ),
+              AppText(
+                text: _date == Null
+                    ? "No date selected"
+                    : "${_date.month}/${_date.day}/${_date.year}",
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
             ],
           ),
           SizedBox(
@@ -218,11 +225,16 @@ class _PlantFormState extends State<PlantForm> {
             child: Center(
               child: ResponsiveButton(
                 onPress: () async {
-                  var response = await plantService.uploadPlant(
-                      _plantTypeController.text,
-                      _plantCurrentSizeHeight.text,
-                      _plantCurrentSizeWidth.text,
-                      _plantDated.text);
+                  var response = await plantService
+                      .uploadPlant(
+                          _plantTypeController.text,
+                          _plantCurrentSizeHeight.text,
+                          _plantCurrentSizeWidth.text,
+                          _plantDated.text)
+                      .then((value) {
+                    Navigator.pop(context, true);
+                    setState(() {});
+                  });
                 },
                 // [To Do] add error handling
                 text: "Add Plant",

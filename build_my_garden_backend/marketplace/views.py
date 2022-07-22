@@ -10,11 +10,11 @@ from rest_framework import status
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from .models import Listing, SellerAddress, ListingImage
 from django.db.models import Prefetch
-from .serializers import ListingGETSerializer, ListingImageSerializer, ListingPOSTSerializer, SellerInfoSerializer, SingleListingGETSerializer
+from .serializers import ListingGETSerializer, ListingImageSerializer, ListingPOSTSerializer, SellerInfoPOSTSerializer, SellerInfoSerializer, SingleListingGETSerializer
 from geopy.geocoders import GoogleV3
 from decouple import config
 from rest_framework.permissions import IsAuthenticated
-
+from django.http import QueryDict
 
 # Create the class to use for geolocation
 geolocator = GoogleV3(api_key=config("GOOGLE_API_KEY"))
@@ -105,7 +105,7 @@ class SellerInfoAPI(APIView):
         Fetch all the information of the seller
         '''
         # Get the seller id from the token authentication
-        seller = request.user.seller_info.filter(id=1)
+        seller = request.user.seller_info.all()
         if seller.exists():
             # Save the seller model
             seller = seller.first()
@@ -115,6 +115,24 @@ class SellerInfoAPI(APIView):
         else:
             return Response({'no_seller':'User has no seller account'}, status=status.HTTP_404_NOT_FOUND)
 
+    def post(self, request: Request):
+        request.user.first_name = request.data.get('first_name')
+        request.user.last_name = request.data.get('last_name')
+        request.user.save()
+        print(type(request.data))
+        normal_request = {'profile_picture':request.data.get('profile_picture'), 'dashboard_image':request.data.get('dashboard_image'), 'user':request.user.id}
+        request_data = QueryDict('',mutable=True)
+        request_data.update(normal_request)
+        print(request_data)
+        serialzer = SellerInfoPOSTSerializer(data=request_data)
+        if serialzer.is_valid():
+            # user_serializer.is_valid()
+            serialzer.save()
+            return Response(serialzer.data, status=status.HTTP_201_CREATED)
+        # return Response({}, status=status.HTTP_200_OK)
+        return Response(serialzer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class SellerListing(APIView):
 
     def get(self, request: Request):
@@ -122,7 +140,7 @@ class SellerListing(APIView):
         Fetch all the listing of the seller's
         '''
         # Get the seller id from the token authentication
-        seller = request.user.seller_info.filter(id=1)
+        seller = request.user.seller_info.all()
         if seller.exists():
             # Save the seller model
             seller = seller.first()
@@ -181,3 +199,4 @@ class SingleListing(APIView):
                 return Response({'No Listing':'Not Listing Existing'}, status=status.HTTP_404_NOT_FOUND)
         else:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
