@@ -1,3 +1,6 @@
+
+// ignore_for_file: prefer_const_constructors
+import 'package:build_my_garden/pages/navpages/categorylistpage.dart';
 import 'package:build_my_garden/app/welcome_app.dart';
 import 'package:build_my_garden/pages/navpages/account_page.dart';
 import 'package:build_my_garden/pages/navpages/marketplace_listing.dart';
@@ -138,7 +141,7 @@ class TabNavigator extends StatelessWidget {
     /// If new tab is added, must add in TabNavigator, _navigatorkey, and pageKeys
     Widget child = Container();
 
-    if (tabItem == "Learn") child = CenterWithButton(text: "Learn");
+    if (tabItem == "Learn") child = CategoryListPage();
     if (tabItem == "MyGarden") child = MyGardenPage();
     if (tabItem == "Marketplace") child = MarketPlaceHome();
     if (tabItem == "Account") child = AccountPage();
