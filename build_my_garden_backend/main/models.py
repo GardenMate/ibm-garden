@@ -87,7 +87,7 @@ class PlantType(models.Model):
     # Sun Exposer Lookup
     FULL_SUN = "FULL_SUN"
     PARTIAL_SUN = "PARTIAL_SUN"
-    FULL_OR_PARTIAL = "PARTIAL _OR_FULL_SUN"
+    FULL_OR_PARTIAL = "FULL_OR_PARTIAL_SUN"
 
     SUN_EXPOSER_CHOICES = [
         (FULL_SUN, "Full Sunlight"),
