@@ -13,16 +13,16 @@ class ResponsiveButton extends StatelessWidget {
   Color buttonColor;
   double size;
   Function() onPress;
-  ResponsiveButton(
-      {Key? key,
-      this.text = "",
-      this.width = 120,
-      this.isResponsive = false,
-      this.textColor = const Color.fromARGB(255, 59, 87, 48),
-      this.buttonColor = const Color.fromARGB(255, 181, 255, 180),
-      this.size = 16,
-      required this.onPress, })
-      : super(key: key);
+  ResponsiveButton({
+    Key? key,
+    this.text = "",
+    this.width = 120,
+    this.isResponsive = false,
+    this.textColor = const Color.fromARGB(255, 255, 255, 255),
+    this.buttonColor = const Color.fromARGB(255, 8, 78, 83),
+    this.size = 16,
+    required this.onPress,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -43,14 +43,20 @@ class _AccountPageState extends State<AccountPage> {
             if (seller.runtimeType == SellerInfoError) {
               return Center(
                 child: Container(
+                  margin: EdgeInsets.only(
+                      top: displayHeight(context) * 0.4, left: 20, right: 30),
                   child: Column(
                     children: [
                       Center(
                           child: AppLargeText(
-                              text: "No Seller Connected to Account")),
+                              text:
+                                  " No Seller Connected \n          to Account")),
+                      SizedBox(
+                        height: 12,
+                      ),
                       ResponsiveButton(
                         onPress: () => addSellerDialog(context),
-                        text: "Create Listing Account",
+                        text: "Create Profile",
                         width: 200,
                       )
                     ],
@@ -121,8 +127,6 @@ class _AccountPageState extends State<AccountPage> {
                   ResponsiveButton(
                     onPress: () => {},
                     text: "Message",
-                    buttonColor: Color.fromARGB(255, 156, 222, 155),
-                    textColor: Colors.black,
                   ),
                   Container(
                     margin: EdgeInsets.only(
@@ -139,7 +143,6 @@ class _AccountPageState extends State<AccountPage> {
                           ResponsiveButton(
                             onPress: () => addListingDialog(context),
                             text: "+ Add",
-                            buttonColor: Color.fromARGB(255, 156, 222, 155),
                           )
                         ],
                       ),
