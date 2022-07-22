@@ -75,10 +75,14 @@ class _AccountPageState extends State<AccountPage> {
                           color: Colors.black,
                           width: displayWidth(context),
                           height: 180,
-                          child: Image(
-                              image: AssetImage(
-                                  "assets/images/defaultBackground.png"),
-                              fit: BoxFit.cover),
+                          child: Image.network(
+                            "$baseUrl/media/${seller.profile_picture}",
+                            fit: BoxFit.cover,
+                          ),
+                          // child: Image(
+                          //     image: AssetImage(
+                          //         "assets/images/defaultBackground.png"),
+                          //     fit: BoxFit.cover),
                         ),
                         Positioned(
                           top: 180 - 60,
@@ -94,10 +98,16 @@ class _AccountPageState extends State<AccountPage> {
                               margin: EdgeInsets.all(7),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(90),
-                                child: Image(
-                                    image: AssetImage(
-                                        "assets/images/Profile-Icon.png"),
-                                    fit: BoxFit.cover),
+                                child: Image.network(
+                                  "$baseUrl/media/${seller.profile_picture}",
+                                  fit: BoxFit.cover,
+                                ),
+                                // child: Image(
+
+                                //   // Set an if statement
+                                //     // image: AssetImage(
+                                //     //     "assets/images/Profile-Icon.png"),
+                                // fit: BoxFit.cover),
                               ),
                             ),
                           ),
