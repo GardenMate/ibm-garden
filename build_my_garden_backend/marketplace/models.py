@@ -18,7 +18,7 @@ def get_profile_image_path(instance, filename):
 # Model for the seller, includes additional information
 class SellerInfromation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller_info', null=True)
-    seller_rating = models.DecimalField(max_digits=3, decimal_places=2, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    seller_rating = models.DecimalField(max_digits=3, decimal_places=2, validators=[MinValueValidator(0), MaxValueValidator(5)], default=0)
     profile_picture = models.ImageField(upload_to = get_profile_image_path)
     dashboard_image = models.ImageField(upload_to = get_profile_image_path)
 
