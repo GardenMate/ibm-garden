@@ -304,6 +304,7 @@ while pageSize<=1000:
                 plant_how_to_garden = []
                 for garden_type in garden_types:
                     plant_how_to_garden.append(garden_type.text)
+                plant_how_to_garden = ",".join(plant_how_to_garden)
             except:
                 plant_how_to_garden = np.NAN
             print(plant_how_to_garden)
@@ -332,8 +333,8 @@ while pageSize<=1000:
             temp_df = {"plant_scientific_name": [scientifc_name],"plant_title": [normal_name],"plant_description": [description],
             "plant_type": [plant_type],"plant_size_max_height_lowest": [plant_size_max_height_lowest],"plant_size_max_height_highest": [plant_size_max_height_highest],
             "plant_max_time_lowest": [plant_max_time_lowest],"plant_max_time_highest": [plant_max_time_highest],"plant_sun_exposer": [sun_exposer],
-            "plant_how_to_culitvate": [plant_how_to_culitvate],"plant_how_to_propagate": [plant_how_to_propagate],"plant_how_to_garden_type":[plant_how_to_garden],"plant_how_to_pruning":[plant_how_to_pruning],"plant_how_to_pests": [plant_how_to_pests],}
-            
+            "plant_how_to_culitvate": [plant_how_to_culitvate],"plant_how_to_propagate": [plant_how_to_propagate],"plant_how_to_garden_type":[plant_how_to_garden],"plant_how_to_pruning":[plant_how_to_pruning],"plant_how_to_pests": [plant_how_to_pests],"plant_how_to_diseases":[plant_how_to_diseases]}
+                
             plant_table = plant_table.append(pd.DataFrame(temp_df))
 
             plant_table.index = np.arange(1, len(plant_table)+1)
@@ -341,7 +342,7 @@ while pageSize<=1000:
             print(plant_table)
     
     startFrom += 100
-    pageSize += 100        
+       
 
 driver.quit()
 
