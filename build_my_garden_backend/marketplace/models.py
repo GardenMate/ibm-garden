@@ -48,7 +48,7 @@ class SellerAddress(models.Model):
     location = PlainLocationField(based_fields=['street_address', 'city'], zoom=10)
 
     def __str__(self) -> str:
-        return str(self.city)
+        return str(self.id) + '. ' +str(self.city)
 
 # Model for the lisiting
 class Listing(models.Model):

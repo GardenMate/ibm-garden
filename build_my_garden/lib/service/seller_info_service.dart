@@ -145,6 +145,8 @@ class SellerInfo {
   String city;
   double seller_rating;
   int user;
+  String profile_picture;
+  String dashboard_image;
 
   SellerInfo({
     required this.id,
@@ -154,6 +156,8 @@ class SellerInfo {
     required this.city,
     required this.seller_rating,
     required this.user,
+    required this.profile_picture,
+    required this.dashboard_image,
   });
 
   factory SellerInfo.fromJson(map) {
@@ -165,6 +169,8 @@ class SellerInfo {
       city: map['city'],
       user: map['user'],
       seller_rating: map['seller_rating'].toDouble(),
+      profile_picture: map['profile_picture'],
+      dashboard_image: map['dashboard_image'],
     );
   }
 }

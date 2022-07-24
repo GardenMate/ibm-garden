@@ -134,7 +134,7 @@ class PlantType(models.Model):
     plant_how_to_diseases = models.TextField()
 
     def __str__(self) -> str:
-        return self.plant_name
+        return str(self.id) + ". " + self.plant_name
 
 
 # Soil model
