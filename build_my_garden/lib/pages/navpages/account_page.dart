@@ -55,7 +55,10 @@ class _AccountPageState extends State<AccountPage> {
                         height: 12,
                       ),
                       ResponsiveButton(
-                        onPress: () => addSellerDialog(context),
+                        onPress: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => addSellerPage())),
                         text: "Create Profile",
                         width: 200,
                       )

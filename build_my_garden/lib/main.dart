@@ -80,9 +80,9 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
         title: 'Build Your Garden', //The title of the Flutter App
-        theme: new ThemeData(primaryColor: Color.fromARGB(255, 8, 78, 83)
+        theme: ThemeData(primaryColor: Color.fromARGB(255, 8, 78, 83)
 
             // primaryColor: Color.fromARGB(255, 8, 78, 83)
             // primarySwatch: Color.fromARGB(255, 8, 78, 83),

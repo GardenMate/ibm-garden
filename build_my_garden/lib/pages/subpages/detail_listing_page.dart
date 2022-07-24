@@ -100,7 +100,7 @@ class _DetailListingState extends State<DetailListing> {
                         AppText(
                             color: const Color.fromARGB(255, 152, 167, 177),
                             text: listing.seller_first_name.isNotEmpty
-                                ? "${listing.seller_first_name} ${listing.seller_first_name}"
+                                ? "${listing.seller_first_name} ${listing.seller_last_name}"
                                 : listing.seller_username),
                         const SizedBox(
                           height: 10,
