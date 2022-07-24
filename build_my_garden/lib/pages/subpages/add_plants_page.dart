@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 TextEditingController _plantTypeController = TextEditingController();
+TextEditingController _soilTypeController = TextEditingController();
 TextEditingController _plantCurrentSizeHeight = TextEditingController();
 TextEditingController _plantCurrentSizeWidth = TextEditingController();
 TextEditingController _plantDated = TextEditingController();
@@ -46,17 +48,20 @@ class PlantForm extends StatefulWidget {
 
 class _PlantFormState extends State<PlantForm> {
   PlantService plantService = PlantService();
-  late DateTime _date;
+  late DateTime now = new DateTime.now();
+  late DateTime _date = new DateTime(now.year, now.month, now.day);
 
   @override
   void initState() {
     // TODO: implement initState
-    _date = DateTime.now();
+    _date = DateTime(now.year, now.month, now.day);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_date);
+    print(now);
     return Container(
       width: displayWidth(context),
       margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -137,6 +142,25 @@ class _PlantFormState extends State<PlantForm> {
             width: 100,
             height: 10,
           ),
+          AppText(text: "Soil Type"),
+          SizedBox(
+            height: 30,
+            width: 200,
+            child: TextField(
+              controller: _soilTypeController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  borderSide: const BorderSide(
+                    width: 0,
+                    style: BorderStyle.none,
+                  ),
+                ),
+                fillColor: Colors.white,
+                filled: true,
+              ),
+            ),
+          ),
           AppText(text: "Plant's Current Height"),
           SizedBox(
             height: 30,
@@ -192,7 +216,7 @@ class _PlantFormState extends State<PlantForm> {
               AppText(
                 text: _date == Null
                     ? "No date selected"
-                    : "${_date.month}/${_date.day}/${_date.year}",
+                    : "${_date.year}/${_date.month}/${_date.day}",
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
@@ -228,9 +252,10 @@ class _PlantFormState extends State<PlantForm> {
                   var response = await plantService
                       .uploadPlant(
                           _plantTypeController.text,
+                          _soilTypeController.text,
                           _plantCurrentSizeHeight.text,
                           _plantCurrentSizeWidth.text,
-                          _plantDated.text)
+                          _plantDated.text.split(' ')[0])
                       .then((value) {
                     Navigator.pop(context, true);
                     setState(() {});

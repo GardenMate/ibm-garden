@@ -47,7 +47,7 @@ class SoilType(models.Model):
     soil_description = models.TextField()
 
     def __str__(self) -> str:
-        return self.soil_name
+        return str(self.id) + ". " +self.soil_name
 
 
 # The MOISTURE LEVEL model
@@ -66,7 +66,7 @@ class MoistureLevel(models.Model):
     plant_moisture_level = models.CharField(max_length=50, choices=MOISTURE_LEVEL_CHOICE, default=WELL_DRAINED)
 
     def __str__(self) -> str:
-        return self.plant_moisture_level 
+        return  str(self.id) + ". " +self.plant_moisture_level
 
 # The PH level model
 class PhLevel(models.Model):
@@ -81,6 +81,9 @@ class PhLevel(models.Model):
         (NEUTRAL, "Neutral")
     ]
     ph_level = models.CharField(max_length=20, choices=PH_LEVEL_CHOICE, default=NEUTRAL)
+
+    def __str__(self) -> str:
+        return  str(self.id) + ". " +self.ph_level
 
 # The plant model
 class PlantType(models.Model):
@@ -98,10 +101,12 @@ class PlantType(models.Model):
     # Wearther Expose Lookup
     EXPOSED = "EXPOSED"
     SHELTERED = "SHELTERED"
+    EXPOSED_OR_SHELTERED = "EXPOSED_OR_SHELTERED"
 
     WEATHER_EXPOSER_CHOICES = [
         (EXPOSED, "Exposed"),
         (SHELTERED, "Sheltered"),
+        (EXPOSED_OR_SHELTERED, "Exposed or Sheltered"),
     ]
 
     plant_name = models.CharField(max_length=255)

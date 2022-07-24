@@ -14,13 +14,12 @@ Solanum melongena
 Pisum sativum
 Allium sativum
 Allium fistulosum
-Brassica oleracea var. italica
+Brassica oleracea
 Phaseolus vulgaris
 Lactuca sativa
 Brassica oleracea var. gemmifera
-Basidiomycota
 Capsicum annuum Group
-Beta vulgaris subsp. vulgaris Conditiva Group
+Beta vulgaris
 Amaranthus
 Brassica oleracea var. sabellica
 Beta vulgaris subsp. vulgaris
@@ -31,11 +30,11 @@ Apium graveolens
 Zea mays
 Moringa oleifera
 Lens culinaris
-Brassica oleracea var. capitata
+Brassica oleracea
 Cichorium endivia
 Allium porrum
-Brassica oleracea var. botrytis
-Cynara cardunculus var. scolymus
+Brassica oleracea
+Cynara cardunculus 
 Helianthus tuberosus
 Moringa oleifera
 Brassica rapa subsp. rapa
@@ -45,7 +44,7 @@ Pastinaca sativa
 Phaseolus vulgaris
 Phaseolus lunatus
 Brassica oleracea Gongylodes Group
-Eruca vesicaria ssp. sativa
-Daucus carota subsp. sativus
-Brassica rapa subsp. chinensis
-Pisum sativum var. saccharatum
+Eruca vesicaria
+Daucus carota
+Brassica rapa
+Pisum sativum
