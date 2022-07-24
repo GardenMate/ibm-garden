@@ -18,7 +18,6 @@ Broccoli
 Green beans
 Lettuce
 Brussels Sprouts
-Mushrooms
 Bell Peppers
 Beets
 Leaf Amaranth
