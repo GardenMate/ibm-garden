@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:build_my_garden/service/mygarden_service.dart';
+import 'package:build_my_garden/pages/subpages/add_plants_page.dart';
 
 class MyGardenPage extends StatefulWidget {
   const MyGardenPage({Key? key}) : super(key: key);
@@ -90,7 +91,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
               child: Padding(
                 padding: EdgeInsets.only(right: 8),
                 child: ResponsiveButton(
-                  onPress: () => addPlantDialog(context),
+                  onPress: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PlantForm())),
                   text: "+",
                   width: 50,
                   size: 20,
