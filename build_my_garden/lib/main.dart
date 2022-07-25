@@ -19,7 +19,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   bool? isSignedIn = await SecureStorage.getIsSignedIn();
   if (isSignedIn != null) {
-    isSignedIn ? runApp(WelcomeApp()) : runApp(WelcomeApp());
+
+    isSignedIn ? runApp(MainApp()) : runApp(MainApp());
+
   }
   // Allows the app to be full screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
