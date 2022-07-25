@@ -114,6 +114,8 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                       child: Row(
                                         children: [
                                           Container(
+                                            margin: EdgeInsets.only(
+                                                top: 5, left: 10, bottom: 0),
                                             child: Text(
                                               categories[index].name,
                                               style: TextStyle(
