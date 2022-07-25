@@ -25,7 +25,7 @@ class SearchBar extends StatelessWidget {
         color: Color.fromARGB(255, 255, 255, 255),
       ),
       style: const TextStyle(
-        color: Color.fromARGB(255, 75, 72, 52),
+        color: Color.fromARGB(255, 255, 255, 255),
       ),
       itemColor: const Color.fromARGB(255, 173, 164, 116),
       decoration: BoxDecoration(

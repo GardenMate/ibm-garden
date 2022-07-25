@@ -7,6 +7,6 @@ urlpatterns = [
     path("image/add/", ImageAPI.as_view()),
     path("seller/", SellerInfoAPI.as_view()),
     path("seller/listing/", SellerListing.as_view()),
-    path("listing/search/", ListingSearchView.as_view()),
+  path("listing/search/", ListingSearchView.as_view()),
     path("listing/details/", SingleListing.as_view()),
 ]

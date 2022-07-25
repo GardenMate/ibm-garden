@@ -15,8 +15,6 @@ class _WelcomeAppState extends State<WelcomeApp> {
   @override
   Widget build(BuildContext context) {
     // Reset the tokens everytime you load welcome app
-    SecureStorage.setIsSignedIn(false);
-    SecureStorage.setToken("");
 
     return MaterialApp(
         title: 'Build Your Garden', //The title of the Flutter App

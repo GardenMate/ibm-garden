@@ -27,10 +27,7 @@ class DetailsPage extends StatelessWidget {
             SliverAppBar(
               title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    
-                  ]
-                  ),
+                  children: []),
               bottom: PreferredSize(
                 preferredSize: Size.fromHeight(-10),
                 child: Positioned(
@@ -41,8 +38,7 @@ class DetailsPage extends StatelessWidget {
                       text: title[index],
                       size: 20,
                       color: Color.fromARGB(255, 255, 255, 255),
-                    ))
-                    ,
+                    )),
                     width: double.maxFinite,
                     padding: EdgeInsets.only(top: 5, bottom: 10),
                     decoration: BoxDecoration(
