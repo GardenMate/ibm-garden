@@ -30,8 +30,12 @@ class PlantService {
     }
   }
 
-  Future<void> uploadPlant(String plant_type, String soil_planted,String plant_current_size_height,
-      String plant_current_size_spread, String planted_date) async {
+  Future<void> uploadPlant(
+      String plant_type,
+      String soil_planted,
+      String plant_current_size_height,
+      String plant_current_size_spread,
+      String planted_date) async {
     var stream = image!.readAsBytes().asStream();
     stream.cast();
     var length = await image!.length();
@@ -76,6 +80,7 @@ class PlantService {
     return ListOfPlants.fromList(jsonDecode(response.body));
   }
 }
+
 
 class ListOfPlants {
   List<Plant> plants;

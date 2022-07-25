@@ -16,28 +16,28 @@ TextEditingController _plantCurrentSizeHeight = TextEditingController();
 TextEditingController _plantCurrentSizeWidth = TextEditingController();
 TextEditingController _plantDated = TextEditingController();
 
-void addPlantDialog(BuildContext context) {
-  showDialog(
-      context: context,
-      builder: (context) {
-        PlantService plantService = PlantService();
+// void addPlantDialog(BuildContext context) {
+//   showDialog(
+//       context: context,
+//       builder: (context) {
+//         PlantService plantService = PlantService();
 
-        return Dialog(
-          backgroundColor: Color.fromARGB(255, 255, 228, 182),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          elevation: 16,
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            reverse: true,
-            padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom) *
-                0.5,
-            child: PlantForm(),
-          ),
-        );
-      });
-}
+//         return Dialog(
+//           backgroundColor: Color.fromARGB(255, 255, 228, 182),
+//           shape:
+//               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+//           elevation: 16,
+//           child: SingleChildScrollView(
+//             physics: BouncingScrollPhysics(),
+//             reverse: true,
+//             padding: EdgeInsets.only(
+//                     bottom: MediaQuery.of(context).viewInsets.bottom) *
+//                 0.5,
+//             child: PlantForm(),
+//           ),
+//         );
+//       });
+// }
 
 class PlantForm extends StatefulWidget {
   const PlantForm({Key? key}) : super(key: key);
@@ -62,211 +62,214 @@ class _PlantFormState extends State<PlantForm> {
   Widget build(BuildContext context) {
     print(_date);
     print(now);
-    return Container(
-      width: displayWidth(context),
-      margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 200,
-            width: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Color.fromARGB(255, 255, 255, 255),
-            ),
-            child: Center(
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 8, 78, 83),
+      body: Container(
+        width: displayWidth(context),
+        margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Color.fromARGB(255, 167, 158, 158),
+              ),
+              child: Center(
+                  child: Container(
                 child: Container(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 255, 255, 255),
-                ),
-                height: 200,
-                width: 200,
-                child: GestureDetector(
-                    onTap: () {
-                      plantService.getImage().then((value) => setState(() {}));
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                      height: 200,
-                      width: 200,
-                      child: plantService.image == null
-                          ? Center(child: Text('No image selected'))
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.file(
-                                File(plantService.image!.path).absolute,
-                                height: 200,
-                                width: 200,
-                                fit: BoxFit.cover,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromARGB(255, 16, 15, 15),
+                  ),
+                  height: 200,
+                  width: 200,
+                  child: GestureDetector(
+                      onTap: () {
+                        plantService.getImage().then((value) => setState(() {}));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color.fromARGB(255, 229, 222, 222),
+                        ),
+                        height: 200,
+                        width: 200,
+                        child: plantService.image == null
+                            ? Center(child: Text('No image selected'))
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.file(
+                                  File(plantService.image!.path).absolute,
+                                  height: 200,
+                                  width: 200,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                    )),
-              ),
-            )),
-          ),
-          SizedBox(
-            width: 100,
-            height: 10,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppText(text: "Plant Type"),
-              SizedBox(
-                height: 30,
-                width: 200,
-                child: TextField(
-                  controller: _plantTypeController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
+                      )),
+                ),
+              )),
+            ),
+            SizedBox(
+              width: 100,
+              height: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText(text: "Plant Type", color: Colors.white,),
+                SizedBox(
+                  height: 30,
+                  width: 200,
+                  child: TextField(
+                    controller: _plantTypeController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          width: 0,
+                          style: BorderStyle.none,
+                        ),
                       ),
+                      fillColor: Colors.white,
+                      filled: true,
                     ),
-                    fillColor: Colors.white,
-                    filled: true,
                   ),
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            width: 100,
-            height: 10,
-          ),
-          AppText(text: "Soil Type"),
-          SizedBox(
-            height: 30,
-            width: 200,
-            child: TextField(
-              controller: _soilTypeController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                  borderSide: const BorderSide(
-                    width: 0,
-                    style: BorderStyle.none,
+                )
+              ],
+            ),
+            SizedBox(
+              width: 100,
+              height: 10,
+            ),
+            AppText(text: "Soil Type", color: Colors.white,),
+            SizedBox(
+              height: 30,
+              width: 200,
+              child: TextField(
+                controller: _soilTypeController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    ),
                   ),
+                  fillColor: Colors.white,
+                  filled: true,
                 ),
-                fillColor: Colors.white,
-                filled: true,
               ),
             ),
-          ),
-          AppText(text: "Plant's Current Height"),
-          SizedBox(
-            height: 30,
-            width: 200,
-            child: TextField(
-              controller: _plantCurrentSizeHeight,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                  borderSide: const BorderSide(
-                    width: 0,
-                    style: BorderStyle.none,
+            AppText(text: "Plant's Current Height", color: Colors.white,),
+            SizedBox(
+              height: 30,
+              width: 200,
+              child: TextField(
+                controller: _plantCurrentSizeHeight,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    ),
                   ),
+                  fillColor: Colors.white,
+                  filled: true,
                 ),
-                fillColor: Colors.white,
-                filled: true,
               ),
             ),
-          ),
-          SizedBox(
-            width: 100,
-            height: 10,
-          ),
-          AppText(text: "Plant's Current Width"),
-          SizedBox(
-            height: 30,
-            width: 200,
-            child: TextField(
-              controller: _plantCurrentSizeWidth,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                  borderSide: const BorderSide(
-                    width: 0,
-                    style: BorderStyle.none,
+            SizedBox(
+              width: 100,
+              height: 10,
+            ),
+            AppText(text: "Plant's Current Width", color: Colors.white,),
+            SizedBox(
+              height: 30,
+              width: 200,
+              child: TextField(
+                controller: _plantCurrentSizeWidth,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    ),
                   ),
+                  fillColor: Colors.white,
+                  filled: true,
                 ),
-                fillColor: Colors.white,
-                filled: true,
               ),
             ),
-          ),
-          SizedBox(
-            width: 100,
-            height: 10,
-          ),
-          Row(
-            children: [
-              AppText(text: "Plant's Date:"),
-              SizedBox(
-                width: 5,
-              ),
-              AppText(
-                text: _date == Null
-                    ? "No date selected"
-                    : "${_date.year}/${_date.month}/${_date.day}",
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 100,
-            height: 10,
-          ),
-          ResponsiveButton(
-            text: "Pick a date",
-            onPress: () {
-              showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(1900),
-                lastDate: DateTime(2100),
-              ).then((date) => setState(() {
-                    _date = date!;
-                    _plantDated.text = _date.toString();
-                  }));
-            },
-          ),
-          SizedBox(
-            width: 100,
-            height: 10,
-          ),
-          Container(
-            width: displayWidth(context),
-            child: Center(
-              child: ResponsiveButton(
-                onPress: () async {
-                  var response = await plantService
-                      .uploadPlant(
-                          _plantTypeController.text,
-                          _soilTypeController.text,
-                          _plantCurrentSizeHeight.text,
-                          _plantCurrentSizeWidth.text,
-                          _plantDated.text.split(' ')[0])
-                      .then((value) {
-                    Navigator.pop(context, true);
-                    setState(() {});
-                  });
-                },
-                // [To Do] add error handling
-                text: "Add Plant",
-              ),
+            SizedBox(
+              width: 100,
+              height: 10,
             ),
-          )
-        ],
+            Row(
+              children: [
+                AppText(text: "Plant's Date:"),
+                SizedBox(
+                  width: 5,
+                ),
+                AppText(
+                  text: _date == Null
+                      ? "No date selected"
+                      : "${_date.year}/${_date.month}/${_date.day}",
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 100,
+              height: 10,
+            ),
+            ResponsiveButton(
+              text: "Pick a date",
+              onPress: () {
+                showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime(2100),
+                ).then((date) => setState(() {
+                      _date = date!;
+                      _plantDated.text = _date.toString();
+                    }));
+              },
+            ),
+            SizedBox(
+              width: 100,
+              height: 10,
+            ),
+            Container(
+              width: displayWidth(context),
+              child: Center(
+                child: ResponsiveButton(
+                  onPress: () async {
+                    var response = await plantService
+                        .uploadPlant(
+                            _plantTypeController.text,
+                            _soilTypeController.text,
+                            _plantCurrentSizeHeight.text,
+                            _plantCurrentSizeWidth.text,
+                            _plantDated.text.split(' ')[0])
+                        .then((value) {
+                      Navigator.pop(context, true);
+                      setState(() {});
+                    });
+                  },
+                  // [To Do] add error handling
+                  text: "Add Plant",
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
