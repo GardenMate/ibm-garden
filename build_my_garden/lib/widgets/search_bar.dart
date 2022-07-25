@@ -22,15 +22,15 @@ class SearchBar extends StatelessWidget {
       onSubmitted: onSubmit,
       onSuffixTap: onXMarkPress,
       placeholderStyle: const TextStyle(
-        color: Color.fromARGB(255, 157, 151, 112),
+        color: Color.fromARGB(255, 255, 255, 255),
       ),
       style: const TextStyle(
-        color: Color.fromARGB(255, 75, 72, 52),
+        color: Color.fromARGB(255, 255, 255, 255),
       ),
       itemColor: const Color.fromARGB(255, 173, 164, 116),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(90)),
-        color: const Color.fromARGB(255, 255, 228, 182),
+        color: const Color.fromARGB(255, 15, 81, 86),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.7),

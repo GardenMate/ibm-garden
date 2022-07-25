@@ -19,7 +19,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   bool? isSignedIn = await SecureStorage.getIsSignedIn();
   if (isSignedIn != null) {
-    isSignedIn ? runApp(MainApp()) : runApp(WelcomeApp());
+
+    isSignedIn ? runApp(MainApp()) : runApp(MainApp());
+
   }
   // Allows the app to be full screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
@@ -186,7 +188,7 @@ class _BottomNavState extends State<BottomNav> {
             backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.energy_savings_leaf),
+            icon: Icon(Icons.local_florist_outlined),
             label: 'Your Plants',
             backgroundColor: Colors.red,
           ),
