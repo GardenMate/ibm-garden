@@ -9,10 +9,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ["email","phone_number"]
 
-class PlantTypeSerializer:
+class PlantTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlantType
-        fields = ["plant_name","plant_type","plant_size_height","plant_size_spread","plant_max_size_time","plant_harvest_length","sun_exposer"]
+        fields = '__all__'
 
 class PlantSerializer(serializers.ModelSerializer):
     class Meta:

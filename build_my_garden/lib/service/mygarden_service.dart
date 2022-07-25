@@ -30,8 +30,12 @@ class PlantService {
     }
   }
 
-  Future<void> uploadPlant(String plant_type, String plant_current_size_height,
-      String plant_current_size_spread, String planted_date) async {
+  Future<void> uploadPlant(
+      String plant_type,
+      String soil_planted,
+      String plant_current_size_height,
+      String plant_current_size_spread,
+      String planted_date) async {
     var stream = image!.readAsBytes().asStream();
     stream.cast();
     var length = await image!.length();
@@ -44,6 +48,7 @@ class PlantService {
     var request = http.MultipartRequest('POST', uri);
     request.fields.addAll({
       'plant_type': plant_type.toString(),
+      'soil_type': soil_planted.toString(),
       'plant_current_size_height': plant_current_size_height.toString(),
       'plant_current_size_spread': plant_current_size_spread.toString(),
       'planted_date': planted_date
@@ -77,6 +82,7 @@ class PlantService {
   }
 }
 
+
 class ListOfPlants {
   List<Plant> plants;
   ListOfPlants({required this.plants});
@@ -92,6 +98,7 @@ class ListOfPlants {
 class Plant {
   int user;
   int plant_type;
+  int soil_planted;
   double plant_current_size_height;
   double plant_current_size_spread;
   String planted_date;
@@ -100,6 +107,7 @@ class Plant {
   Plant({
     required this.user,
     required this.plant_type,
+    required this.soil_planted,
     required this.plant_current_size_height,
     required this.plant_current_size_spread,
     required this.planted_date,
@@ -110,6 +118,7 @@ class Plant {
     return Plant(
         user: map['user'],
         plant_type: map['plant_type'],
+        soil_planted: map['soil_planted'],
         plant_current_size_height: map['plant_current_size_height'].toDouble(),
         plant_current_size_spread: map['plant_current_size_spread'].toDouble(),
         planted_date: map['planted_date'],

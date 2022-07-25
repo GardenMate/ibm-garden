@@ -182,7 +182,7 @@ REST_FRAMEWORK = {
 
     # Authentication for
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        #'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        # 'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
