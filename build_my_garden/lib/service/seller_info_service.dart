@@ -121,6 +121,31 @@ class SellerInfoService {
     });
     return SellerInfo.fromJson(jsonDecode(response.body));
   }
+
+  Future postSellerAddress(
+      [String? latitude, String? longitude, String? address]) async {
+    // POST request for the SellerInfo
+    String? token = await SecureStorage.getToken();
+
+    if (address != null) {
+      var response =
+          await http.post(Uri.parse("$baseUrl/api/seller/address/"), headers: {
+        'Authorization': 'Token $token',
+      }, body: {
+        "address": address,
+      });
+      // return SellerInfo.fromJson(jsonDecode(response.body));
+    } else {
+      var response =
+          await http.post(Uri.parse("$baseUrl/api/seller/address/"), headers: {
+        'Authorization': 'Token $token',
+      }, body: {
+        "latitude": latitude,
+        "longitude": longitude,
+      });
+      // return SellerInfo.fromJson(jsonDecode(response.body));
+    }
+  }
 }
 // asdlkjglaj
 
@@ -186,6 +211,7 @@ class SellerInfoError {
     return SellerInfoError(no_seller: map['no_seller']);
   }
 }
+
 
 // class SellerInfoResponse {
 //   dynamic id;

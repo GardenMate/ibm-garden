@@ -79,7 +79,7 @@ class _AccountPageState extends State<AccountPage> {
                           width: displayWidth(context),
                           height: 180,
                           child: Image.network(
-                            "$baseUrl${seller.profile_picture}",
+                            "$baseUrl${seller.dashboard_image}",
                             fit: BoxFit.cover,
                           ),
                           // child: Image(

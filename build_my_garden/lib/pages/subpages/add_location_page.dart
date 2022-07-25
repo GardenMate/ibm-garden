@@ -1,3 +1,5 @@
+import 'package:build_my_garden/pages/subpages/get_location.dart';
+import 'package:build_my_garden/service/seller_info_service.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_large_text.dart';
 import 'package:build_my_garden/widgets/responsive_button.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:geolocator/geolocator.dart';
 
 TextEditingController _addressController = TextEditingController();
 
@@ -16,10 +19,12 @@ class AddLocation extends StatefulWidget {
 }
 
 class _AddLocationState extends State<AddLocation> {
+  SellerInfoService sellerInfoService = SellerInfoService();
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0x0000),
+      color: const Color(0x0000),
       width: displayWidth(context),
       margin: EdgeInsets.only(
           left: displayWidth(context) * 0.07,
@@ -29,13 +34,13 @@ class _AddLocationState extends State<AddLocation> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Center(child: AppLargeText(text: "Add your address!")),
-          SizedBox(height: 20),
-          AppLargeText(
+          const Center(child: AppLargeText(text: "Add your address!")),
+          const SizedBox(height: 20),
+          const AppLargeText(
             text: "Address",
             size: 18,
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           SizedBox(
             height: 50,
             width: 200,
@@ -44,28 +49,58 @@ class _AddLocationState extends State<AddLocation> {
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
-                    borderSide: BorderSide(width: 0, style: BorderStyle.none)),
-                fillColor: Color.fromARGB(20, 64, 42, 42),
+                    borderSide:
+                        const BorderSide(width: 0, style: BorderStyle.none)),
+                fillColor: const Color.fromARGB(20, 64, 42, 42),
                 filled: true,
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          AppLargeText(
+          const AppLargeText(
             text: "Or",
             size: 18,
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           ResponsiveButton(
-            onPress: () {},
-            text: "Profile Picture",
+            onPress: () async {
+              Position location = await determinePosition();
+
+              var response = await sellerInfoService
+                  .postSellerAddress(location.latitude.toString(),
+                      location.longitude.toString(), null)
+                  .then((value) {
+                setState(() {});
+                var count = 0;
+                Navigator.popUntil(context, (route) {
+                  return count++ == 2;
+                });
+              });
+              // Pop 2 times
+            },
+            text: "Use Current Location",
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Container(
             child: ResponsiveButton(
               onPress: () async {
+                var response = await sellerInfoService
+                    .postSellerAddress(
+                  null,
+                  null,
+                  _addressController.text,
+                )
+                    .then((value) {
+                  setState(() {});
+                  var count = 0;
+                  Navigator.popUntil(context, (route) {
+                    return count++ == 2;
+                  });
+                });
+                // Pop 2 times
+
                 // var response = await sellerInfoService
                 //     .postSeller(
                 //         _firstNameController.text, _lastNameController.text)
