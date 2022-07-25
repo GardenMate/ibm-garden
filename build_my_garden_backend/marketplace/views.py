@@ -1,3 +1,6 @@
+from audioop import add
+import re
+from urllib import response
 from django.http import QueryDict
 from django.shortcuts import render
 from django.db.models import Q
@@ -10,7 +13,7 @@ from rest_framework import status
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from .models import Listing, SellerAddress, ListingImage
 from django.db.models import Prefetch
-from .serializers import ListingGETSerializer, ListingImageSerializer, ListingPOSTSerializer, SellerInfoPOSTSerializer, SellerInfoSerializer, SingleListingGETSerializer
+from .serializers import ListingGETSerializer, ListingImageSerializer, ListingPOSTSerializer, SellerAddressSerializer, SellerInfoPOSTSerializer, SellerInfoSerializer, SingleListingGETSerializer
 from geopy.geocoders import GoogleV3
 from decouple import config
 from rest_framework.permissions import IsAuthenticated
@@ -38,6 +41,8 @@ class ListingView(APIView):
         if latitude and longitude:
             location = geolocator.reverse(query=(latitude, longitude))
             address_components = location.raw['address_components']
+            # print(address_components)
+            print(location.address)
             cities = [addr['long_name'] for addr in address_components if 'locality' in addr['types']]
             
             city = cities[0]
@@ -200,3 +205,74 @@ class SingleListing(APIView):
         else:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class SellerAddressAPI(APIView):
+    serializer_class = SellerAddressSerializer
+
+    def post(self, request: Request):
+        '''
+        POST the seller address information
+        '''
+
+        address = request.data.get("address")
+        latitude = request.data.get("latitude")
+        longitude = request.data.get("longitude")
+        location = request.data.get('location')
+
+        # Get the seller id from user if exists
+        seller = request.user.seller_info.all()
+        if seller.exists():
+            seller = seller.first()
+
+            # If using address from user
+            # used geopy doc: https://geopy.readthedocs.io/en/stable/#googlev3
+            if address:
+                street_address = geolocator.geocode(query=address)
+                if street_address:
+                    
+                    address_components = street_address.raw['address_components']
+                    cities = [addr['long_name'] for addr in address_components if 'locality' in addr['types']]
+                    countries = [addr['long_name'] for addr in address_components if 'country' in addr['types']]
+                    
+                    city = cities[0]
+                    country = countries[0]
+                    location = "%s, %s" % (street_address.latitude,street_address.longitude)
+
+                    request_data = QueryDict(mutable=True)
+                    request_data.update({"street_address":street_address.address, "city": city, "country": country, "seller":seller.id, "location":location})
+
+                    serializer = SellerAddressSerializer(data=request_data)
+                    if serializer.is_valid():
+                        serializer.save()
+                        return Response(serializer.data, status=status.HTTP_200_OK)
+                    else:
+                        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    return Response({"address_error":"Wrong Street Address"}, status=status.HTTP_404_NOT_FOUND)
+            # If using latitude and longitude
+            elif latitude and longitude:
+                location = geolocator.reverse(query=(latitude, longitude))
+                address_components = location.raw['address_components']
+                # print(address_components)
+                cities = [addr['long_name'] for addr in address_components if 'locality' in addr['types']]
+                countries = [addr['long_name'] for addr in address_components if 'country' in addr['types']]
+                
+                street_address = location.address
+                city = cities[0]
+                country = countries[0]
+                location = "%s, %s" % (latitude,longitude)
+
+                request_data = QueryDict(mutable=True)
+                request_data.update({"street_address":street_address, "city": city, "country": country, "seller":seller.id, "location": location})
+
+                serializer = SellerAddressSerializer(data=request_data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
+        return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+
+            

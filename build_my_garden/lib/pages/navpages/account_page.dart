@@ -55,7 +55,10 @@ class _AccountPageState extends State<AccountPage> {
                         height: 12,
                       ),
                       ResponsiveButton(
-                        onPress: () => addSellerDialog(context),
+                        onPress: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => addSellerPage())),
                         text: "Create Profile",
                         width: 200,
                       )
@@ -76,7 +79,7 @@ class _AccountPageState extends State<AccountPage> {
                           width: displayWidth(context),
                           height: 180,
                           child: Image.network(
-                            "$baseUrl${seller.profile_picture}",
+                            "$baseUrl${seller.dashboard_image}",
                             fit: BoxFit.cover,
                           ),
                           // child: Image(
