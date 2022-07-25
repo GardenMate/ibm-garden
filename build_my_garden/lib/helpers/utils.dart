@@ -24,7 +24,7 @@ class Utils {
           subCategories: []),
       category.Category(
           color: AppColors.fourth,
-          name: "Save your Soil",
+          name: "Save our Soil",
           imgName: "img4",
           subCategories: [])
     ];

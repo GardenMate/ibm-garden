@@ -71,6 +71,10 @@ flutter:
     - assets/images/CategoryPageImg/img2.png
     - assets/images/CategoryPageImg/img3.png
     - assets/images/CategoryPageImg/img4.png
+    - assets/images/CategoryPageImg/img1.gif
+    - assets/images/CategoryPageImg/img2.gif
+    - assets/images/CategoryPageImg/img3.gif
+    - assets/images/CategoryPageImg/img4.gif
     - assets/images/CategoryPageImg/img5.gif
     - assets/images/potatoes.png
     - assets/images/tomatoes.png

@@ -11,6 +11,12 @@ class DetailsPage extends StatelessWidget {
     "Save your Soil"
   ];
   List info = ["Alec", "prana", "Deepak", "Manu"];
+  List images = [
+    "assets/images/CategoryPageImg/img1.gif",
+    "assets/images/CategoryPageImg/img2.gif",
+    "assets/images/CategoryPageImg/img3.gif",
+    "assets/images/CategoryPageImg/img4.gif"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +25,12 @@ class DetailsPage extends StatelessWidget {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
+              title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    
+                  ]
+                  ),
               bottom: PreferredSize(
                 preferredSize: Size.fromHeight(-10),
                 child: Positioned(
@@ -28,11 +40,13 @@ class DetailsPage extends StatelessWidget {
                         child: AppText(
                       text: title[index],
                       size: 20,
-                    )),
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ))
+                    ,
                     width: double.maxFinite,
                     padding: EdgeInsets.only(top: 5, bottom: 10),
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 255, 228, 182),
+                        color: Color.fromARGB(255, 8, 78, 83),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.elliptical(20, 10),
                           topRight: Radius.elliptical(20, 10),
@@ -43,14 +57,13 @@ class DetailsPage extends StatelessWidget {
                 ),
               ),
               pinned: true,
-              backgroundColor: Color.fromARGB(255, 255, 228, 182),
+              backgroundColor: Color.fromARGB(255, 8, 78, 83),
               expandedHeight: 300,
               flexibleSpace: FlexibleSpaceBar(
-                background: Image.asset(
-                  "assets/images/CategoryPageImg/img5.gif",
-                  width: double.maxFinite,
-                  fit: BoxFit.cover,
-                ),
+                background: Image.asset(images[index],
+                    width: double.maxFinite,
+                    fit: BoxFit.cover,
+                    height: double.infinity),
               ),
             ),
             SliverToBoxAdapter(

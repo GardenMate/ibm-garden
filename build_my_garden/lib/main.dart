@@ -186,7 +186,7 @@ class _BottomNavState extends State<BottomNav> {
             backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.energy_savings_leaf),
+            icon: Icon(Icons.local_florist_outlined),
             label: 'Your Plants',
             backgroundColor: Colors.red,
           ),
