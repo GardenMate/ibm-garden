@@ -29,4 +29,11 @@ class SecureStorage {
       return false;
     }
   }
+
+  // Set the city of the user
+  static Future setCity(String city) =>
+      _storage.write(key: 'city', value: city);
+
+  // Store the city of the user
+  static Future<String?> getCity() => _storage.read(key: 'city');
 }
