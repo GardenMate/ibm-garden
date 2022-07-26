@@ -27,21 +27,6 @@ class _MyGardenPageState extends State<MyGardenPage> {
   bool _searched = false;
   String _search = "";
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   plants = plantService.getPlant() as List<Plant>;
-  //   super.initState();
-  // }
-
-  List images_list = [
-    'potatoes.png',
-    'tomatoes.png',
-    'potatoes.png',
-    'Brocooli.png',
-    'onion.png'
-  ];
-
   var months = {
     '1': 'Jan',
     '2': 'Feb',
@@ -138,6 +123,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(25)),
                                     image: DecorationImage(
+                                      fit: BoxFit.cover,
                                       image: NetworkImage(
                                           "$baseUrl${plants[index].image}"),
                                     )),
@@ -276,6 +262,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                                       const BorderRadius.all(
                                                           Radius.circular(25)),
                                                   image: DecorationImage(
+                                                    fit: BoxFit.cover,
                                                     image: NetworkImage(
                                                         "$baseUrl${plants[index].image}"),
                                                   )),
