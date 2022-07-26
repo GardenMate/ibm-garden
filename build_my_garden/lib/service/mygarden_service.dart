@@ -80,6 +80,18 @@ class PlantService {
     print(jsonDecode(response.body));
     return ListOfPlants.fromList(jsonDecode(response.body));
   }
+
+  Future<ListOfPlants> getSearchPlant(String search) async {
+    String? token = await SecureStorage.getToken();
+
+    var response = await http.get(
+        Uri.parse("$baseUrl/api/mygarden/plant/search/?search=$search"),
+        headers: {
+          'Authorization': 'Token $token',
+        });
+
+    return ListOfPlants.fromList(jsonDecode(response.body));
+  }
 }
 
 class ListOfPlants {
