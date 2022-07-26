@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -76,12 +75,22 @@ class PlantService {
         await http.get(Uri.parse("$baseUrl/api/mygarden/plant"), headers: {
       'Authorization': 'Token $token',
     });
-    print(token);
     print(jsonDecode(response.body));
     return ListOfPlants.fromList(jsonDecode(response.body));
   }
-}
 
+  Future<ListOfPlants> getSearchPlant(String search) async {
+    String? token = await SecureStorage.getToken();
+
+    var response = await http.get(
+        Uri.parse("$baseUrl/api/mygarden/plant/search/?search=$search"),
+        headers: {
+          'Authorization': 'Token $token',
+        });
+
+    return ListOfPlants.fromList(jsonDecode(response.body));
+  }
+}
 
 class ListOfPlants {
   List<Plant> plants;
