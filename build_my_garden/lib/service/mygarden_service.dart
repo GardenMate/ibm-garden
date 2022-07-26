@@ -91,6 +91,17 @@ class PlantService {
   }
 }
 
+class SoilServices {
+  Future postSoil() async {
+    String? token = await SecureStorage.getToken();
+
+    var response =
+        await http.post(Uri.parse("$baseUrl/api/mygarden/soil/"), headers: {
+      'Authorization': 'Token $token',
+    });
+  }
+}
+
 class ListOfPlants {
   List<Plant> plants;
   ListOfPlants({required this.plants});
