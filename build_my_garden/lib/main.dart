@@ -237,7 +237,7 @@ class CenterWithButton extends StatelessWidget {
             padding: const EdgeInsets.all(0.0),
             child: ElevatedButton(
                 onPressed: addListing
-                    ? () => addListingDialog(context)
+                    ? () => Navigator.push(context, MaterialPageRoute(builder: ((context) => ListingForm())))
                     : buttonPressed,
                 child: Text('Click')))
       ],
