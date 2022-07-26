@@ -19,7 +19,7 @@ class Utils {
           subCategories: []),
       category.Category(
           color: AppColors.third,
-          name: "Plant and monitor \nyour produce",
+          name: "Boxed Planting \nfor Urban areas",
           imgName: "img3",
           subCategories: []),
       category.Category(

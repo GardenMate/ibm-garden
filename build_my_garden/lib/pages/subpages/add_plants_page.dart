@@ -63,6 +63,7 @@ class _PlantFormState extends State<PlantForm> {
     print(_date);
     print(now);
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: Container(
         width: displayWidth(context),
