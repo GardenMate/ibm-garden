@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -76,7 +75,6 @@ class PlantService {
         await http.get(Uri.parse("$baseUrl/api/mygarden/plant"), headers: {
       'Authorization': 'Token $token',
     });
-    print(token);
     print(jsonDecode(response.body));
     return ListOfPlants.fromList(jsonDecode(response.body));
   }
