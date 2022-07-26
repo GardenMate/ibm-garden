@@ -151,7 +151,13 @@ class _AccountPageState extends State<AccountPage> {
                           ),
                           const Spacer(),
                           ResponsiveButton(
-                            onPress: () => addListingDialog(context),
+                            onPress: () async {
+                              await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) => ListingForm())));
+                              setState(() {});
+                            },
                             text: "+ Add",
                           )
                         ],

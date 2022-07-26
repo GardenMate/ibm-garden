@@ -1,10 +1,14 @@
+from urllib.request import Request
+from requests import request
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from main.models import Plant, Soil
+# from build_my_garden_backend.main.models import PlantType
+from main.models import Plant, Soil, PlantType
 from .serializers import PlantSerializer, SoilSerializer, PlantTypeSerializer
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
+from django.db.models import Q
 
 
 # Create your views here.
@@ -70,3 +74,28 @@ class PlantTypeViews(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    # GET function
+    def get(self,request,format=None):
+        """
+        Return all the plant types
+        """
+        plant_types = PlantType.objects.all()
+        serializer = PlantTypeSerializer(plant_types,many=True)
+        return Response(serializer.data)
+
+class PlantTypeSearchView(APIView):
+    """
+    Search for a plant type by name
+    """
+    permission_classes = [IsAuthenticated]
+    serializer_class = PlantTypeSerializer
+
+    def get(self,request: Request,format=None):
+        search = request.query_params.get('search')
+        if search:
+            plant_types = PlantType.objects.filter(Q(plant_name__icontains = search))
+            serializer = PlantTypeSerializer(plant_types,many=True)
+            
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)

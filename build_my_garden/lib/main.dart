@@ -20,7 +20,7 @@ void main() async {
   bool? isSignedIn = await SecureStorage.getIsSignedIn();
   if (isSignedIn != null) {
 
-    isSignedIn ? runApp(MainApp()) : runApp(MainApp());
+    isSignedIn ? runApp(MainApp()) : runApp(WelcomeApp());
 
   }
   // Allows the app to be full screen
@@ -239,7 +239,7 @@ class CenterWithButton extends StatelessWidget {
             padding: const EdgeInsets.all(0.0),
             child: ElevatedButton(
                 onPressed: addListing
-                    ? () => addListingDialog(context)
+                    ? () => Navigator.push(context, MaterialPageRoute(builder: ((context) => ListingForm())))
                     : buttonPressed,
                 child: Text('Click')))
       ],
