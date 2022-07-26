@@ -13,17 +13,17 @@ class PlantTypeService {
     };
     var response = await http.get(uri, headers: headers);
     var jsonResponse = json.decode(response.body);
-    print(jsonResponse[1]['plant_name']);
     return ListOfPlantTypes.fromJson(jsonResponse);
   }
 
   Future<ListOfPlantTypes> getSearchPlantTypes(String search) async {
     String? token = await SecureStorage.getToken();
-    var uri = Uri.parse("$baseUrl/api/mygarden/planttype/search?search=$search");
+    var uri =
+        Uri.parse("$baseUrl/api/mygarden/planttype/search?search=$search");
     final headers = {
       'Authorization': 'Token $token',
     };
-    var response = await http.get(uri, headers: headers);  
+    var response = await http.get(uri, headers: headers);
     print(response.body);
     return ListOfPlantTypes.fromJson(jsonDecode(response.body));
   }
