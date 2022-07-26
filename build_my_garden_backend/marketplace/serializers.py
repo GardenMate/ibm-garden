@@ -1,7 +1,8 @@
+from pyexpat import model
 from rest_framework import serializers
-
+from location_field.models.plain import PlainLocationField
 from accounts.models import User
-from .models import Listing, ListingImage, SellerInfromation
+from .models import Listing, ListingImage, SellerAddress, SellerInfromation
 from djmoney.contrib.django_rest_framework import MoneyField
 
 
@@ -95,3 +96,8 @@ class SellerInfoPOSTSerializer(serializers.ModelSerializer):
 
         return seller
     
+
+class SellerAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SellerAddress
+        fields = '__all__'
