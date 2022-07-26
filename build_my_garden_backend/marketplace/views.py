@@ -275,4 +275,23 @@ class SellerAddressAPI(APIView):
         return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class LocationAPI(APIView):
+
+    def get(self, request: Request):
+        '''
+        Get city
+        '''     
+        latitude = request.query_params.get("latitude")
+        longitude = request.query_params.get("longitude")
+        if latitude and longitude:
+            location = geolocator.reverse(query=(latitude, longitude))
+            address_components = location.raw['address_components']
+            # print(address_components)
+            print(location.address)
+            cities = [addr['long_name'] for addr in address_components if 'locality' in addr['types']]
             
+            city = cities[0]
+
+            return Response({'city': city}, status=status.HTTP_200_OK)
+        else:
+            return Response({}, status=status.HTTP_404_NOT_FOUND)
