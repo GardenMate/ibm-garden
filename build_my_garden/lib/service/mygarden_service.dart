@@ -75,7 +75,6 @@ class PlantService {
         await http.get(Uri.parse("$baseUrl/api/mygarden/plant"), headers: {
       'Authorization': 'Token $token',
     });
-    print(jsonDecode(response.body));
     return ListOfPlants.fromList(jsonDecode(response.body));
   }
 

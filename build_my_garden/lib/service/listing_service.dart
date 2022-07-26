@@ -17,7 +17,6 @@ class ListingService {
         'Authorization': 'Token $token',
       },
     );
-    print(response.body);
     return ListOfListing.fromList(jsonDecode(response.body));
   }
 
@@ -32,7 +31,6 @@ class ListingService {
         'Authorization': 'Token $token',
       },
     );
-    print(response.body);
     return ListOfListing.fromList(jsonDecode(response.body));
   }
 
@@ -47,7 +45,6 @@ class ListingService {
         'Authorization': 'Token $token',
       },
     );
-    print(response.body);
     return ListOfListing.fromList(jsonDecode(response.body));
   }
 
