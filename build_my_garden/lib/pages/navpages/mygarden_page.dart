@@ -91,7 +91,8 @@ class _MyGardenPageState extends State<MyGardenPage> {
               child: Padding(
                 padding: EdgeInsets.only(right: 8),
                 child: ResponsiveButton(
-                  onPress: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PlantForm())),
+                  onPress: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PlantForm())),
                   text: "+",
                   width: 50,
                   size: 20,

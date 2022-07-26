@@ -1,3 +1,4 @@
+from django.http import QueryDict
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from main.models import Plant, Soil
@@ -5,6 +6,8 @@ from .serializers import PlantSerializer, SoilSerializer, PlantTypeSerializer
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
+from rest_framework.request import Request
+from django.db.models import Q
 
 
 # Create your views here.
@@ -17,8 +20,13 @@ class PlantViews(APIView):
 
     # Post function
     def post(self, request,format=None):
-        request.data['user'] = request.user.id
-        serializer = PlantSerializer(data=request.data)
+        print(request.data)
+        # request.data['user'] = request.user.id
+        request_data = QueryDict(mutable=True)
+        request_data.update(request.data)
+        request_data.update({"user": request.user.id})
+        print(request_data)
+        serializer = PlantSerializer(data=request_data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -70,3 +78,19 @@ class PlantTypeViews(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class PlantSearch(APIView):
+
+    def get(self, request: Request):
+        '''
+        Fetchs search result for my garden plant
+        '''
+        search = request.query_params.get('search')
+        if search:
+            plants = Plant.objects.filter(Q(plant_type__plant_name__icontains=search) | Q(plant_type__plant_description__icontains = search))
+            serializer = PlantSerializer(plants, many=True)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+        return Response({'No search':'No search result'}, status=status.HTTP_200_OK)

@@ -82,7 +82,6 @@ class PlantService {
   }
 }
 
-
 class ListOfPlants {
   List<Plant> plants;
   ListOfPlants({required this.plants});
