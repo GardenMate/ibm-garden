@@ -10,7 +10,12 @@ class DetailsPage extends StatelessWidget {
     "Planting and monitoring your produce",
     "Save your Soil"
   ];
-  List info = ["Alec", "prana", "Deepak", "Manu"];
+  List info = [
+    "An economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.An economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.An economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. \nSuch a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests. \nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. \nSuch a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.",
+    "An economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.An economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.An economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests. \nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. \nSuch a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.",
+    "An economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.",
+    "An economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests.\nAn economically and socially sustainable agriculture system is one that enables farms of all sizes to be profitable and contribute to their local economies. Such a system supports the next generation of farmers, deals fairly with its workers, promotes racial equity and justice, creates access to healthy food for all, and prioritizes people and communities over corporate interests."
+  ];
   List images = [
     "assets/images/CategoryPageImg/img1.gif",
     "assets/images/CategoryPageImg/img2.gif",
@@ -25,13 +30,26 @@ class DetailsPage extends StatelessWidget {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
-              title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                  children: []),
-
+              toolbarHeight: 90,
+              automaticallyImplyLeading: false,
+              title: Row(children: [
+                Container(
+                  margin: EdgeInsets.only(top: 38, left: 6.4, bottom: 17),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 8, 78, 83),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.arrow_back),
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                )
+              ]),
               bottom: PreferredSize(
-                preferredSize: Size.fromHeight(-10),
+                preferredSize: Size.fromHeight(0),
                 child: Positioned(
                   top: 50,
                   child: Container(
@@ -40,9 +58,7 @@ class DetailsPage extends StatelessWidget {
                       text: title[index],
                       size: 20,
                       color: Color.fromARGB(255, 255, 255, 255),
-
                     )),
-
                     width: double.maxFinite,
                     padding: EdgeInsets.only(top: 5, bottom: 10),
                     decoration: BoxDecoration(
@@ -63,22 +79,23 @@ class DetailsPage extends StatelessWidget {
                 background: Image.asset(images[index],
                     width: double.maxFinite,
                     fit: BoxFit.cover,
-                    height: double.infinity),
+                    height: double.maxFinite),
               ),
             ),
             SliverToBoxAdapter(
-                child: Container(
-                    child: Column(
-              children: [
-                Container(
-                  child: Center(
-                    child:
-                        AppText(fontWeight: FontWeight.w300, text: info[index]),
+              child: Container(
+                  child: Column(
+                children: [
+                  Container(
+                    child: Center(
+                      child: AppText(
+                          fontWeight: FontWeight.w300, text: info[index]),
+                    ),
+                    margin: EdgeInsets.only(left: 40, right: 40, top: 20),
                   ),
-                  margin: EdgeInsets.only(left: 40, right: 40, top: 20),
-                )
-              ],
-            )))
+                ],
+              )),
+            ),
           ],
         ));
   }
