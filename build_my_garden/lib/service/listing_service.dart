@@ -30,7 +30,7 @@ class ListingService {
       );
 
       // Get city and store
-      SecureStorage.setCity(jsonDecode(city.body)['city']);
+      await SecureStorage.setCity(jsonDecode(city.body)['city']);
 
       var response = await http.get(
         Uri.parse(

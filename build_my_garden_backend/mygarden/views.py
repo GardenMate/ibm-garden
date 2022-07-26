@@ -52,8 +52,14 @@ class SoilViews(APIView):
 
     # Post Function
     def post(self,request,format=None):
-        request.data['account_id'] = request.user.id
-        serialzer = SoilSerializer(data = request.data)
+        '''
+        Make a soil association for user
+        '''
+        request_data = QueryDict(mutable=True)
+        request_data.update({'soil_type': 1})
+        request_data.update({"user": request.user.id})
+
+        serialzer = SoilSerializer(data = request_data)
         if serialzer.is_valid():
             serialzer.save()
             return Response(serialzer.data,status=status.HTTP_201_CREATED)

@@ -157,20 +157,27 @@ class _PlantFormState extends State<PlantForm> {
             SizedBox(
               height: 30,
               width: 200,
-              child: TextField(
-                controller: _soilTypeController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      width: 0,
-                      style: BorderStyle.none,
-                    ),
-                  ),
-                  fillColor: Color.fromARGB(20, 64, 42, 42),
-                  filled: true,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromARGB(20, 64, 42, 42),
                 ),
+                child: AppText(text: "Loam"),
               ),
+              // child: TextField(
+              //   controller: _soilTypeController,
+              //   decoration: InputDecoration(
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(10),
+              //       borderSide: const BorderSide(
+              //         width: 0,
+              //         style: BorderStyle.none,
+              //       ),
+              //     ),
+              //     fillColor: Color.fromARGB(20, 64, 42, 42),
+              //     filled: true,
+              //   ),
+              // ),
             ),
             AppText(
               text: "Plant's Current Height",
@@ -269,7 +276,8 @@ class _PlantFormState extends State<PlantForm> {
                     var response = await plantService
                         .uploadPlant(
                             _plantTypeController.text,
-                            _soilTypeController.text,
+                            1.toString(),
+                            // _soilTypeController.text,
                             _plantCurrentSizeHeight.text,
                             _plantCurrentSizeWidth.text,
                             _plantDated.text.split(' ')[0])

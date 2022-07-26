@@ -6,6 +6,7 @@ import 'dart:ffi';
 import 'package:build_my_garden/pages/signin_page.dart';
 import 'package:build_my_garden/pages/subpages/about_page.dart';
 import 'package:build_my_garden/service/auth_service.dart';
+import 'package:build_my_garden/service/mygarden_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
@@ -140,8 +141,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       // Save the token in an encrpted storage and set app state as signedin
                       await SecureStorage.setToken(registrationResponse.key);
                       await SecureStorage.setIsSignedIn(true);
-                      // Fix added if we need to remove the ignore
+                      // [To Do] Fix added if we need to remove the ignore
                       // ignore: use_build_context_synchronously
+                      // [To Do] Create a soil page
+                      // Creates a dummy soil
+                      SoilServices soilServices = SoilServices();
+                      await soilServices.postSoil();
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -159,7 +165,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
                 text: "SIGN UP",
                 textColor: Colors.white,
-                buttonColor: Color.fromARGB(255, 156, 222, 155),
+                buttonColor: const Color.fromARGB(255, 15, 81, 86),
                 width: 300,
               ),
               const SizedBox(height: 10),
