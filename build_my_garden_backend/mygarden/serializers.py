@@ -21,18 +21,18 @@ class PlantSerializer(serializers.ModelSerializer):
         model = Plant
         fields = '__all__'
 
-        def create(self, validated_data):
-            # create Plant
-            plant = Plant.objects.create(
-                # user = validated_data['user'],
-                plant_type = validated_data['plant_type'],
-                plant_current_size_height = validated_data['plant_current_size_height'],
-                plant_current_size_spread = validated_data['plant_current_size_spread'],
-                planted_data = validated_data['planted_date'],
-                soil_planted = validated_data['soil_planted'],
-            )
+        # def create(self, validated_data):
+        #     # create Plant
+        #     plant = Plant.objects.create(
+        #         # user = validated_data['user'],
+        #         plant_type = validated_data['plant_type'],
+        #         plant_current_size_height = validated_data['plant_current_size_height'],
+        #         plant_current_size_spread = validated_data['plant_current_size_spread'],
+        #         planted_data = validated_data['planted_date'],
+        #         soil_planted = validated_data['soil_planted'],
+        #     )
 
-            return plant
+        #     return plant
 
 class SoilSerializer(serializers.ModelSerializer):
     class Meta:
