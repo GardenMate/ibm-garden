@@ -63,12 +63,12 @@ class _PlantFormState extends State<PlantForm> {
     print(_date);
     print(now);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 8, 78, 83),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: Container(
         width: displayWidth(context),
         margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               height: 200,
@@ -88,15 +88,17 @@ class _PlantFormState extends State<PlantForm> {
                   width: 200,
                   child: GestureDetector(
                       onTap: () {
-                        plantService.getImage().then((value) => setState(() {}));
+                        plantService
+                            .getImage()
+                            .then((value) => setState(() {}));
                       },
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Color.fromARGB(255, 229, 222, 222),
                         ),
-                        height: 200,
-                        width: 200,
+                        height: double.maxFinite,
+                        width: double.maxFinite,
                         child: plantService.image == null
                             ? Center(child: Text('No image selected'))
                             : ClipRRect(
@@ -117,9 +119,12 @@ class _PlantFormState extends State<PlantForm> {
               height: 10,
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                AppText(text: "Plant Type", color: Colors.white,),
+                AppText(
+                  text: "Plant Type",
+                  color: Color.fromARGB(255, 37, 36, 36),
+                ),
                 SizedBox(
                   height: 30,
                   width: 200,
@@ -133,7 +138,7 @@ class _PlantFormState extends State<PlantForm> {
                           style: BorderStyle.none,
                         ),
                       ),
-                      fillColor: Colors.white,
+                      fillColor: Color.fromARGB(20, 64, 42, 42),
                       filled: true,
                     ),
                   ),
@@ -144,7 +149,10 @@ class _PlantFormState extends State<PlantForm> {
               width: 100,
               height: 10,
             ),
-            AppText(text: "Soil Type", color: Colors.white,),
+            AppText(
+              text: "Soil Type",
+              color: Color.fromARGB(255, 59, 56, 56),
+            ),
             SizedBox(
               height: 30,
               width: 200,
@@ -152,18 +160,21 @@ class _PlantFormState extends State<PlantForm> {
                 controller: _soilTypeController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(
                       width: 0,
                       style: BorderStyle.none,
                     ),
                   ),
-                  fillColor: Colors.white,
+                  fillColor: Color.fromARGB(20, 64, 42, 42),
                   filled: true,
                 ),
               ),
             ),
-            AppText(text: "Plant's Current Height", color: Colors.white,),
+            AppText(
+              text: "Plant's Current Height",
+              color: Color.fromARGB(255, 44, 42, 42),
+            ),
             SizedBox(
               height: 30,
               width: 200,
@@ -171,13 +182,13 @@ class _PlantFormState extends State<PlantForm> {
                 controller: _plantCurrentSizeHeight,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(
                       width: 0,
                       style: BorderStyle.none,
                     ),
                   ),
-                  fillColor: Colors.white,
+                  fillColor: Color.fromARGB(20, 64, 42, 42),
                   filled: true,
                 ),
               ),
@@ -186,7 +197,10 @@ class _PlantFormState extends State<PlantForm> {
               width: 100,
               height: 10,
             ),
-            AppText(text: "Plant's Current Width", color: Colors.white,),
+            AppText(
+              text: "Plant's Current Width",
+              color: Color.fromARGB(255, 46, 43, 43),
+            ),
             SizedBox(
               height: 30,
               width: 200,
@@ -194,13 +208,13 @@ class _PlantFormState extends State<PlantForm> {
                 controller: _plantCurrentSizeWidth,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(
                       width: 0,
                       style: BorderStyle.none,
                     ),
                   ),
-                  fillColor: Colors.white,
+                  fillColor: Color.fromARGB(20, 64, 42, 42),
                   filled: true,
                 ),
               ),
@@ -219,7 +233,7 @@ class _PlantFormState extends State<PlantForm> {
                   text: _date == Null
                       ? "No date selected"
                       : "${_date.year}/${_date.month}/${_date.day}",
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 56, 53, 53),
                   fontWeight: FontWeight.bold,
                 ),
               ],

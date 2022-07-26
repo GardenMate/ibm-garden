@@ -178,7 +178,7 @@ class _DetailListingState extends State<DetailListing> {
                 );
               }),
           Container(
-            margin: EdgeInsets.only(top: 15, left: 16),
+            margin: EdgeInsets.only(top: 31, left: 22),
             decoration: BoxDecoration(
               color: Color.fromARGB(255, 8, 78, 83),
               shape: BoxShape.circle,
