@@ -68,7 +68,6 @@ class ListingSearchView(APIView):
         '''
         Fetchs search result for listing
         '''
-        print(request.query_params)
         search = request.query_params.get('search')
         if search:
             listings = Listing.objects.filter(Q(title__icontains=search) | Q(plant_type__plant_name__icontains=search) | Q(description__icontains = search))

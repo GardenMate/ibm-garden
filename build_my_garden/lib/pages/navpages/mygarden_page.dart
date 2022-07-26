@@ -24,21 +24,8 @@ class _MyGardenPageState extends State<MyGardenPage> {
   PlantService plantService = PlantService();
   late List<Plant> plants;
   TextEditingController _searchController = TextEditingController();
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   plants = plantService.getPlant() as List<Plant>;
-  //   super.initState();
-  // }
-
-  List images_list = [
-    'potatoes.png',
-    'tomatoes.png',
-    'potatoes.png',
-    'Brocooli.png',
-    'onion.png'
-  ];
+  bool _searched = false;
+  String _search = "";
 
   var months = {
     '1': 'Jan',
@@ -66,14 +53,23 @@ class _MyGardenPageState extends State<MyGardenPage> {
         child: Column(
           children: <Widget>[
             Padding(
-                padding: EdgeInsets.only(bottom: 18),
+                padding: const EdgeInsets.only(bottom: 18),
                 child: Container(
                   width: displayWidth(context) * 0.8,
                   margin: const EdgeInsets.symmetric(vertical: 15),
                   child: SearchBar(
                       searchController: _searchController,
-                      onSubmit: (search) {},
-                      onXMarkPress: () {}),
+                      onSubmit: (search) {
+                        _search = search;
+                        _searched = true;
+                        setState(() {});
+                      },
+                      onXMarkPress: () {
+                        _search = "";
+                        _searched = false;
+                        _searchController.clear();
+                        setState(() {});
+                      }),
                 )),
             const Align(
               alignment: Alignment.topLeft,
@@ -89,9 +85,12 @@ class _MyGardenPageState extends State<MyGardenPage> {
             Align(
               alignment: Alignment.topRight,
               child: Padding(
-                padding: EdgeInsets.only(right: 8),
+                padding: const EdgeInsets.only(right: 8),
                 child: ResponsiveButton(
-                  onPress: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PlantForm())),
+                  onPress: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PlantForm())),
                   text: "+",
                   width: 50,
                   size: 20,
@@ -101,7 +100,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
             FutureBuilder<ListOfPlants>(
               future: plantService.getPlant(),
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
+                if (snapshot.hasData && _searched == false) {
                   List<Plant> plants = snapshot.data!.plants;
                   return Expanded(
                       child: ListView.builder(
@@ -124,6 +123,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(25)),
                                     image: DecorationImage(
+                                      fit: BoxFit.cover,
                                       image: NetworkImage(
                                           "$baseUrl${plants[index].image}"),
                                     )),
@@ -147,7 +147,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                 // ignore: prefer_interpolation_to_compose_strings
                                 text:
                                     "Planted: ${months[date.month.toString()]} ${date.day} ${date.year}\nWater Need: Daily",
-                                color: Color.fromARGB(255, 255, 255, 255),
+                                color: const Color.fromARGB(255, 255, 255, 255),
                               ),
                             ),
                             const Positioned(
@@ -166,7 +166,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                               top: 10,
                               right: 20,
                               child: ElevatedButton(
-                                  child: AppText(
+                                  child: const AppText(
                                     text: "Learn More",
                                     size: 12,
                                     color: Color.fromARGB(250, 255, 255, 255),
@@ -194,7 +194,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                 top: 50,
                                 left: 35,
                                 child: Column(
-                                  children: [
+                                  children: const [
                                     AppText(
                                       text: "25",
                                       size: 20,
@@ -225,8 +225,164 @@ class _MyGardenPageState extends State<MyGardenPage> {
                       );
                     },
                   ));
+                } else if (_searched == true) {
+                  return FutureBuilder<ListOfPlants>(
+                      future: plantService.getSearchPlant(_search),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          List<Plant> plants = snapshot.data!.plants;
+                          return Expanded(
+                              child: Column(
+                            children: [
+                              Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: AppText(
+                                      text: "You searched: $_search",
+                                      size: 20)),
+                              Expanded(
+                                child: ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: plants.length,
+                                  itemBuilder: (context, index) {
+                                    var date = DateTime.parse(
+                                        plants[index].planted_date.toString());
+                                    //making the date object
+                                    return Container(
+                                      margin: const EdgeInsets.only(bottom: 10),
+                                      child: SizedBox(
+                                        width: displayWidth(context),
+                                        child: Stack(children: [
+                                          Container(
+                                            height: 140,
+                                            width: displayWidth(context),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(25)),
+                                                  image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: NetworkImage(
+                                                        "$baseUrl${plants[index].image}"),
+                                                  )),
+                                            ),
+                                          ),
+                                          Positioned(
+                                              child: Container(
+                                            padding: const EdgeInsets.only(
+                                                top: 1, bottom: 0),
+                                            height: 135,
+                                            width: displayWidth(context),
+                                            decoration: const BoxDecoration(
+                                                color: Color.fromARGB(
+                                                    79, 34, 35, 31),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(25))),
+                                          )),
+                                          Positioned(
+                                            top: 85,
+                                            bottom: 0,
+                                            right: 10,
+                                            child: AppText(
+                                              // ignore: prefer_interpolation_to_compose_strings
+                                              text:
+                                                  "Planted: ${months[date.month.toString()]} ${date.day} ${date.year}\nWater Need: Daily",
+                                              color: const Color.fromARGB(
+                                                  255, 255, 255, 255),
+                                            ),
+                                          ),
+                                          const Positioned(
+                                            top: 20,
+                                            left: 35,
+                                            child: AppText(
+                                              text: "Status",
+                                              size: 12,
+                                              color: Color.fromARGB(
+                                                  250, 255, 255, 255),
+                                              letterSpacing: 1.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          //Create a new positioned widget to display the learn more text widget on top right of the image
+                                          Positioned(
+                                            top: 10,
+                                            right: 20,
+                                            child: ElevatedButton(
+                                                child: const AppText(
+                                                  text: "Learn More",
+                                                  size: 12,
+                                                  color: Color.fromARGB(
+                                                      250, 255, 255, 255),
+                                                  letterSpacing: 1.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                onPressed: () {}),
+                                          ),
+                                          //Create a new positioned widget to display circle shape to the upper left of the image
+                                          Positioned(
+                                            top: 35,
+                                            left: 15,
+                                            child: Container(
+                                              height: 90,
+                                              width: 90,
+                                              decoration: const BoxDecoration(
+                                                color: Color.fromARGB(
+                                                    217, 255, 255, 255),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(100)),
+                                              ),
+                                            ),
+                                          ),
+                                          //Create a new positioned widget to display text in the center of the circle shape
+                                          Positioned(
+                                              top: 50,
+                                              left: 35,
+                                              child: Column(
+                                                children: const [
+                                                  AppText(
+                                                    text: "25",
+                                                    size: 20,
+                                                    color: Color.fromARGB(
+                                                        249, 0, 0, 0),
+                                                    letterSpacing: 0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  //Create a text widget that is centered and under the previous text widget
+                                                  AppText(
+                                                    text: "Until",
+                                                    size: 12,
+                                                    color: Color.fromARGB(
+                                                        249, 0, 0, 0),
+                                                    letterSpacing: 0,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                                  //Create a text widget that is centered and under the previous text widget
+                                                  AppText(
+                                                    text: "Harvest",
+                                                    size: 12,
+                                                    color: Color.fromARGB(
+                                                        249, 0, 0, 0),
+                                                    letterSpacing: 0,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                                ],
+                                              )),
+                                        ]),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ));
+                        }
+                        return Center(child: CircularProgressIndicator());
+                      });
                 }
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: const CircularProgressIndicator());
               },
             ),
           ],
