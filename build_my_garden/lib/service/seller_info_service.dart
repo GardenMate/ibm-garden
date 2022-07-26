@@ -91,7 +91,6 @@ class SellerInfoService {
         'Authorization': 'Token $token',
       },
     );
-    print(response.body);
     if (jsonDecode(response.body)['no_seller'] != null) {
       print(jsonDecode(response.body)['no_seller']);
       return SellerInfoError.fromJson(jsonDecode(response.body));

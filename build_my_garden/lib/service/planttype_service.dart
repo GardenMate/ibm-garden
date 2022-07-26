@@ -24,7 +24,7 @@ class PlantTypeService {
       'Authorization': 'Token $token',
     };
     var response = await http.get(uri, headers: headers);
-    print(response.body);
+
     return ListOfPlantTypes.fromJson(jsonDecode(response.body));
   }
 }
@@ -42,6 +42,7 @@ class ListOfPlantTypes {
 }
 
 class PlantType {
+  int id;
   String plant_name;
   String plant_scientific_name;
   String? plant_description;
@@ -69,6 +70,7 @@ class PlantType {
   String? plant_how_to_diseases;
 
   PlantType({
+    required this.id,
     required this.plant_name,
     required this.plant_scientific_name,
     this.plant_description,
@@ -98,6 +100,7 @@ class PlantType {
   });
   factory PlantType.fromJson(Map<String, dynamic> json) {
     return PlantType(
+      id: json['id'],
       plant_name: json['plant_name'],
       plant_scientific_name: json['plant_scientific_name'],
       plant_description: json['plant_description'],

@@ -81,7 +81,7 @@ class ListingSearchView(APIView):
 
 class ImageAPI(APIView):
     # serializer_class = ListingImageSerializer
-    parser_classes = [MultiPartParser, FormParser]
+    # parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request: Request):
         '''
@@ -92,14 +92,13 @@ class ImageAPI(APIView):
         # # request_data.update({"listing": 7})
         # print(request_data)
 
-        print('Test')
         serializer = ListingImageSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SellerInfoAPI(APIView):
@@ -175,12 +174,14 @@ class SellerListing(APIView):
             # Serialize and save
             self.serializer_class = ListingPOSTSerializer
             serializer = ListingPOSTSerializer(data=request_data)
-
+            print(request_data)
             if serializer.is_valid():
                 serializer.save()
+                print(serializer.data)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
-                return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+                print(serializer.errors)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
         return Response({"Seller does not exist"}, status=status.HTTP_400_BAD_REQUEST)
     

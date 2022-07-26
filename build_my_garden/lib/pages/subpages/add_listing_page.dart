@@ -36,7 +36,7 @@ class _ListingFormState extends State<ListingForm> {
   AddImageService addImageService = AddImageService();
   PlantTypeService plantTypeService = PlantTypeService();
   late List<PlantType> plantTypes;
-  late int plant_index;
+  int plant_index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +183,7 @@ class _ListingFormState extends State<ListingForm> {
                           builder: (context) => PlantTypePage(),
                         ),
                       );
+
                       setState(() {
                         _typeController.text = plant_index_list[0];
                         plant_index = plant_index_list[1];
