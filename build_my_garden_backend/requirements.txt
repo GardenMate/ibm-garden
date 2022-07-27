@@ -21,14 +21,19 @@ django-money==3.0.0
 django-rest-framework==0.1.0
 djangorestframework==3.13.1
 djangorestframework-simplejwt==5.2.0
+et-xmlfile==1.1.0
+excel2json-3==0.1.6
 geographiclib==1.52
 geopy==2.2.0
 h11==0.13.0
+ibm-cloud-sdk-core==3.15.3
+ibm-watson==6.0.0
 idna==3.3
 joblib==1.1.0
 Markdown==3.3.7
 numpy==1.23.1
 oauthlib==3.2.0
+openpyxl==3.0.10
 outcome==1.2.0
 pandas==1.4.3
 Pillow==9.2.0
@@ -63,4 +68,6 @@ typing_extensions==4.3.0
 tzdata==2022.1
 urllib3==1.26.9
 webdriver-manager==3.8.2
+websocket-client==1.1.0
 wsproto==1.1.0
+xlrd==2.0.1
