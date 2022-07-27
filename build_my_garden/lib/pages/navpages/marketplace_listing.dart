@@ -122,7 +122,7 @@ class _MarketPlaceHomeState extends State<MarketPlaceHome> {
                       return FutureBuilder(
                           future: SecureStorage.getCity(),
                           builder: (context, snapshot) {
-                            city = snapshot.data;
+                            city = null;
                             if (city == null) {
                               latitude = position.latitude;
                               longitude = position.longitude;

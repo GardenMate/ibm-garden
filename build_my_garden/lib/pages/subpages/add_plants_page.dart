@@ -57,6 +57,7 @@ class _PlantFormState extends State<PlantForm> {
   void initState() {
     // TODO: implement initState
     _date = DateTime(now.year, now.month, now.day);
+    _plantDated.text = _date.toString();
 
     super.initState();
   }
@@ -312,15 +313,20 @@ class _PlantFormState extends State<PlantForm> {
                     child: Center(
                       child: ResponsiveButton(
                         onPress: () async {
+                          print(_plantDated.text.split(' ')[0]);
                           var response = await plantService
                               .uploadPlant(
-                                  _plantTypeController.text,
+                                  plant_index.toString(),
                                   _soilTypeController.text,
                                   _plantCurrentSizeHeight.text,
                                   _plantCurrentSizeWidth.text,
                                   _plantDated.text.split(' ')[0])
                               .then((value) {
                             Navigator.pop(context, true);
+                            _plantCurrentSizeHeight.clear();
+                            _plantCurrentSizeWidth.clear();
+                            _plantTypeController.clear();
+
                             setState(() {});
                           });
                         },
