@@ -1,7 +1,5 @@
 // Create the connection between the front and backend using API
 // For signing up and logining in
-import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:build_my_garden/pages/signin_page.dart';
 import 'package:build_my_garden/pages/subpages/about_page.dart';
@@ -14,8 +12,6 @@ import 'package:build_my_garden/widgets/app_text.dart';
 import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import '../main.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -41,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
           width: displayWidth(context),
           height: displayHeight(context),
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: Color.fromARGB(255, 255, 255, 255),
             borderRadius: BorderRadius.all(
               Radius.circular(20.0),
             ),
@@ -152,6 +148,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         SoilServices soilServices = SoilServices();
                         await soilServices.postSoil();
 
+                        // ignore: use_build_context_synchronously
                         Navigator.push(
                             context,
                             MaterialPageRoute(

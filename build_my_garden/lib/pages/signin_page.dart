@@ -30,7 +30,11 @@ class _SignInPageState extends State<SignInPage> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
+
+          
+
           scrollDirection: Axis.vertical,
+
           child: Container(
             margin:
                 const EdgeInsets.only(top: 90, bottom: 90, left: 30, right: 30),
@@ -113,7 +117,11 @@ class _SignInPageState extends State<SignInPage> {
                     },
                     text: "LOGIN",
                     textColor: Colors.white,
+
+                    
+
                     buttonColor: const Color.fromARGB(255, 15, 81, 86),
+
                     width: 300,
                   ),
                   const SizedBox(height: 10),
