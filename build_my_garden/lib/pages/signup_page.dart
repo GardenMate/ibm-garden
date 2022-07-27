@@ -3,6 +3,7 @@
 
 import 'package:build_my_garden/pages/signin_page.dart';
 import 'package:build_my_garden/pages/subpages/about_page.dart';
+import 'package:build_my_garden/pages/subpages/about_page.dart';
 import 'package:build_my_garden/service/auth_service.dart';
 import 'package:build_my_garden/service/mygarden_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';

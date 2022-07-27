@@ -51,19 +51,18 @@ class _PlantFormState extends State<PlantForm> {
   PlantService plantService = PlantService();
   late DateTime now = new DateTime.now();
   late DateTime _date = new DateTime(now.year, now.month, now.day);
-  late int plant_index;
+  int? plant_index;
 
   @override
   void initState() {
     // TODO: implement initState
     _date = DateTime(now.year, now.month, now.day);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_date);
-    print(now);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -251,11 +250,16 @@ class _PlantFormState extends State<PlantForm> {
                   ),
                 ],
               ),
+
               SizedBox(height: 20),
               SizedBox(
                 width: 100,
                 height: 10,
-              ),
+
+            ),
+            
+
+            
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -296,24 +300,6 @@ class _PlantFormState extends State<PlantForm> {
               SizedBox(height: 20),
               Column(
                 children: [
-                  // SizedBox(
-                  //   width: 20,
-                  //   height: 10,
-                  // ),
-                  // ResponsiveButton(
-                  //   text: "Pick a date",
-                  //   onPress: () {
-                  //     showDatePicker(
-                  //       context: context,
-                  //       initialDate: DateTime.now(),
-                  //       firstDate: DateTime(1900),
-                  //       lastDate: DateTime(2100),
-                  //     ).then((date) => setState(() {
-                  //           _date = date!;
-                  //           _plantDated.text = _date.toString();
-                  //         }));
-                  //   },
-                  // ),
                   SizedBox(
                     width: 20,
                     height: 10,

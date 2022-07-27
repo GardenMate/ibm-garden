@@ -110,6 +110,7 @@ class ListingService {
       "location": location,
       "distance_from_location": distanceFromLocation
     });
+    print(response.body);
     return AddListingResponse.fromJson(jsonDecode(response.body));
   }
 }
