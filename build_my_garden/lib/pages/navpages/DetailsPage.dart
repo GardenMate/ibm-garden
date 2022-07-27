@@ -2,7 +2,6 @@ import 'package:build_my_garden/pages/navpages/DetailsPageSpanish.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
 import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
 
 class DetailsPage extends StatefulWidget {
   int index;
@@ -181,8 +180,6 @@ Share this information with friends and family, and help them to start saving th
 '''
   ];
 
-  
-
   List images = [
     "assets/images/CategoryPageImg/img1.gif",
     "assets/images/CategoryPageImg/img2.gif",
@@ -225,7 +222,12 @@ Share this information with friends and family, and help them to start saving th
                       child: ResponsiveButton(
                         text: "Translate",
                         onPress: () async {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPageSpanish(index: widget.index,)));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DetailsPageSpanish(
+                                        index: widget.index,
+                                      )));
                           // if (isPlaying) {
                           //   await audioPlayer.pause();
                           // } else {
