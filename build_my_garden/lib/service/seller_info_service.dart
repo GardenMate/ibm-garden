@@ -91,7 +91,6 @@ class SellerInfoService {
         'Authorization': 'Token $token',
       },
     );
-    print(response.body);
     if (jsonDecode(response.body)['no_seller'] != null) {
       return null;
     } else {

@@ -65,6 +65,7 @@ class _PlantFormState extends State<PlantForm> {
     print(_date);
     print(now);
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: Container(
         width: displayWidth(context),
@@ -174,20 +175,27 @@ class _PlantFormState extends State<PlantForm> {
             SizedBox(
               height: 30,
               width: 200,
-              child: TextField(
-                controller: _soilTypeController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      width: 0,
-                      style: BorderStyle.none,
-                    ),
-                  ),
-                  fillColor: Color.fromARGB(20, 64, 42, 42),
-                  filled: true,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromARGB(20, 64, 42, 42),
                 ),
+                child: AppText(text: "Loam"),
               ),
+              // child: TextField(
+              //   controller: _soilTypeController,
+              //   decoration: InputDecoration(
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(10),
+              //       borderSide: const BorderSide(
+              //         width: 0,
+              //         style: BorderStyle.none,
+              //       ),
+              //     ),
+              //     fillColor: Color.fromARGB(20, 64, 42, 42),
+              //     filled: true,
+              //   ),
+              // ),
             ),
             AppText(
               text: "Plant's Current Height",
@@ -286,8 +294,9 @@ class _PlantFormState extends State<PlantForm> {
                   onPress: () async {
                     var response = await plantService
                         .uploadPlant(
-                            plant_index.toString(),
-                            _soilTypeController.text,
+                            _plantTypeController.text,
+                            1.toString(),
+                            // _soilTypeController.text,
                             _plantCurrentSizeHeight.text,
                             _plantCurrentSizeWidth.text,
                             _date.toString().split(' ')[0])
