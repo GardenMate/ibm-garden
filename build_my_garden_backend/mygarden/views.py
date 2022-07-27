@@ -1,6 +1,7 @@
+from os import stat
 from urllib.request import Request
 from requests import request
-from django.http import QueryDict
+from django.http import JsonResponse, QueryDict
 from rest_framework.views import APIView
 from rest_framework.response import Response
 # from build_my_garden_backend.main.models import PlantType
@@ -11,7 +12,33 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from rest_framework.request import Request
 from django.db.models import Q
+from ibm_watson import LanguageTranslatorV3
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+import json
 
+
+class WatsonView(APIView):
+    def post(self, request:Request):
+
+        print(request.data.get('info'))
+        apikey = 'xr-JuhLUlEGfW2e7ZqBQZV6FPX7B3chHpAhVMaJHXvfb'
+        url = 'https://api.us-south.language-translator.watson.cloud.ibm.com/instances/e73e1236-9397-4324-8003-d183779188ae'
+        authenticator = IAMAuthenticator(f'{apikey}')
+        language_translator = LanguageTranslatorV3(
+        version='2018-05-01',
+        authenticator=authenticator
+        )
+
+        print(request)
+        language_translator.set_service_url(f'{url}')
+        spanish_list = []
+        for x in eval(request.data.get('info')):
+            print(x)
+            translation = language_translator.translate(text=x, model_id="en-es").get_result()
+            spanish_list.append(translation['translations'][0]['translation'])
+
+        
+        return Response({"info":spanish_list}, status=status.HTTP_200_OK)
 
 # Create your views here.
 class PlantViews(APIView):
