@@ -18,7 +18,7 @@ Install all the python dependencies using
 ```
 pip install -r requirements.txt
 ```
-
+```
 ```
 Open powershell in administerative mode and run
 ```
