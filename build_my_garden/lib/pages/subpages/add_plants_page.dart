@@ -133,23 +133,38 @@ class _PlantFormState extends State<PlantForm> {
                     ),
                   ),
                   SizedBox(
-                    height: 30,
-                    width: 200,
-                    child: TextField(
-                      controller: _plantTypeController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            width: 0,
-                            style: BorderStyle.none,
+                      height: 30,
+                      width: 200,
+                      child: GestureDetector(
+                        onTap: () async {
+                          final plant_index_list = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PlantTypePage(),
+                            ),
+                          );
+                          setState(() {
+                            _plantTypeController.text = plant_index_list[0];
+                            plant_index = plant_index_list[1];
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(20, 64, 42, 42),
+                            borderRadius: BorderRadius.circular(10.0),
+                            //     borderSide: const BorderSide(
+                            //         width: 0, style: BorderStyle.none),
+                            // fillColor: Colors.white,
+                            // filled: true,
+                          ),
+                          child: Center(
+                            child: AppText(
+                              text: _plantTypeController.text,
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
                           ),
                         ),
-                        fillColor: Color.fromARGB(20, 64, 42, 42),
-                        filled: true,
-                      ),
-                    ),
-                  )
+                      ))
                 ],
               ),
               SizedBox(height: 20),
@@ -169,19 +184,12 @@ class _PlantFormState extends State<PlantForm> {
                   SizedBox(
                     height: 30,
                     width: 200,
-                    child: TextField(
-                      controller: _soilTypeController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            width: 0,
-                            style: BorderStyle.none,
-                          ),
-                        ),
-                        fillColor: Color.fromARGB(20, 64, 42, 42),
-                        filled: true,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromARGB(20, 64, 42, 42),
                       ),
+                      child: AppText(text: "Loam"),
                     ),
                   ),
                 ],
@@ -250,16 +258,11 @@ class _PlantFormState extends State<PlantForm> {
                   ),
                 ],
               ),
-
               SizedBox(height: 20),
               SizedBox(
                 width: 100,
                 height: 10,
-
-            ),
-            
-
-            
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
