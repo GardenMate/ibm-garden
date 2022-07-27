@@ -42,7 +42,6 @@ class ListingView(APIView):
             location = geolocator.reverse(query=(latitude, longitude))
             address_components = location.raw['address_components']
             # print(address_components)
-            print(location.address)
             cities = [addr['long_name'] for addr in address_components if 'locality' in addr['types']]
             
             city = cities[0]
@@ -122,11 +121,9 @@ class SellerInfoAPI(APIView):
         request.user.first_name = request.data.get('first_name')
         request.user.last_name = request.data.get('last_name')
         request.user.save()
-        print(type(request.data))
         normal_request = {'profile_picture':request.data.get('profile_picture'), 'dashboard_image':request.data.get('dashboard_image'), 'user':request.user.id}
         request_data = QueryDict('',mutable=True)
         request_data.update(normal_request)
-        print(request_data)
         serialzer = SellerInfoPOSTSerializer(data=request_data)
         if serialzer.is_valid():
             # user_serializer.is_valid()
@@ -174,7 +171,6 @@ class SellerListing(APIView):
             # Serialize and save
             self.serializer_class = ListingPOSTSerializer
             serializer = ListingPOSTSerializer(data=request_data)
-            print(request_data)
             if serializer.is_valid():
                 serializer.save()
                 print(serializer.data)
