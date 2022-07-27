@@ -4,6 +4,7 @@ import 'package:build_my_garden/service/add_image_service.dart';
 import 'package:build_my_garden/service/listing_service.dart';
 import 'package:build_my_garden/service/mygarden_service.dart';
 import 'package:build_my_garden/service/planttype_service.dart';
+import 'package:build_my_garden/service/seller_info_service.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_large_text.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:build_my_garden/pages/subpages/add_plant_type_page.dart';
+import 'package:build_my_garden/service/address_service.dart';
 
 TextEditingController _priceController = TextEditingController();
 TextEditingController _titleController = TextEditingController();
@@ -35,6 +37,13 @@ class _ListingFormState extends State<ListingForm> {
   ListingService listingService = ListingService();
   AddImageService addImageService = AddImageService();
   PlantTypeService plantTypeService = PlantTypeService();
+  SellerInfoService sellerInfoService = SellerInfoService();
+  AddressService addressService = AddressService();
+  // ListOfAddress listOfAddress = ListOfAddress(addresses: addressService.getAddress());
+
+  // List<String> streetAddress = [];
+  List<String> units = ["Item", "lbs", "oz", "kg", "g", "ml"];
+  String? seletectUnit = "Item";
   late List<PlantType> plantTypes;
   int plant_index = 0;
 
@@ -241,17 +250,32 @@ class _ListingFormState extends State<ListingForm> {
                     AppText(text: "Unit"),
                     SizedBox(
                       height: 30,
-                      width: 100,
-                      child: TextField(
-                        controller: _unitController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: const BorderSide(
-                                  width: 0, style: BorderStyle.none)),
-                          fillColor: const Color.fromARGB(20, 64, 42, 42),
-                          filled: true,
-                        ),
+                      width: 60,
+                      // child: TextField(
+                      //   controller: _unitController,
+                      //   decoration: InputDecoration(
+                      //     border: OutlineInputBorder(
+                      //         borderRadius: BorderRadius.circular(10.0),
+                      //         borderSide: const BorderSide(
+                      //             width: 0, style: BorderStyle.none)),
+                      //     fillColor: Colors.white,
+                      //     filled: true,
+                      //   ),
+                      // ),
+                      child: DropdownButton<String>(
+                        value: seletectUnit,
+                        items: units.map((item) {
+                          return DropdownMenuItem<String>(
+                            child: Text(item),
+                            value: item,
+                          );
+                        }).toList(),
+                        onChanged: (item) {
+                          setState(() {
+                            seletectUnit = item;
+                            _unitController.text = item!;
+                          });
+                        },
                       ),
                     )
                   ],
@@ -259,19 +283,68 @@ class _ListingFormState extends State<ListingForm> {
               ],
             ),
             AppText(text: "Location"),
+            FutureBuilder<ListOfAddress>(
+              future: addressService.getAddress(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<Address> addresses = snapshot.data!.addresses;
+                  // return ListView.builder(
+                  //   shrinkWrap: true,
+                  //   scrollDirection: Axis.vertical,
+                  //   itemCount: addresses.length,
+                  //   itemBuilder: (context, index) {
+                  //     return Container(
+                  //       child: AppText(text: addresses[index].street_address.toString())
+                  //     );
+                  //   },
+                  // );
+                  return DropdownButton<Address>(
+                    value: addresses[0],
+                    items: addresses.map((item) {
+                      return DropdownMenuItem<Address>(
+                        child: Text(item.street_address.toString()),
+                        value: item,
+                      );
+                    }).toList(),
+                    onChanged: (item) {
+                      setState(() {
+                        _locationController.text = item!.id.toString();
+                        // dummy_address = item!;
+                      });
+                    },
+                  );
+                }
+                return AppText(text: "No Address");
+              },
+            ),
             SizedBox(
               height: 30,
-              child: TextField(
-                controller: _locationController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                      borderSide:
-                          BorderSide(width: 0, style: BorderStyle.none)),
-                  fillColor: const Color.fromARGB(20, 64, 42, 42),
-                  filled: true,
-                ),
-              ),
+              // child: TextField(
+              //   controller: _locationController,
+              //   decoration: InputDecoration(
+              //     border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(15.0),
+              //         borderSide:
+              //             BorderSide(width: 0, style: BorderStyle.none)),
+              //     fillColor: Colors.white,
+              //     filled: true,
+              //   ),
+              // ),
+              // child: DropdownButton<String>(
+              //   value: selectLocation,
+              //   items: .map((item) {
+              //     return DropdownMenuItem<String>(
+              //       child: Text(item),
+              //       value: item,
+              //     );
+              //   }).toList(),
+              //   onChanged: (item) {
+              //     setState(() {
+              //       selectLocation = item;
+              //       _locationController.text = item!;
+              //     });
+              //   },
+              // ),
             ),
             SizedBox(height: 10),
             Container(

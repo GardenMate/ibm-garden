@@ -24,7 +24,6 @@ class PlantTypeService {
       'Authorization': 'Token $token',
     };
     var response = await http.get(uri, headers: headers);
-
     return ListOfPlantTypes.fromJson(jsonDecode(response.body));
   }
 }
