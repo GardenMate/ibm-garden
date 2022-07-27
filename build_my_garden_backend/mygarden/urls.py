@@ -8,6 +8,7 @@ urlpatterns = [
     path('soil/', views.SoilViews.as_view(),name="Soil-API"),
     path('planttype/', views.PlantTypeViews.as_view(),name="PlantType-API"),
     path('planttype/search', views.PlantTypeSearchView.as_view(),name="PlantType-Search-API"),
+    path('watson/', views.WatsonView.as_view(),name="Watson-API"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

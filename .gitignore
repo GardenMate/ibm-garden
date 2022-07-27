@@ -13,6 +13,9 @@ media
 # Backup files # 
 *.bak 
 
+# For removing the API key file in scraper
+scraper/config.py
+
 # If you are using PyCharm # 
 # User-specific stuff
 .idea/**/workspace.xml

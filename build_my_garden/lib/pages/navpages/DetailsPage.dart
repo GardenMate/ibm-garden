@@ -1,9 +1,23 @@
+import 'package:build_my_garden/pages/navpages/DetailsPageSpanish.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
+import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
-class DetailsPage extends StatelessWidget {
+class DetailsPage extends StatefulWidget {
   int index;
+
   DetailsPage({Key? key, required this.index}) : super(key: key);
+
+  @override
+  State<DetailsPage> createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
+  // String apiKey = "G3aORQyrb17Rg6aFAn9Tlu2SiC-JXISM3UebzBDE6N3-";
+  // String ibmUrl =
+  //     "https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/885ec2db-c454-497d-bf9c-813b5c60f619";
+
   List title = [
     "Sustainable Farming Practices",
     "Homemade Compost from your Kitchen",
@@ -166,6 +180,9 @@ Share this information with friends and family, and help them to start saving th
 
 '''
   ];
+
+  
+
   List images = [
     "assets/images/CategoryPageImg/img1.gif",
     "assets/images/CategoryPageImg/img2.gif",
@@ -182,22 +199,47 @@ Share this information with friends and family, and help them to start saving th
             SliverAppBar(
               toolbarHeight: 90,
               automaticallyImplyLeading: false,
-              title: Row(children: [
-                Container(
-                  margin: EdgeInsets.only(top: 38, left: 6.4, bottom: 17),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 8, 78, 83),
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.arrow_back),
-                    color: Color.fromARGB(255, 255, 255, 255),
-                  ),
-                )
-              ]),
+              title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 38, left: 6.4, bottom: 17),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 8, 78, 83),
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back),
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 38, right: 6.4, bottom: 17),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 8, 78, 83),
+                        shape: BoxShape.circle,
+                      ),
+                      child: ResponsiveButton(
+                        text: "Translate",
+                        onPress: () async {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPageSpanish(index: widget.index,)));
+                          // if (isPlaying) {
+                          //   await audioPlayer.pause();
+                          // } else {
+                          //   String url =
+                          //       'https://www2.cs.uic.edu/~i101/SoundFiles/BabyElephantWalk60.wav';
+                          //   await audioPlayer.setSourceUrl(url);
+                          // }
+                          // audioCache.load('hello_world.wav');
+                        },
+                        // icon: Icon(Icons.audiotrack_outlined),
+                        // color: Color.fromARGB(255, 255, 255, 255),
+                      ),
+                    ),
+                  ]),
               bottom: PreferredSize(
                 preferredSize: Size.fromHeight(0),
                 child: Positioned(
@@ -205,7 +247,7 @@ Share this information with friends and family, and help them to start saving th
                   child: Container(
                     child: Center(
                         child: AppText(
-                      text: title[index],
+                      text: title[widget.index],
                       size: 20,
                       color: Color.fromARGB(255, 255, 255, 255),
                     )),
@@ -226,7 +268,7 @@ Share this information with friends and family, and help them to start saving th
               backgroundColor: Color.fromARGB(255, 8, 78, 83),
               expandedHeight: 300,
               flexibleSpace: FlexibleSpaceBar(
-                background: Image.asset(images[index],
+                background: Image.asset(images[widget.index],
                     width: double.maxFinite,
                     fit: BoxFit.cover,
                     height: double.maxFinite),
@@ -239,7 +281,8 @@ Share this information with friends and family, and help them to start saving th
                   Container(
                     child: Center(
                       child: AppText(
-                          fontWeight: FontWeight.w500, text: info[index]),
+                          fontWeight: FontWeight.w500,
+                          text: info[widget.index]),
                     ),
                     margin: EdgeInsets.only(left: 40, right: 40, top: 20),
                   ),
