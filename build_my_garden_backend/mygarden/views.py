@@ -28,6 +28,7 @@ class PlantViews(APIView):
         request_data = QueryDict(mutable=True)
         request_data.update(request.data)
         request_data.update({"user": request.user.id})
+        request_data.update({'soil_planted': request.user.soil.id})
         print(request_data)
         serializer = PlantSerializer(data=request_data)
         if serializer.is_valid():
