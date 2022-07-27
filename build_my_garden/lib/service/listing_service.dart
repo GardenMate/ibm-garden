@@ -5,20 +5,42 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ListingService {
-  Future<ListOfListing> getListing(String latitude, String longitude) async {
+  Future<ListOfListing> getListing(
+      [String? city, String? latitude, String? longitude]) async {
     // Store and reformate token correctly
     String? token = await SecureStorage.getToken();
 
     // Uri parse should always pass the token in the header for authentication
-    var response = await http.get(
-      Uri.parse(
-          '$baseUrl/api/listing/?latitude=$latitude&longitude=$longitude'),
-      headers: {
-        'Authorization': 'Token $token',
-      },
-    );
-    print(response.body);
-    return ListOfListing.fromList(jsonDecode(response.body));
+    if (city != "null") {
+      var response = await http.get(
+        Uri.parse('$baseUrl/api/listing/?city=$city'),
+        headers: {
+          'Authorization': 'Token $token',
+        },
+      );
+      return ListOfListing.fromList(jsonDecode(response.body));
+      // If city is not provided but latitude and longitude is provided
+    } else {
+      var city = await http.get(
+        Uri.parse(
+            '$baseUrl/api/location/?latitude=$latitude&longitude=$longitude'),
+        headers: {
+          'Authorization': 'Token $token',
+        },
+      );
+
+      // Get city and store
+      await SecureStorage.setCity(jsonDecode(city.body)['city']);
+
+      var response = await http.get(
+        Uri.parse(
+            '$baseUrl/api/listing/?latitude=$latitude&longitude=$longitude'),
+        headers: {
+          'Authorization': 'Token $token',
+        },
+      );
+      return ListOfListing.fromList(jsonDecode(response.body));
+    }
   }
 
   Future<ListOfListing> getSellersListing() async {
@@ -32,7 +54,6 @@ class ListingService {
         'Authorization': 'Token $token',
       },
     );
-    print(response.body);
     return ListOfListing.fromList(jsonDecode(response.body));
   }
 
@@ -47,7 +68,6 @@ class ListingService {
         'Authorization': 'Token $token',
       },
     );
-    print(response.body);
     return ListOfListing.fromList(jsonDecode(response.body));
   }
 

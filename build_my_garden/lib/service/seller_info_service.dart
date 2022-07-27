@@ -80,7 +80,7 @@ class SellerInfoService {
     }
   }
 
-  Future<dynamic> getSellerInfo() async {
+  Future<SellerInfo?> getSellerInfo() async {
     // Store and reformate token correctly
     String? token = await SecureStorage.getToken();
 
@@ -91,10 +91,8 @@ class SellerInfoService {
         'Authorization': 'Token $token',
       },
     );
-    print(response.body);
     if (jsonDecode(response.body)['no_seller'] != null) {
-      print(jsonDecode(response.body)['no_seller']);
-      return SellerInfoError.fromJson(jsonDecode(response.body));
+      return null;
     } else {
       return SellerInfo.fromJson(jsonDecode(response.body));
     }
@@ -146,19 +144,21 @@ class SellerInfoService {
       // return SellerInfo.fromJson(jsonDecode(response.body));
     }
   }
+
+  
 }
 // asdlkjglaj
 
 // class ListOfSellerInfo {
-//   List<SellerInfo> SellerInfos;
-//   ListOfSellerInfo({required this.SellerInfos});
+//   List<SellerInfo> sellerInfo;
+//   ListOfSellerInfo({required this.sellerInfo});
 
 //   factory ListOfSellerInfo.fromList(List list) {
 //     List<SellerInfo> _SellerInfos = [];
 //     list.forEach((element) {
 //       _SellerInfos.add(SellerInfo.fromJson(element));
 //     });
-//     return ListOfSellerInfo(SellerInfos: _SellerInfos);
+//     return ListOfSellerInfo(sellerInfo: _SellerInfos);
 //   }
 // }
 

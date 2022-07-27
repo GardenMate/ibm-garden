@@ -13,18 +13,17 @@ class PlantTypeService {
     };
     var response = await http.get(uri, headers: headers);
     var jsonResponse = json.decode(response.body);
-    print(jsonResponse[1]['plant_name']);
     return ListOfPlantTypes.fromJson(jsonResponse);
   }
 
   Future<ListOfPlantTypes> getSearchPlantTypes(String search) async {
     String? token = await SecureStorage.getToken();
-    var uri = Uri.parse("$baseUrl/api/mygarden/planttype/search?search=$search");
+    var uri =
+        Uri.parse("$baseUrl/api/mygarden/planttype/search?search=$search");
     final headers = {
       'Authorization': 'Token $token',
     };
-    var response = await http.get(uri, headers: headers);  
-    print(response.body);
+    var response = await http.get(uri, headers: headers);
     return ListOfPlantTypes.fromJson(jsonDecode(response.body));
   }
 }
@@ -42,6 +41,7 @@ class ListOfPlantTypes {
 }
 
 class PlantType {
+  int id;
   String plant_name;
   String plant_scientific_name;
   String? plant_description;
@@ -69,6 +69,7 @@ class PlantType {
   String? plant_how_to_diseases;
 
   PlantType({
+    required this.id,
     required this.plant_name,
     required this.plant_scientific_name,
     this.plant_description,
@@ -98,6 +99,7 @@ class PlantType {
   });
   factory PlantType.fromJson(Map<String, dynamic> json) {
     return PlantType(
+      id: json['id'],
       plant_name: json['plant_name'],
       plant_scientific_name: json['plant_scientific_name'],
       plant_description: json['plant_description'],

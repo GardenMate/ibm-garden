@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:build_my_garden/pages/subpages/add_plant_type_page.dart';
 import 'package:build_my_garden/service/mygarden_service.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
@@ -50,6 +51,7 @@ class _PlantFormState extends State<PlantForm> {
   PlantService plantService = PlantService();
   late DateTime now = new DateTime.now();
   late DateTime _date = new DateTime(now.year, now.month, now.day);
+  late int plant_index;
 
   @override
   void initState() {

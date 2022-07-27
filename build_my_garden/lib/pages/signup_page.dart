@@ -1,11 +1,10 @@
 // Create the connection between the front and backend using API
 // For signing up and logining in
-import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:build_my_garden/pages/signin_page.dart';
 import 'package:build_my_garden/pages/subpages/about_page.dart';
 import 'package:build_my_garden/service/auth_service.dart';
+import 'package:build_my_garden/service/mygarden_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
@@ -13,7 +12,6 @@ import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../main.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -38,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage> {
           width: displayWidth(context),
           height: displayHeight(context),
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: Color(0xFFFFFF),
             borderRadius: BorderRadius.all(
               Radius.circular(20.0),
             ),
@@ -81,6 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 AppText(text: "New Password", size: 18),
                 const SizedBox(height: 5),
                 TextField(
+                  controller: _passwordController,
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
                       icon: Icon(_secureText
@@ -141,26 +140,31 @@ class _SignUpPageState extends State<SignUpPage> {
                         // Save the token in an encrpted storage and set app state as signedin
                         await SecureStorage.setToken(registrationResponse.key);
                         await SecureStorage.setIsSignedIn(true);
-                        // Fix added if we need to remove the ignore
+                        // [To Do] Fix added if we need to remove the ignore
                         // ignore: use_build_context_synchronously
+                        // [To Do] Create a soil page
+                        // Creates a dummy soil
+                        SoilServices soilServices = SoilServices();
+                        await soilServices.postSoil();
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const AboutPage()));
                       }
                       registrationResponse.email
-                          ?.forEach((element) => print(element));
+                          ?.forEach((element) => print("email: " + element));
                       registrationResponse.username
-                          ?.forEach((element) => print(element));
+                          ?.forEach((element) => print("username: " + element));
                       registrationResponse.password1
-                          ?.forEach((element) => print(element));
-                      registrationResponse.non_field_errors
-                          ?.forEach((element) => print(element));
+                          ?.forEach((element) => print("password: " + element));
+                      registrationResponse.non_field_errors?.forEach(
+                          (element) => print("non_field_error: " + element));
                     }
                   },
                   text: "SIGN UP",
                   textColor: Colors.white,
-                  buttonColor: Color.fromARGB(255, 156, 222, 155),
+                  buttonColor: const Color.fromARGB(255, 15, 81, 86),
                   width: 300,
                 ),
                 const SizedBox(height: 10),

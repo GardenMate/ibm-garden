@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.exceptions import ParseError
 from rest_framework import status
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
-from .models import Listing, SellerAddress, ListingImage
+from .models import Listing, SellerAddress, ListingImage, SellerInfromation
 from django.db.models import Prefetch
 from .serializers import ListingGETSerializer, ListingImageSerializer, ListingPOSTSerializer, SellerAddressSerializer, SellerInfoPOSTSerializer, SellerInfoSerializer, SingleListingGETSerializer
 from geopy.geocoders import GoogleV3
@@ -81,7 +81,7 @@ class ListingSearchView(APIView):
 
 class ImageAPI(APIView):
     # serializer_class = ListingImageSerializer
-    parser_classes = [MultiPartParser, FormParser]
+    # parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request: Request):
         '''
@@ -92,14 +92,13 @@ class ImageAPI(APIView):
         # # request_data.update({"listing": 7})
         # print(request_data)
 
-        print('Test')
         serializer = ListingImageSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SellerInfoAPI(APIView):
@@ -175,12 +174,14 @@ class SellerListing(APIView):
             # Serialize and save
             self.serializer_class = ListingPOSTSerializer
             serializer = ListingPOSTSerializer(data=request_data)
-
+            print(request_data)
             if serializer.is_valid():
                 serializer.save()
+                print(serializer.data)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
-                return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+                print(serializer.errors)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
         return Response({"Seller does not exist"}, status=status.HTTP_400_BAD_REQUEST)
     
@@ -207,6 +208,22 @@ class SingleListing(APIView):
 
 class SellerAddressAPI(APIView):
     serializer_class = SellerAddressSerializer
+
+    def get(self, request: Request):
+        '''
+        Get the address of the seller
+        '''
+
+        id = request.user.id
+        seller = SellerInfromation.objects.filter(user=id)[0]
+
+        sellerAdress = SellerAddress.objects.filter(seller=seller)
+
+        serializer = SellerAddressSerializer(sellerAdress, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+            # return Response({'No Address':'Not Address Existing'}, status=status.HTTP_404_NOT_FOUND)
+        # return Response({'No Seller':'User has no seller account'}, status=status.HTTP_404_NOT_FOUND)
+
 
     def post(self, request: Request):
         '''
@@ -274,4 +291,23 @@ class SellerAddressAPI(APIView):
         return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class LocationAPI(APIView):
+
+    def get(self, request: Request):
+        '''
+        Get city
+        '''     
+        latitude = request.query_params.get("latitude")
+        longitude = request.query_params.get("longitude")
+        if latitude and longitude:
+            location = geolocator.reverse(query=(latitude, longitude))
+            address_components = location.raw['address_components']
+            # print(address_components)
+            print(location.address)
+            cities = [addr['long_name'] for addr in address_components if 'locality' in addr['types']]
             
+            city = cities[0]
+
+            return Response({'city': city}, status=status.HTTP_200_OK)
+        else:
+            return Response({}, status=status.HTTP_404_NOT_FOUND)

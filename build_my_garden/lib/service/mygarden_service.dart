@@ -47,7 +47,7 @@ class PlantService {
     var request = http.MultipartRequest('POST', uri);
     request.fields.addAll({
       'plant_type': plant_type.toString(),
-      'soil_type': soil_planted.toString(),
+      'soil_planted': soil_planted.toString(),
       'plant_current_size_height': plant_current_size_height.toString(),
       'plant_current_size_spread': plant_current_size_spread.toString(),
       'planted_date': planted_date
@@ -75,7 +75,6 @@ class PlantService {
         await http.get(Uri.parse("$baseUrl/api/mygarden/plant"), headers: {
       'Authorization': 'Token $token',
     });
-    print(jsonDecode(response.body));
     return ListOfPlants.fromList(jsonDecode(response.body));
   }
 
@@ -89,6 +88,17 @@ class PlantService {
         });
 
     return ListOfPlants.fromList(jsonDecode(response.body));
+  }
+}
+
+class SoilServices {
+  Future postSoil() async {
+    String? token = await SecureStorage.getToken();
+
+    var response =
+        await http.post(Uri.parse("$baseUrl/api/mygarden/soil/"), headers: {
+      'Authorization': 'Token $token',
+    });
   }
 }
 
