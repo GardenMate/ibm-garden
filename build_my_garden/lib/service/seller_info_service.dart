@@ -80,7 +80,7 @@ class SellerInfoService {
     }
   }
 
-  Future<SellerInfo?> getSellerInfo() async {
+  Future<dynamic> getSellerInfo() async {
     // Store and reformate token correctly
     String? token = await SecureStorage.getToken();
 
@@ -92,7 +92,7 @@ class SellerInfoService {
       },
     );
     if (jsonDecode(response.body)['no_seller'] != null) {
-      return null;
+      return SellerInfoError.fromJson(jsonDecode(response.body));
     } else {
       return SellerInfo.fromJson(jsonDecode(response.body));
     }
@@ -144,8 +144,6 @@ class SellerInfoService {
       // return SellerInfo.fromJson(jsonDecode(response.body));
     }
   }
-
-  
 }
 // asdlkjglaj
 
@@ -212,38 +210,37 @@ class SellerInfoError {
   }
 }
 
+class SellerInfoResponse {
+  dynamic id;
+  dynamic username;
+  dynamic first_name;
+  dynamic last_name;
+  dynamic city;
+  dynamic user;
+  dynamic seller_rating;
+  dynamic no_seller;
 
-// class SellerInfoResponse {
-//   dynamic id;
-//   dynamic username;
-//   dynamic first_name;
-//   dynamic last_name;
-//   dynamic city;
-//   dynamic user;
-//   dynamic seller_rating;
-//   dynamic no_seller;
+  SellerInfoResponse({
+    this.id,
+    this.username,
+    this.first_name,
+    this.last_name,
+    this.city,
+    this.user,
+    this.seller_rating,
+    this.no_seller,
+  });
 
-//   SellerInfoResponse({
-//     this.id,
-//     this.username,
-//     this.first_name,
-//     this.last_name,
-//     this.city,
-//     this.user,
-//     this.seller_rating,
-//     this.no_seller,
-//   });
-
-//   factory SellerInfoResponse.fromJson(mapOfBody) {
-//     return SellerInfoResponse(
-//       id: mapOfBody['id'],
-//       username: mapOfBody['uesrname'],
-//       first_name: mapOfBody['first_name'],
-//       last_name: mapOfBody['last_name'],
-//       city: mapOfBody['city'],
-//       user: mapOfBody['user'],
-//       seller_rating: mapOfBody['seller_rating'],
-//       no_seller: mapOfBody['no_seller'],
-//     );
-//   }
-// }
+  factory SellerInfoResponse.fromJson(mapOfBody) {
+    return SellerInfoResponse(
+      id: mapOfBody['id'],
+      username: mapOfBody['uesrname'],
+      first_name: mapOfBody['first_name'],
+      last_name: mapOfBody['last_name'],
+      city: mapOfBody['city'],
+      user: mapOfBody['user'],
+      seller_rating: mapOfBody['seller_rating'],
+      no_seller: mapOfBody['no_seller'],
+    );
+  }
+}

@@ -45,12 +45,12 @@ class _ListingFormState extends State<ListingForm> {
   List<String> units = ["Item", "lbs", "oz", "kg", "g", "ml"];
   String? seletectUnit = "Item";
   late List<PlantType> plantTypes;
-  int plant_index = 0;
+  int ?plant_index;
 
   @override
   Widget build(BuildContext context) {
     var plantTypeList = plantTypeService.getPlantType();
-
+    _unitController.text = "Item";
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Container(
@@ -287,7 +287,9 @@ class _ListingFormState extends State<ListingForm> {
               future: addressService.getAddress(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+                  
                   List<Address> addresses = snapshot.data!.addresses;
+                  _locationController.text = addresses[0].id.toString();
                   // return ListView.builder(
                   //   shrinkWrap: true,
                   //   scrollDirection: Axis.vertical,

@@ -51,19 +51,18 @@ class _PlantFormState extends State<PlantForm> {
   PlantService plantService = PlantService();
   late DateTime now = new DateTime.now();
   late DateTime _date = new DateTime(now.year, now.month, now.day);
-  late int plant_index;
+  int? plant_index;
 
   @override
   void initState() {
     // TODO: implement initState
     _date = DateTime(now.year, now.month, now.day);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_date);
-    print(now);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -294,9 +293,8 @@ class _PlantFormState extends State<PlantForm> {
                   onPress: () async {
                     var response = await plantService
                         .uploadPlant(
-                            _plantTypeController.text,
-                            1.toString(),
-                            // _soilTypeController.text,
+                            plant_index.toString(),
+                            _soilTypeController.text,
                             _plantCurrentSizeHeight.text,
                             _plantCurrentSizeWidth.text,
                             _date.toString().split(' ')[0])

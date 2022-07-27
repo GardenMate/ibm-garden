@@ -39,7 +39,6 @@ class _AccountPageState extends State<AccountPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var seller = snapshot.data!;
-            print(seller.runtimeType);
             if (seller.runtimeType == SellerInfoError) {
               return Center(
                 child: Container(
