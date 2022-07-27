@@ -29,10 +29,9 @@ class PlantViews(APIView):
         request_data.update(request.data)
         request_data.update({"user": request.user.id})
         soil = request.user.soil.all()
-        print(soil)
         soil = soil.first()
-        print(soil)
-        request_data.update({'soil_planted': soil})
+        
+        request_data.update({'soil_planted': soil.id})
         print(request_data)
         serializer = PlantSerializer(data=request_data)
         if serializer.is_valid():
