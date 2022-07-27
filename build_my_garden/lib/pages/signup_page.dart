@@ -12,7 +12,6 @@ import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
@@ -32,11 +31,12 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          margin: const EdgeInsets.only(top: 90, bottom: 90, left: 30, right: 30),
+          margin:
+              const EdgeInsets.only(top: 90, bottom: 90, left: 30, right: 30),
           width: displayWidth(context),
           height: displayHeight(context),
           decoration: const BoxDecoration(
-            color: Color(0xFFFFFF),
+            color: Color.fromARGB(255, 255, 255, 255),
             borderRadius: BorderRadius.all(
               Radius.circular(20.0),
             ),
@@ -93,8 +93,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15.0),
-                        borderSide:
-                            const BorderSide(width: 0, style: BorderStyle.none)),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
                     fillColor: const Color.fromARGB(20, 64, 42, 42),
                     filled: true,
                   ),
@@ -118,8 +118,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15.0),
-                        borderSide:
-                            const BorderSide(width: 0, style: BorderStyle.none)),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
                     fillColor: const Color.fromARGB(20, 64, 42, 42),
                     filled: true,
                   ),
@@ -147,6 +147,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         SoilServices soilServices = SoilServices();
                         await soilServices.postSoil();
 
+                        // ignore: use_build_context_synchronously
                         Navigator.push(
                             context,
                             MaterialPageRoute(

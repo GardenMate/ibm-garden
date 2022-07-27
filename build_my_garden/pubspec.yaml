@@ -41,6 +41,7 @@ dependencies:
   image_picker: ^0.8.5+3
   flutter_rating_bar: ^4.0.1
   geolocator: ^9.0.1
+  flutter_gifimage: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +77,7 @@ flutter:
     - assets/images/CategoryPageImg/img3.gif
     - assets/images/CategoryPageImg/img4.gif
     - assets/images/CategoryPageImg/img5.gif
+    - assets/images/img6.gif
     - assets/images/potatoes.png
     - assets/images/tomatoes.png
     - assets/images/Brocooli.png
