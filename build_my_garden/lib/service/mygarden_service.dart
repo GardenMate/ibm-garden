@@ -47,7 +47,7 @@ class PlantService {
     var request = http.MultipartRequest('POST', uri);
     request.fields.addAll({
       'plant_type': plant_type.toString(),
-      'soil_type': soil_planted.toString(),
+      'soil_planted': soil_planted.toString(),
       'plant_current_size_height': plant_current_size_height.toString(),
       'plant_current_size_spread': plant_current_size_spread.toString(),
       'planted_date': planted_date

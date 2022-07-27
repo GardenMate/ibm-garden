@@ -81,10 +81,7 @@ class _PlantTypePageState extends State<PlantTypePage> {
                                             plantTypes[index].plant_name;
                                         Navigator.pop(
                                           context,
-                                          [
-                                          plantTypes[index].plant_name,
-                                          index
-                                          ],
+                                          [plantTypes[index].plant_name, index],
                                         );
                                       },
                                     ),

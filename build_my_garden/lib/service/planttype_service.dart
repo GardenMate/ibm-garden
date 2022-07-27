@@ -19,11 +19,12 @@ class PlantTypeService {
 
   Future<ListOfPlantTypes> getSearchPlantTypes(String search) async {
     String? token = await SecureStorage.getToken();
-    var uri = Uri.parse("$baseUrl/api/mygarden/planttype/search?search=$search");
+    var uri =
+        Uri.parse("$baseUrl/api/mygarden/planttype/search?search=$search");
     final headers = {
       'Authorization': 'Token $token',
     };
-    var response = await http.get(uri, headers: headers);  
+    var response = await http.get(uri, headers: headers);
     print(response.body);
     return ListOfPlantTypes.fromJson(jsonDecode(response.body));
   }

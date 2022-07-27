@@ -134,7 +134,7 @@ class _MarketPlaceHomeState extends State<MarketPlaceHome> {
                                         child: InkWell(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
-                                          onTap: () {
+                                          onTap: () async { await
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -144,6 +144,8 @@ class _MarketPlaceHomeState extends State<MarketPlaceHome> {
                                                               listings[index]
                                                                   .id,
                                                         )));
+                                                        setState(() {
+                                                      });
                                           },
                                           child: Container(
                                             height: 150,
@@ -280,8 +282,8 @@ class _MarketPlaceHomeState extends State<MarketPlaceHome> {
                                                                   .all(
                                                               Radius.circular(
                                                                   10)),
-                                                      onTap: () {
-                                                        Navigator.push(
+                                                      onTap: () async{ await
+                                                         Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
                                                                 builder:
@@ -290,6 +292,9 @@ class _MarketPlaceHomeState extends State<MarketPlaceHome> {
                                                                           listingId:
                                                                               listings[index].id,
                                                                         )));
+                                                                        setState(() {
+                                                                          
+                                                                        });
                                                       },
                                                       child: Container(
                                                         height: 150,

@@ -87,10 +87,13 @@ class _MyGardenPageState extends State<MyGardenPage> {
               child: Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: ResponsiveButton(
-                  onPress: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PlantForm())),
+                  onPress: () async {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PlantForm()));
+                            setState(() {});
+                  },
                   text: "+",
                   width: 50,
                   size: 20,
@@ -165,15 +168,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                             Positioned(
                               top: 10,
                               right: 20,
-                              child: ElevatedButton(
-                                  child: const AppText(
-                                    text: "Learn More",
-                                    size: 12,
-                                    color: Color.fromARGB(250, 255, 255, 255),
-                                    letterSpacing: 1.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  onPressed: () {}),
+                              child: ResponsiveButton(onPress: () => {}, text: "Learn More"),
                             ),
                             //Create a new positioned widget to display circle shape to the upper left of the image
                             Positioned(

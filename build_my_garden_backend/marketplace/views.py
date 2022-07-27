@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.exceptions import ParseError
 from rest_framework import status
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
-from .models import Listing, SellerAddress, ListingImage
+from .models import Listing, SellerAddress, ListingImage, SellerInfromation
 from django.db.models import Prefetch
 from .serializers import ListingGETSerializer, ListingImageSerializer, ListingPOSTSerializer, SellerAddressSerializer, SellerInfoPOSTSerializer, SellerInfoSerializer, SingleListingGETSerializer
 from geopy.geocoders import GoogleV3
@@ -207,6 +207,22 @@ class SingleListing(APIView):
 
 class SellerAddressAPI(APIView):
     serializer_class = SellerAddressSerializer
+
+    def get(self, request: Request):
+        '''
+        Get the address of the seller
+        '''
+
+        id = request.user.id
+        seller = SellerInfromation.objects.filter(user=id)[0]
+
+        sellerAdress = SellerAddress.objects.filter(seller=seller)
+
+        serializer = SellerAddressSerializer(sellerAdress, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+            # return Response({'No Address':'Not Address Existing'}, status=status.HTTP_404_NOT_FOUND)
+        # return Response({'No Seller':'User has no seller account'}, status=status.HTTP_404_NOT_FOUND)
+
 
     def post(self, request: Request):
         '''

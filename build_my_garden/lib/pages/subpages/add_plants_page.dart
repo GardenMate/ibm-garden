@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:build_my_garden/pages/subpages/add_plant_type_page.dart';
 import 'package:build_my_garden/service/mygarden_service.dart';
 import 'package:build_my_garden/sizes_helpers.dart';
 import 'package:build_my_garden/widgets/app_text.dart';
@@ -50,6 +51,7 @@ class _PlantFormState extends State<PlantForm> {
   PlantService plantService = PlantService();
   late DateTime now = new DateTime.now();
   late DateTime _date = new DateTime(now.year, now.month, now.day);
+  late int plant_index;
 
   @override
   void initState() {
@@ -128,18 +130,34 @@ class _PlantFormState extends State<PlantForm> {
                 SizedBox(
                   height: 30,
                   width: 200,
-                  child: TextField(
-                    controller: _plantTypeController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
+                  child: GestureDetector(
+                    onTap: () async {
+                      final plant_index_list = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PlantTypePage(),
+                        ),
+                      );
+                      setState(() {
+                        _plantTypeController.text = plant_index_list[0];
+                        plant_index = plant_index_list[1];
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(20, 64, 42, 42),
+                        borderRadius: BorderRadius.circular(10.0),
+                        //     borderSide: const BorderSide(
+                        //         width: 0, style: BorderStyle.none),
+                        // fillColor: Colors.white,
+                        // filled: true,
+                      ),
+                      child: Center(
+                        child: AppText(
+                          text: _plantTypeController.text,
+                          color: Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
-                      fillColor: Color.fromARGB(20, 64, 42, 42),
-                      filled: true,
                     ),
                   ),
                 )
@@ -245,6 +263,7 @@ class _PlantFormState extends State<PlantForm> {
             ResponsiveButton(
               text: "Pick a date",
               onPress: () {
+                print(_plantDated.text.split(" ")[0]);
                 showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
@@ -267,11 +286,11 @@ class _PlantFormState extends State<PlantForm> {
                   onPress: () async {
                     var response = await plantService
                         .uploadPlant(
-                            _plantTypeController.text,
+                            plant_index.toString(),
                             _soilTypeController.text,
                             _plantCurrentSizeHeight.text,
                             _plantCurrentSizeWidth.text,
-                            _plantDated.text.split(' ')[0])
+                            _date.toString().split(' ')[0])
                         .then((value) {
                       Navigator.pop(context, true);
                       setState(() {});
