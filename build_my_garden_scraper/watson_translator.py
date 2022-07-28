@@ -1,16 +1,22 @@
-import config
 
 from ibm_watson import LanguageTranslatorV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 import json
+import os
+from dotenv import load_dotenv
 
-authenticator = IAMAuthenticator(f'{config.apikey}')
+load_dotenv()
+
+apikey = os.getenv("API_KEY")
+url = os.getenv("url")
+
+authenticator = IAMAuthenticator(f'{apikey}')
 language_translator = LanguageTranslatorV3(
     version='2018-05-01',
     authenticator=authenticator
 )
 
-language_translator.set_service_url(f'{config.url}')
+language_translator.set_service_url(f'{url}')
 
 list_str = [
     "Sustainable Farming Practices",
