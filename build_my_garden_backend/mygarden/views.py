@@ -153,7 +153,7 @@ class PlantSearch(APIView):
         search = request.query_params.get('search')
         if search:
             plants = Plant.objects.filter(Q(plant_type__plant_name__icontains=search) | Q(plant_type__plant_description__icontains = search))
-            serializer = PlantSerializer(plants, many=True)
+            serializer = PlantGETSerializer(plants, many=True)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
 
