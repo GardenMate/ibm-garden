@@ -123,6 +123,7 @@ class Plant {
   double plant_current_size_spread;
   String planted_date;
   String image;
+  String harvest_length;
 
   Plant({
     required this.user,
@@ -132,6 +133,7 @@ class Plant {
     required this.plant_current_size_spread,
     required this.planted_date,
     required this.image,
+    required this.harvest_length,
   });
 
   factory Plant.fromJson(map) {
@@ -142,6 +144,7 @@ class Plant {
         plant_current_size_height: map['plant_current_size_height'].toDouble(),
         plant_current_size_spread: map['plant_current_size_spread'].toDouble(),
         planted_date: map['planted_date'],
-        image: map['image']);
+        image: map['image'],
+        harvest_length: map['harvest_length']);
   }
 }
