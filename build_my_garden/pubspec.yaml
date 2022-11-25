@@ -33,6 +33,7 @@ dependencies:
   flutter:
     sdk: flutter
   auto_size_text: ^3.0.0
+  percent_indicator: ^4.0.1
 
 
 

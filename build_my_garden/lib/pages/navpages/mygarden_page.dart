@@ -12,6 +12,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:build_my_garden/service/mygarden_service.dart';
 import 'package:build_my_garden/pages/subpages/add_plants_page.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class MyGardenPage extends StatefulWidget {
   const MyGardenPage({Key? key}) : super(key: key);
@@ -92,7 +93,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const PlantForm()));
-                            setState(() {});
+                    setState(() {});
                   },
                   text: "+",
                   width: 50,
@@ -103,6 +104,9 @@ class _MyGardenPageState extends State<MyGardenPage> {
             FutureBuilder<ListOfPlants>(
               future: plantService.getPlant(),
               builder: (context, snapshot) {
+                // Get the time when the mygarden is loaded
+                DateTime now = DateTime.now();
+
                 if (snapshot.hasData && _searched == false) {
                   List<Plant> plants = snapshot.data!.plants;
                   return Expanded(
@@ -110,8 +114,25 @@ class _MyGardenPageState extends State<MyGardenPage> {
                     scrollDirection: Axis.vertical,
                     itemCount: plants.length,
                     itemBuilder: (context, index) {
+                      var harvestLength;
                       var date =
                           DateTime.parse(plants[index].planted_date.toString());
+
+                      // Change duration string into duration, [TODO]: Create a function
+                      List<String> timePart =
+                          plants[index].harvest_length.split(' ');
+                      if (timePart.length > 1) {
+                        harvestLength = Duration(days: int.parse(timePart[0]));
+                      }
+                      // var harvestLength = Duration(days: plants[index].harvest_length);
+                      var harvestDate = date.add(harvestLength);
+
+                      Duration timeLeft = harvestDate.difference(now);
+
+                      if (int.parse(timeLeft.inDays.toString()) < 0) {
+                        timeLeft = Duration(days: 0);
+                      }
+
                       //making the date object
                       return Container(
                         margin: const EdgeInsets.only(bottom: 10),
@@ -143,62 +164,90 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                       BorderRadius.all(Radius.circular(25))),
                             )),
                             Positioned(
-                              top: 85,
-                              bottom: 0,
-                              right: 10,
-                              child: AppText(
-                                // ignore: prefer_interpolation_to_compose_strings
-                                text:
-                                    "Planted: ${months[date.month.toString()]} ${date.day} ${date.year}\nWater Need: Daily",
-                                color: const Color.fromARGB(255, 255, 255, 255),
+                              top: 75,
+                              bottom: 20,
+                              right: -20,
+                              child: Container(
+                                height: 400,
+                                width: 180,
+                                decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(25))),
+                                child: Center(
+                                  child: AppText(
+                                    // ignore: prefer_interpolation_to_compose_strings
+                                    text:
+                                        "Planted: ${months[date.month.toString()]} ${date.day} ${date.year}\nWater Need: Daily",
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    size: 14,
+                                  ),
+                                ),
                               ),
                             ),
-                            const Positioned(
-                              top: 20,
-                              left: 35,
-                              child: AppText(
-                                text: "Status",
-                                size: 12,
-                                color: Color.fromARGB(250, 255, 255, 255),
-                                letterSpacing: 1.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+
                             //Create a new positioned widget to display the learn more text widget on top right of the image
-                            Positioned(
-                              top: 10,
+                            const Positioned(
                               right: 20,
-                              child: ResponsiveButton(onPress: () => {}, text: "Learn More"),
+                              child: AppLargeText(
+                                text: "...",
+                                color: Colors.white,
+                              ),
                             ),
                             //Create a new positioned widget to display circle shape to the upper left of the image
                             Positioned(
-                              top: 35,
+                              top: 10,
                               left: 15,
                               child: Container(
-                                height: 90,
-                                width: 90,
-                                decoration: const BoxDecoration(
-                                  color: Color.fromARGB(217, 255, 255, 255),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(100)),
+                                child: CircularPercentIndicator(
+                                  radius: 50,
+                                  lineWidth: 12,
+                                  startAngle: 180,
+                                  backgroundColor: Colors.white,
+                                  percent:
+                                      double.parse(timeLeft.inDays.toString()) /
+                                          double.parse(
+                                              harvestLength.inDays.toString()),
+                                  progressColor:
+                                      Color.fromARGB(255, 255, 217, 0),
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                  animation: true,
+                                  header: Container(
+                                    child: const AppText(
+                                      text: "Status",
+                                      size: 12,
+                                      color: Colors.white,
+                                      letterSpacing: 1.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  center: Container(
+                                    height: 77,
+                                    width: 77,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(100)),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                             //Create a new positioned widget to display text in the center of the circle shape
                             Positioned(
-                                top: 50,
-                                left: 35,
+                                top: 45,
+                                left: 40,
                                 child: Column(
-                                  children: const [
+                                  children: [
                                     AppText(
-                                      text: "25",
+                                      text: timeLeft.inDays.toString(),
                                       size: 20,
                                       color: Color.fromARGB(249, 0, 0, 0),
                                       letterSpacing: 0,
                                       fontWeight: FontWeight.bold,
                                     ),
                                     //Create a text widget that is centered and under the previous text widget
-                                    AppText(
+                                    const AppText(
                                       text: "Until",
                                       size: 12,
                                       color: Color.fromARGB(249, 0, 0, 0),
@@ -206,7 +255,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                       fontWeight: FontWeight.normal,
                                     ),
                                     //Create a text widget that is centered and under the previous text widget
-                                    AppText(
+                                    const AppText(
                                       text: "Harvest",
                                       size: 12,
                                       color: Color.fromARGB(249, 0, 0, 0),
@@ -240,8 +289,28 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                   scrollDirection: Axis.vertical,
                                   itemCount: plants.length,
                                   itemBuilder: (context, index) {
+                                    var harvestLength;
                                     var date = DateTime.parse(
                                         plants[index].planted_date.toString());
+
+                                    // Change duration string into duration, [TODO]: Create a function
+                                    List<String> timePart =
+                                        plants[index].harvest_length.split(' ');
+                                    if (timePart.length > 1) {
+                                      harvestLength = Duration(
+                                          days: int.parse(timePart[0]));
+                                    }
+                                    // var harvestLength = Duration(days: plants[index].harvest_length);
+                                    var harvestDate = date.add(harvestLength);
+
+                                    Duration timeLeft =
+                                        harvestDate.difference(now);
+
+                                    if (int.parse(timeLeft.inDays.toString()) <
+                                        0) {
+                                      timeLeft = Duration(days: 0);
+                                    }
+
                                     //making the date object
                                     return Container(
                                       margin: const EdgeInsets.only(bottom: 10),
@@ -276,67 +345,93 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                                     Radius.circular(25))),
                                           )),
                                           Positioned(
-                                            top: 85,
-                                            bottom: 0,
-                                            right: 10,
-                                            child: AppText(
-                                              // ignore: prefer_interpolation_to_compose_strings
-                                              text:
-                                                  "Planted: ${months[date.month.toString()]} ${date.day} ${date.year}\nWater Need: Daily",
-                                              color: const Color.fromARGB(
-                                                  255, 255, 255, 255),
-                                            ),
-                                          ),
-                                          const Positioned(
-                                            top: 20,
-                                            left: 35,
-                                            child: AppText(
-                                              text: "Status",
-                                              size: 12,
-                                              color: Color.fromARGB(
-                                                  250, 255, 255, 255),
-                                              letterSpacing: 1.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          //Create a new positioned widget to display the learn more text widget on top right of the image
-                                          Positioned(
-                                            top: 10,
-                                            right: 20,
-                                            child: ElevatedButton(
-                                                child: const AppText(
-                                                  text: "Learn More",
-                                                  size: 12,
+                                            top: 75,
+                                            bottom: 20,
+                                            right: -20,
+                                            child: Container(
+                                              height: 400,
+                                              width: 180,
+                                              decoration: const BoxDecoration(
                                                   color: Color.fromARGB(
-                                                      250, 255, 255, 255),
-                                                  letterSpacing: 1.0,
-                                                  fontWeight: FontWeight.bold,
+                                                      255, 255, 255, 255),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(25))),
+                                              child: Center(
+                                                child: AppText(
+                                                  // ignore: prefer_interpolation_to_compose_strings
+                                                  text:
+                                                      "Planted: ${months[date.month.toString()]} ${date.day} ${date.year}\nWater Need: Daily",
+                                                  color: Color.fromARGB(
+                                                      255, 0, 0, 0),
+                                                  size: 14,
                                                 ),
-                                                onPressed: () {}),
+                                              ),
+                                            ),
+                                          ),
+
+                                          //Create a new positioned widget to display the learn more text widget on top right of the image
+                                          const Positioned(
+                                            right: 20,
+                                            child: AppLargeText(
+                                              text: "...",
+                                              color: Colors.white,
+                                            ),
                                           ),
                                           //Create a new positioned widget to display circle shape to the upper left of the image
                                           Positioned(
-                                            top: 35,
+                                            top: 10,
                                             left: 15,
                                             child: Container(
-                                              height: 90,
-                                              width: 90,
-                                              decoration: const BoxDecoration(
-                                                color: Color.fromARGB(
-                                                    217, 255, 255, 255),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(100)),
+                                              child: CircularPercentIndicator(
+                                                radius: 50,
+                                                lineWidth: 12,
+                                                startAngle: 180,
+                                                backgroundColor: Colors.white,
+                                                percent: double.parse(timeLeft
+                                                        .inDays
+                                                        .toString()) /
+                                                    double.parse(harvestLength
+                                                        .inDays
+                                                        .toString()),
+                                                progressColor: Color.fromARGB(
+                                                    255, 255, 217, 0),
+                                                circularStrokeCap:
+                                                    CircularStrokeCap.round,
+                                                animation: true,
+                                                header: Container(
+                                                  child: const AppText(
+                                                    text: "Status",
+                                                    size: 12,
+                                                    color: Colors.white,
+                                                    letterSpacing: 1.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                center: Container(
+                                                  height: 77,
+                                                  width: 77,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                100)),
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
                                           //Create a new positioned widget to display text in the center of the circle shape
                                           Positioned(
-                                              top: 50,
-                                              left: 35,
+                                              top: 45,
+                                              left: 40,
                                               child: Column(
-                                                children: const [
+                                                children: [
                                                   AppText(
-                                                    text: "25",
+                                                    text: timeLeft.inDays
+                                                        .toString(),
                                                     size: 20,
                                                     color: Color.fromARGB(
                                                         249, 0, 0, 0),
@@ -344,7 +439,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                   //Create a text widget that is centered and under the previous text widget
-                                                  AppText(
+                                                  const AppText(
                                                     text: "Until",
                                                     size: 12,
                                                     color: Color.fromARGB(
@@ -354,7 +449,7 @@ class _MyGardenPageState extends State<MyGardenPage> {
                                                         FontWeight.normal,
                                                   ),
                                                   //Create a text widget that is centered and under the previous text widget
-                                                  AppText(
+                                                  const AppText(
                                                     text: "Harvest",
                                                     size: 12,
                                                     color: Color.fromARGB(
