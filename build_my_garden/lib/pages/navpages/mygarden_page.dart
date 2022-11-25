@@ -129,6 +129,10 @@ class _MyGardenPageState extends State<MyGardenPage> {
 
                       Duration timeLeft = harvestDate.difference(now);
 
+                      if (int.parse(timeLeft.inDays.toString()) < 0) {
+                        timeLeft = Duration(days: 0);
+                      }
+
                       //making the date object
                       return Container(
                         margin: const EdgeInsets.only(bottom: 10),
@@ -301,6 +305,11 @@ class _MyGardenPageState extends State<MyGardenPage> {
 
                                     Duration timeLeft =
                                         harvestDate.difference(now);
+
+                                    if (int.parse(timeLeft.inDays.toString()) <
+                                        0) {
+                                      timeLeft = Duration(days: 0);
+                                    }
 
                                     //making the date object
                                     return Container(
