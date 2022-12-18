@@ -1,6 +1,5 @@
 // The Signin and Signup app state
 import 'package:build_my_garden/pages/signin_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AuthApp extends StatefulWidget {
@@ -16,9 +15,9 @@ class _AuthAppState extends State<AuthApp> {
     return MaterialApp(
         title: 'Build Your Garden', //The title of the Flutter App
         theme: ThemeData(
-          scaffoldBackgroundColor: Color.fromARGB(255, 255, 228, 182),
+          scaffoldBackgroundColor: const Color.fromARGB(255, 255, 228, 182),
           primarySwatch: Colors.green,
         ),
-        home: SignInPage());
+        home: const SignInPage());
   }
 }

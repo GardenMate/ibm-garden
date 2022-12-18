@@ -1,7 +1,5 @@
 // The welcome app state
 import 'package:build_my_garden/pages/welcome_page.dart';
-import 'package:build_my_garden/service/secure_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeApp extends StatefulWidget {
@@ -19,9 +17,9 @@ class _WelcomeAppState extends State<WelcomeApp> {
     return MaterialApp(
         title: 'Build Your Garden', //The title of the Flutter App
         theme: ThemeData(
-          scaffoldBackgroundColor: Color.fromARGB(255, 255, 228, 182),
+          scaffoldBackgroundColor: const Color.fromARGB(255, 255, 228, 182),
           primarySwatch: Colors.green,
         ), //ThemeData
-        home: WelcomePage()); //Column //Center //Scaffold //MaterialApp
+        home: const WelcomePage()); //Column //Center //Scaffold //MaterialApp
   }
 }
