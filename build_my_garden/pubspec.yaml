@@ -47,6 +47,7 @@ dependencies:
   geolocator: ^9.0.1
   flutter_gifimage: ^1.0.0
   audioplayers: ^1.0.1
+  web_socket_channel: ^2.2.0
 
 dev_dependencies:
   flutter_test:
