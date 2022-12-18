@@ -45,7 +45,6 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28"]
 # Application definition
 
 INSTALLED_APPS = [
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -73,6 +72,10 @@ INSTALLED_APPS = [
     'location_field.apps.DefaultConfig',
     # Money model
     'djmoney',
+    # Chat model
+    'chat',
+    # Include channels
+    'channels',
 ]
 
 SITE_ID = 1
@@ -108,7 +111,16 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'build_my_garden_backend.wsgi.application'
+# WSGI_APPLICATION = 'build_my_garden_backend.wsgi.application'
+
+ASGI_APPLICATION = 'build_my_garden_backend.asgi.application'
+
+# Channel layer
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    }
+}
 
 
 # Database
