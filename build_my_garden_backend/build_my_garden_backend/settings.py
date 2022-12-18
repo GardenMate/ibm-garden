@@ -29,19 +29,20 @@ DEBUG = True
 
 # Adding localhost to the list of allowed host files
 CORS_ORIGIN_WHITELIST = [
-    "http://10.0.2.2", #needed for andriod emulator
+    "http://10.0.2.2",  # needed for andriod emulator
     "http://127.0.0.1",
     "http://localhost",
-    "http://ec2-52-55-157-28.compute-1.amazonaws.com", # aws server address
+    "http://ec2-52-55-157-28.compute-1.amazonaws.com",  # aws server address
 ]
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28", "*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    
+    # 'daphne',
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,7 +70,20 @@ INSTALLED_APPS = [
     'location_field.apps.DefaultConfig',
     # Money model
     'djmoney',
+    # Chat app
+    'chat',
+    # Adding the django channels for the chat app
 ]
+
+# ASGI Application
+ASGI_APPLICATION = 'build_my_garden_backend.asgi.application'
+
+# Channel Layer [TODO: Use Redis as the channel layer for production]
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 SITE_ID = 1
 
@@ -105,6 +119,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'build_my_garden_backend.wsgi.application'
+# Commented out the wsgi application because we are using daphne for the server
 
 
 # Database
@@ -174,7 +189,7 @@ REST_FRAMEWORK = {
     # Allow decimal to be sent as decimal instead of strings
     'COERCE_DECIMAL_TO_STRING': False,
     # Use Django's standard 'django.contrib.auth' permissions
-    'DEFAULT_PERMISSION_CLASSES' : [
+    'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
         # 'rest_framework.authentication.TokenAuthentication',
     ],
