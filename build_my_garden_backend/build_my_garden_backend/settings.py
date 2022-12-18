@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,17 +25,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$0-n@s&s6f4gu%d2n%w*d#=ms&x(y13(gy)8u9f4+94_yraj47'
+# Get the secret key from the .env file
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 # Adding localhost to the list of allowed host files
 CORS_ORIGIN_WHITELIST = [
-    "http://10.0.2.2", #needed for andriod emulator
+    "http://10.0.2.2",  # needed for andriod emulator
     "http://127.0.0.1",
     "http://localhost",
-    "http://ec2-52-55-157-28.compute-1.amazonaws.com", # aws server address
+    "http://ec2-52-55-157-28.compute-1.amazonaws.com",  # aws server address
 ]
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28"]
@@ -41,7 +45,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28"]
 # Application definition
 
 INSTALLED_APPS = [
-    
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -174,7 +178,7 @@ REST_FRAMEWORK = {
     # Allow decimal to be sent as decimal instead of strings
     'COERCE_DECIMAL_TO_STRING': False,
     # Use Django's standard 'django.contrib.auth' permissions
-    'DEFAULT_PERMISSION_CLASSES' : [
+    'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
         # 'rest_framework.authentication.TokenAuthentication',
     ],
