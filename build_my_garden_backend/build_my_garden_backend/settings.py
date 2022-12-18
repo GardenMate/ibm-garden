@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$0-n@s&s6f4gu%d2n%w*d#=ms&x(y13(gy)8u9f4+94_yraj47'
+# Get the secret key from the .env file
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,14 +39,13 @@ CORS_ORIGIN_WHITELIST = [
     "http://ec2-52-55-157-28.compute-1.amazonaws.com",  # aws server address
 ]
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28", "*"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    # 'daphne',
-    'channels',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,20 +73,7 @@ INSTALLED_APPS = [
     'location_field.apps.DefaultConfig',
     # Money model
     'djmoney',
-    # Chat app
-    'chat',
-    # Adding the django channels for the chat app
 ]
-
-# ASGI Application
-ASGI_APPLICATION = 'build_my_garden_backend.asgi.application'
-
-# Channel Layer [TODO: Use Redis as the channel layer for production]
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
-}
 
 SITE_ID = 1
 
@@ -119,7 +109,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'build_my_garden_backend.wsgi.application'
-# Commented out the wsgi application because we are using daphne for the server
 
 
 # Database
