@@ -79,13 +79,6 @@ pip install dj-rest-auth[with_social]
 pip install python-decouple
 ```
 
-Add a `.env` file under build_my_garden_backend and add the following:
-```
-EMAIL_HOST_USER = "ibm.garden@gmail.com"
-EMAIL_PASSWORD = "Welcometoibmgarden123"
-EMAIL_HOST_PASSWORD = "atjefnlzbkcdklep"
-```
-
 For the marketplace things to install
 ```
 pip install django-location-field
