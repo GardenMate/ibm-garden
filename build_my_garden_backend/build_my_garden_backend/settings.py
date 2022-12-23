@@ -73,6 +73,8 @@ INSTALLED_APPS = [
     'location_field.apps.DefaultConfig',
     # Money model
     'djmoney',
+    # Braintree
+    'braintree.apps.BraintreeConfig',
 ]
 
 SITE_ID = 1
@@ -219,3 +221,11 @@ LOCATION_FIELD = {
     'provider.google.api_libraries': '',
     'provider.google.map.type': 'ROADMAP',
 }
+
+# BrainTree Settings
+if DEBUG:
+    
+    BT_ENVIRONMENT = 'sandbox'
+    BT_MERCHANT_ID = config("BT_MERCHANT_ID")
+    BT_PUBLIC_KEY = config("BT_PUBLIC_KEY")
+    BT_PRIVATE_KEY = config("BT_PRIVATE_KEY")
