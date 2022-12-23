@@ -100,3 +100,36 @@ class BraintreePayment:
                 "message": ", ".join([ f'{x.code} - {x.message}' for x in result.errors.deep_errors]),
 				"tran_id": "N/A"
             }
+
+'''
+Produces and returns a list of cards assigned to each user
+'''
+
+class BraintreeData:
+
+    def __init__(self, user) -> None:
+        self.user = user
+
+    def invoices(self):
+        
+        # [TODO] use proper agent_id from account user
+        agent_id = self.user.userprofile.agent_id
+
+        invoices = gateway.transaction.search(
+            braintree.TransactionSearch.customer_id == agent_id
+        )
+
+        invoice_list = [
+            [
+                inv.id,
+                inv.created_at.strftime('%d-%m-%y'),
+                "Catagory",    # Check if it is catagory
+                "inv.amount",
+            ]
+            for inv in invoices.items
+        ]
+
+        if not invoice_list:
+            return None
+            
+        return invoice_list
