@@ -38,4 +38,65 @@ def find_transaction(id):
 '''
 Manage the creation of a Braintree user account
 '''
+# Needs vetting
+# class BraintreeAccount:
 
+#     def __init__(self, user):
+        
+#         self.user = user
+#         # Create Braintree account
+#         agent_account = gateway.customer.create({"email": self.user.username})  # [TODO] Check if username works
+#         agent_account_id = agent_account.customer.id
+
+#         up = self.user
+#         up.agent_id = agent_account_id
+
+'''
+Manage Payments
+'''
+class BraintreePayment:
+    
+    def __init__(self, *args, **kwargs):
+
+        self.user = kwargs.get("user")
+        self.agent_id = kwargs.get("agent_id")
+        self.token = kwargs.get("token")
+        self.amount = kwargs.get("amount")
+        self.card_id = kwargs.get("card_id")
+        self.description = kwargs.get("description")
+        self.currency = kwargs.get("currency")
+        self.set_default = kwargs.get("set_default")
+
+    def create(self):
+
+        payment_method = gateway.payment_method.create({
+            "customer_id": self.agent_id,
+            "payment_method_nonce": self.token,
+            "options": {
+                "make_default": True,
+                "verify_card": True,
+                "fail_on_duplicate_payment_method": True
+            }
+        })
+
+        customer = gateway.customer.find(self.agent_id)
+        temp_list = []
+
+        result = transact({
+            'amount':self.amount,
+            'customer_id':self.agent_id,
+            'options': {
+                'submit_for_settlement': True
+            }
+        })
+
+        if result.is_success or result.transction:
+            return {
+				"message": "Success",
+				"tran_id": result.transaction.id
+			}
+        else:
+            return {
+                "message": ", ".join([ f'{x.code} - {x.message}' for x in result.errors.deep_errors]),
+				"tran_id": "N/A"
+            }
