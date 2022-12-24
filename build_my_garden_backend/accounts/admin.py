@@ -9,7 +9,7 @@ class UserAdmin(BaseUserAdmin):
     # Override the fieldset function to include phone number
     def get_fieldsets(self, request, obj):
         fs = super(UserAdmin, self).get_fieldsets(request, obj)
-        fs[1][1]['fields'] = ('first_name', 'last_name', 'email', 'phone_number',)
+        fs[1][1]['fields'] = ('first_name', 'last_name', 'email', 'phone_number', 'agent_id')
         return fs
 
     add_fieldsets = (
