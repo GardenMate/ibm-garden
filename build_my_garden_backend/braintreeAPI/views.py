@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.http import HttpResponse
 import json
-from .models import Invoicing
+from braintreeAPI.models import Invoicing
 from braintreeAPI import gateway, BraintreeData, BraintreePayment, generate_client_token, transact, find_transaction
 
 # Create your views here.
