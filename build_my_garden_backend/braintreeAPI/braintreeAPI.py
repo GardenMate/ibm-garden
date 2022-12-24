@@ -39,17 +39,19 @@ def find_transaction(id):
 Manage the creation of a Braintree user account
 '''
 # Needs vetting
-# class BraintreeAccount:
+class BraintreeAccount:
 
-#     def __init__(self, user):
+    def __init__(self, user):
         
-#         self.user = user
-#         # Create Braintree account
-#         agent_account = gateway.customer.create({"email": self.user.username})  # [TODO] Check if username works
-#         agent_account_id = agent_account.customer.id
-
-#         up = self.user
-#         up.agent_id = agent_account_id
+        self.user = user
+        # Create Braintree account
+        agent_account = gateway.customer.create({"email": self.user.username})  # [TODO] Check if username works
+        agent_account_id = agent_account.customer.id
+       
+        # up used to save user id
+        up = self.user
+        up.agent_id = agent_account_id
+        up.save()
 
 '''
 Manage Payments
@@ -112,8 +114,8 @@ class BraintreeData:
 
     def invoices(self):
         
-        # [TODO] use proper agent_id from account user
-        agent_id = self.user.userprofile.agent_id
+        # Get agent_id from user model
+        agent_id = self.user.agent_id
 
         invoices = gateway.transaction.search(
             braintree.TransactionSearch.customer_id == agent_id

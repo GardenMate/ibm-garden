@@ -4,7 +4,7 @@ from django.conf import settings
 from django.http import HttpResponse
 import json
 from braintreeAPI.models import Invoicing
-from braintreeAPI import gateway, BraintreeData, BraintreePayment, generate_client_token, transact, find_transaction
+from braintreeAPI import gateway, BraintreeData, BraintreePayment,BraintreeAccount, generate_client_token, transact, find_transaction
 
 # Create your views here.
 
@@ -15,8 +15,7 @@ Cart view
 def cart(request):
 
     user = request.user
-    ### Need agent_id
-    agent_id = ""
+    agent_id = user.agent_id
 
     braintree_client_token = gateway.client_token.generate({"customer_id": agent_id})
 
@@ -45,11 +44,11 @@ def payment(request):
         amount = request.POST.get('amount')
 
         ### Need agent id
-        agent_id = ""
+        agent_id = user.agent_id
 
         if not agent_id:
             # Create a braintree account???
-            pass
+            BraintreeAccount(request.user)
         
         payment = BraintreePayment(
             user=user,
