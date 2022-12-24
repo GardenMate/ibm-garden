@@ -8,6 +8,9 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     phoneNumberRegex = RegexValidator(regex = r"^\+?1?\d{8,15}$")
     phone_number = models.CharField(validators= [phoneNumberRegex], max_length= 16, unique= False)
+    
+    # Agent id is the id used to identify customers in braintree
+    agent_id = models.CharField(max_length=100, null=True, blank=True)
 
 # Don't know why but when I move the imports at the top it does not work
 from django.contrib.auth import get_user_model
