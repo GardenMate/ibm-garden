@@ -74,8 +74,7 @@ INSTALLED_APPS = [
     # Money model
     'djmoney',
     # Braintree
-    'braintree.apps.BraintreeConfig',
-    'braintree',
+    'braintreeAPI.apps.BraintreeapiConfig',
 ]
 
 SITE_ID = 1

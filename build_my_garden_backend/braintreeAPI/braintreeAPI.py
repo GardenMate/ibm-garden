@@ -1,7 +1,7 @@
 from datetime import datetime, date, time, timedelta
 from django.conf import settings
 from accounts.models import User
-from braintree.models import Invoicing
+from braintreeAPI.models import Invoicing
 import braintree
 
 gateway = braintree.BraintreeGateway(
