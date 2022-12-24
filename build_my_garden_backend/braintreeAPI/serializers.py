@@ -8,5 +8,5 @@ class PaymentSerializer(serializers.Serializer):
     paymentMethodNonce = serializers.CharField(max_length=36)
     description = serializers.CharField(max_length=255, required=False)
     currency = serializers.CharField(max_length=100)
-    set_default = serializers.BooleanField(set_default=True)
+    set_default = serializers.BooleanField(default=True)
     amount = serializers.DecimalField(max_digits=10, decimal_places=2)

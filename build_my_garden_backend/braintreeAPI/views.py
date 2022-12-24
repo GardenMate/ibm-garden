@@ -5,8 +5,8 @@ from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 import json
-from braintreeAPI.models import Invoicing
-from braintreeAPI import gateway, BraintreeData, BraintreePayment,BraintreeAccount, generate_client_token, transact, find_transaction
+from .models import Invoicing
+from .braintreeAPI import gateway, BraintreeData, BraintreePayment,BraintreeAccount, generate_client_token, transact, find_transaction
 from .serializers import PaymentSerializer
 
 # Create your views here.

@@ -1,9 +1,9 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-import views
+from .views import PaymentView
 
 urlpatterns = [
-    path('payment/', views.PaymentView.as_view(), name="PaymentAPI"),
+    path('payment/', PaymentView.as_view(), name="PaymentAPI"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
