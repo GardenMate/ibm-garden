@@ -2,9 +2,12 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.http import HttpResponse
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 import json
 from braintreeAPI.models import Invoicing
 from braintreeAPI import gateway, BraintreeData, BraintreePayment,BraintreeAccount, generate_client_token, transact, find_transaction
+from .serializers import PaymentSerializer
 
 # Create your views here.
 
@@ -28,27 +31,29 @@ def cart(request):
 '''
 AJAX function to handle Braintree payment
 '''
-@login_required
-def payment(request):
+class PaymentView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PaymentSerializer
 
-    if request.method == "POST":
+    def post(self, request):
+
+        # Get request.data
+        request_data = request.data
 
         user = request.user
-        token = request.POST.get('braintreeToken', None)
-        card_id = request.POST.get('card_id', None)
-        paymentMethodNonce = request.POST.get('paymentMethodNonce', None)
-        description = request.POST.get("description", None)
-        currency = request.POST.get("currency", None)
-        set_default = request.POST.get("set_default", None)
-
-        amount = request.POST.get('amount')
-
-        ### Need agent id
         agent_id = user.agent_id
 
+        token = request_data.get('braintreeToken', None)
+        card_id = request_data.get('card_id', None)
+        paymentMethodNonce = request_data.get('paymentMethodNonce', None)
+        description = request_data.get("description", None)
+        currency = request_data.get("currency", None)
+        set_default = request_data.get("set_default", None)
+        amount = request_data.get('amount')
+ 
+
         if not agent_id:
-            # Create a braintree account???
-            BraintreeAccount(request.user)
+            agent_id = BraintreeAccount(request.user).agent_account_id
         
         payment = BraintreePayment(
             user=user,
@@ -82,9 +87,3 @@ def payment(request):
                 json.dumps({"result": "error", "message":payment["message"]}),
                 content_type="application/json"
             )
-    else:
-        return HttpResponse(
-			json.dumps({"result": "error"}),
-			content_type="application/json"
-			)
-
