@@ -24,7 +24,8 @@ urlpatterns = [
     path('app/',include('main.urls')),
     path('auth/', include('authentication.urls')),
     path('accounts/', include('accounts.urls')),
-    path('api/', include('marketplace.urls'))
+    path('api/', include('marketplace.urls')),
+    path('api/braintree/', include('braintreeapi.urls')),
 ]
 
 # Paths with /app will be connected to the main app
