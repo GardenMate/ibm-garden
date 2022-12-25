@@ -40,17 +40,19 @@ Manage the creation of a Braintree user account
 '''
 # Needs vetting
 class BraintreeAccount:
+    
+    agent_account_id = None
 
     def __init__(self, user):
         
         self.user = user
         # Create Braintree account
-        agent_account = gateway.customer.create({"email": self.user.username})  # [TODO] Check if username works
-        agent_account_id = agent_account.customer.id
+        agent_account = gateway.customer.create({"email": self.user.email})  # [TODO] Check if username works
+        self.agent_account_id = agent_account.customer.id
        
         # up used to save user id
         up = self.user
-        up.agent_id = agent_account_id
+        up.agent_id = self.agent_account_id
         up.save()
 
 '''
@@ -92,6 +94,7 @@ class BraintreePayment:
             }
         })
 
+        print(result)
         if result.is_success or result.transction:
             return {
 				"message": "Success",

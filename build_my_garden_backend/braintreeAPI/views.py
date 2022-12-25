@@ -36,7 +36,7 @@ class PaymentView(APIView):
     serializer_class = PaymentSerializer
 
     def post(self, request):
-
+        
         # Get request.data
         request_data = request.data
 
@@ -66,7 +66,7 @@ class PaymentView(APIView):
             set_default=set_default
         ).create()
 
-        if payment["message"] == "Perfect":
+        if payment["message"] == "Success":
 
             invoice = Invoicing(
                 user = user,
