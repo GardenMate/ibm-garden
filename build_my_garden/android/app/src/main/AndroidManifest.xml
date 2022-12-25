@@ -34,6 +34,17 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- [TODO] Need to change android:scheme to the proper URL com.gardenmate.gardenmate -->
+                <data android:scheme="com.gardenmate.gardenmate.${applicationId}.braintree" />
+            </intent-filter>
+        </activity>
+        <meta-data android:name="com.google.android.gms.wallet.api.enabled" android:value="true"/>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
