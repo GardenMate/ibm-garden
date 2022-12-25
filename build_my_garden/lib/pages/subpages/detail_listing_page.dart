@@ -7,6 +7,9 @@ import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_braintree/flutter_braintree.dart';
+
+import '../../service/braintree_service.dart';
 
 class DetailListing extends StatefulWidget {
   int listingId;
@@ -20,6 +23,7 @@ class DetailListing extends StatefulWidget {
 class _DetailListingState extends State<DetailListing> {
   ListingService listingService = ListingService();
   int _currentImageIndex = 0;
+  static final String tokenizationKey = 'sandbox_8hxpnkht_kzdtzv2btm4p7s5j';
 
   @override
   Widget build(BuildContext context) {
@@ -153,18 +157,27 @@ class _DetailListingState extends State<DetailListing> {
                             child: ResponsiveButton(
                               buttonColor: Color.fromARGB(255, 8, 78, 83),
                               text: "Buy Now",
-                              onPress: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                          title: Text("Purchase Confirmed"),
-                                          actions: [
-                                            TextButton(
-                                                onPressed: (() =>
-                                                    Navigator.pop(context)),
-                                                child: Text("OK"))
-                                          ],
-                                        ));
+                              onPress: () async {
+                                var request = BraintreeDropInRequest(
+                                  tokenizationKey: tokenizationKey,
+                                  collectDeviceData: true,
+                                  googlePaymentRequest:
+                                      BraintreeGooglePaymentRequest(
+                                    totalPrice: '4.20',
+                                    currencyCode: 'USD',
+                                    billingAddressRequired: false,
+                                  ),
+                                  paypalRequest: BraintreePayPalRequest(
+                                    amount: '4.20',
+                                    displayName: 'Example company',
+                                  ),
+                                  cardEnabled: true,
+                                );
+                                final result =
+                                    await BraintreeDropIn.start(request);
+                                if (result != null) {
+                                  showNonce(result.paymentMethodNonce, context);
+                                }
                               },
                             ),
                           ),

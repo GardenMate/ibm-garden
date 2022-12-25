@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" 
     package="com.example.build_my_garden">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -11,6 +12,7 @@
 
    <application
         android:label="build_my_garden"
+        tools:replace="android:label"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -34,14 +36,16 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+        <activity 
+            android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+            android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- [TODO] Need to change android:scheme to the proper URL com.gardenmate.gardenmate -->
-                <data android:scheme="com.gardenmate.gardenmate.${applicationId}.braintree" />
+                <data android:scheme="${applicationId}.braintree" />
             </intent-filter>
         </activity>
         <meta-data android:name="com.google.android.gms.wallet.api.enabled" android:value="true"/>
