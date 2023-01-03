@@ -6,7 +6,7 @@
 
 Clone the git repo into local system
 ```
-git clone git@github.com:Abemelech/ibm-garden.git
+git clone git@github.com:GardenMate/ibm-garden.git
 ```
 
 Create virutual environment
