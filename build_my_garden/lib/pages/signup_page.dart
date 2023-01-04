@@ -139,6 +139,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     if (registrationResponse != null) {
                       if (registrationResponse.key != null) {
                         // Save the token in an encrpted storage and set app state as signedin
+                        // set the username in the app state
+                        await SecureStorage.setUserName(_usernameController.text);
                         await SecureStorage.setToken(registrationResponse.key);
                         await SecureStorage.setIsSignedIn(true);
                         // [To Do] Fix added if we need to remove the ignore

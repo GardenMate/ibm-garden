@@ -17,6 +17,11 @@
     <script type="text/javascript">
       let url = `ws://${window.location.host}/ws/chat/` + window.location.pathname.split("/")[2] + `/`;
 
+      // Add token to the url from the url query string
+      let token = window.location.search.split("=")[1];
+      url += `?token=${token}`;
+      
+
       console.log(url)
 
       const chatSocket = new WebSocket(url);

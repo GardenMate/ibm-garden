@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:build_my_garden/service/base_url_service.dart';
+import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
@@ -24,6 +25,13 @@ class AuthService {
       "password": password,
     });
     return LoginResponse.fromJson(jsonDecode(response.body));
+  }
+
+  // Authentication the user
+  Future<bool> authenticateUser(String token) async {
+    var response = await http.post(Uri.parse("$baseUrl/accounts/login/"),
+        headers: {"Authorization": "Token $token"});
+    return response.statusCode == 200;
   }
 }
 
@@ -72,6 +80,7 @@ class LoginResponse {
   factory LoginResponse.fromJson(mapOfBody) {
     return LoginResponse(
       key: mapOfBody['key'],
+      // Added username to LoginResponse
       non_field_errors: mapOfBody['non_field_errors'],
     );
   }

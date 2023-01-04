@@ -17,6 +17,7 @@ from channels.routing import URLRouter
 import chat.routing
 # Import the AllowedHostsOriginValidator function from the channels.security module
 from channels.security.websocket import AllowedHostsOriginValidator
+from chat.middleware import TokenAuthMiddleware
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'build_my_garden_backend.settings')
@@ -25,11 +26,12 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 django_asgi_app = get_asgi_application()
 
 
+# Removed the AllowedHostsOriginValidator for testing purposes
 application = ProtocolTypeRouter(
-    {"http": django_asgi_app, "websocket": AllowedHostsOriginValidator(
-        AuthMiddlewareStack(
+    {"http": django_asgi_app, "websocket":
+        TokenAuthMiddleware(
             URLRouter(
                 chat.routing.websocket_urlpatterns
             )
         )
-    )})
+     })
