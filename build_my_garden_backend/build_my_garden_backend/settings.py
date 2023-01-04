@@ -39,7 +39,7 @@ CORS_ORIGIN_WHITELIST = [
     "http://ec2-52-55-157-28.compute-1.amazonaws.com",  # aws server address
 ]
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28", "10.240.64.4"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28", "10.240.64.4", "150.239.166.249"]
 
 
 # Application definition
