@@ -14,12 +14,6 @@ Create virutual environment
 py -m venv venv
 
 ```
-Install all the python dependencies using
-```
-pip install -r requirements.txt
-
-```
-
 Open powershell in administerative mode and run
 ```
 set-executionpolicy RemoteSigned
@@ -27,6 +21,11 @@ set-executionpolicy RemoteSigned
 Then go back to the git directory and cd into venv and execute
 ```
 Scripts\activate
+```
+Install all the python dependencies using
+```
+pip install -r requirements.txt
+
 ```
 To start the venv for the backend django
 To stop the virtual environment
