@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 # Adding localhost to the list of allowed host files
 CORS_ORIGIN_WHITELIST = [
@@ -39,7 +39,7 @@ CORS_ORIGIN_WHITELIST = [
     "http://ec2-52-55-157-28.compute-1.amazonaws.com",  # aws server address
 ]
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28", "10.240.64.4"]
 
 
 # Application definition
