@@ -65,6 +65,7 @@ class BraintreePayment:
         self.user = kwargs.get("user")
         self.agent_id = kwargs.get("agent_id")
         self.token = kwargs.get("token")
+        self.paymentMethodNonce = kwargs.get("paymentMethodNonce")
         self.amount = kwargs.get("amount")
         self.card_id = kwargs.get("card_id")
         self.description = kwargs.get("description")
@@ -88,14 +89,14 @@ class BraintreePayment:
 
         result = transact({
             'amount':self.amount,
-            'customer_id':self.agent_id,
+            "payment_method_nonce": self.token,
             'options': {
                 'submit_for_settlement': True
             }
         })
 
-        print(result)
-        if result.is_success or result.transction:
+
+        if result.is_success:   #  or result.transction removed due to error causing (may need to be added)
             return {
 				"message": "Success",
 				"tran_id": result.transaction.id

@@ -48,6 +48,7 @@ dependencies:
   geolocator: ^9.0.1
   flutter_gifimage: ^1.0.0
   audioplayers: ^1.0.1
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -90,6 +91,7 @@ flutter:
     - assets/images/onion.png
     - assets/images/defaultBackground.png
     - assets/images/Profile-Icon.png
+    - lib/.env # Path to env file
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

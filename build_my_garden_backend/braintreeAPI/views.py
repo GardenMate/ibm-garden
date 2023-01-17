@@ -45,7 +45,7 @@ class PaymentView(APIView):
 
         token = request_data.get('braintreeToken', None)
         card_id = request_data.get('card_id', None)
-        paymentMethodNonce = request_data.get('paymentMethodNonce', None)
+        paymentMethodNonce = request_data.get('paymentMethodNonce', None)   # Need to be used instead of token
         description = request_data.get("description", None)
         currency = request_data.get("currency", None)
         set_default = request_data.get("set_default", None)
@@ -58,8 +58,8 @@ class PaymentView(APIView):
         payment = BraintreePayment(
             user=user,
             agent_id=agent_id,
-            token=token,
-            card_id=card_id,
+            paymentMethodNonce=paymentMethodNonce,    # Token may not be the correct value
+            # card_id=card_id,
             amount=amount,
             description=description,
             currency=currency,

@@ -6,6 +6,7 @@ import 'package:build_my_garden/widgets/app_text.dart';
 import 'package:build_my_garden/widgets/responsive_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_braintree/flutter_braintree.dart';
 
@@ -23,7 +24,7 @@ class DetailListing extends StatefulWidget {
 class _DetailListingState extends State<DetailListing> {
   ListingService listingService = ListingService();
   int _currentImageIndex = 0;
-  static final String tokenizationKey = 'sandbox_8hxpnkht_kzdtzv2btm4p7s5j';
+  static final String? tokenizationKey = dotenv.env['BT_TOKENIZATION_KEY'];
 
   @override
   Widget build(BuildContext context) {
@@ -163,12 +164,12 @@ class _DetailListingState extends State<DetailListing> {
                                   collectDeviceData: true,
                                   googlePaymentRequest:
                                       BraintreeGooglePaymentRequest(
-                                    totalPrice: '4.20',
+                                    totalPrice: '10.00',
                                     currencyCode: 'USD',
                                     billingAddressRequired: false,
                                   ),
                                   paypalRequest: BraintreePayPalRequest(
-                                    amount: '4.20',
+                                    amount: '10.00',
                                     displayName: 'Example company',
                                   ),
                                   cardEnabled: true,
