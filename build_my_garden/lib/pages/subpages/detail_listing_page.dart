@@ -23,6 +23,7 @@ class DetailListing extends StatefulWidget {
 
 class _DetailListingState extends State<DetailListing> {
   ListingService listingService = ListingService();
+  BrainTreeService brainTreeService = BrainTreeService();
   int _currentImageIndex = 0;
   static final String? tokenizationKey = dotenv.env['BT_TOKENIZATION_KEY'];
 
@@ -164,12 +165,12 @@ class _DetailListingState extends State<DetailListing> {
                                   collectDeviceData: true,
                                   googlePaymentRequest:
                                       BraintreeGooglePaymentRequest(
-                                    totalPrice: '10.00',
-                                    currencyCode: 'USD',
+                                    totalPrice: listing.price.toString(),
+                                    currencyCode: listing.price_currency,
                                     billingAddressRequired: false,
                                   ),
                                   paypalRequest: BraintreePayPalRequest(
-                                    amount: '10.00',
+                                    amount: listing.price.toString(),
                                     displayName: 'Example company',
                                   ),
                                   cardEnabled: true,
@@ -177,6 +178,12 @@ class _DetailListingState extends State<DetailListing> {
                                 final result =
                                     await BraintreeDropIn.start(request);
                                 if (result != null) {
+                                  // Send a POST request to Django
+                                  brainTreeService.postPayment(
+                                      result.paymentMethodNonce.nonce,
+                                      listing.price.toString(),
+                                      listing.price_currency);
+
                                   showNonce(result.paymentMethodNonce, context);
                                 }
                               },

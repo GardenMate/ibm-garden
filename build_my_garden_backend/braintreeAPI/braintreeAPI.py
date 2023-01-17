@@ -89,7 +89,7 @@ class BraintreePayment:
 
         result = transact({
             'amount':self.amount,
-            "payment_method_nonce": self.token,
+            "payment_method_nonce": self.paymentMethodNonce,
             'options': {
                 'submit_for_settlement': True
             }
