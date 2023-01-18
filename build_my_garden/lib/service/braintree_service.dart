@@ -42,7 +42,8 @@ class PaymentResponse {
   }
 }
 
-void showNonce(BraintreePaymentMethodNonce nonce, context) {
+void showNonce(
+    BraintreePaymentMethodNonce nonce, PaymentResponse response, context) {
   showDialog(
     context: context,
     builder: (_) => AlertDialog(
@@ -51,6 +52,10 @@ void showNonce(BraintreePaymentMethodNonce nonce, context) {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
+          Text('Result: ${response.result}'),
+          SizedBox(height: 16),
+          Text('Message: ${response.message}'),
+          SizedBox(height: 16),
           Text('Nonce: ${nonce.nonce}'),
           SizedBox(height: 16),
           Text('Type label: ${nonce.typeLabel}'),

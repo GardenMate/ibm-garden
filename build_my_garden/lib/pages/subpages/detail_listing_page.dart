@@ -179,12 +179,13 @@ class _DetailListingState extends State<DetailListing> {
                                     await BraintreeDropIn.start(request);
                                 if (result != null) {
                                   // Send a POST request to Django
-                                  brainTreeService.postPayment(
-                                      result.paymentMethodNonce.nonce,
-                                      listing.price.toString(),
-                                      listing.price_currency);
-
-                                  showNonce(result.paymentMethodNonce, context);
+                                  PaymentResponse response =
+                                      await brainTreeService.postPayment(
+                                          result.paymentMethodNonce.nonce,
+                                          listing.price.toString(),
+                                          listing.price_currency);
+                                  showNonce(result.paymentMethodNonce, response,
+                                      context);
                                 }
                               },
                             ),
