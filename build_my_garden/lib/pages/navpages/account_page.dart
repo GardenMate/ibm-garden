@@ -15,6 +15,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:build_my_garden/pages/navpages/account_page.dart';
+import 'package:build_my_garden/pages/subpages/message_page.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -137,7 +138,10 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                   const SizedBox(height: 5),
                   ResponsiveButton(
-                    onPress: () => {},
+                    onPress: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChatSystem())),
                     text: "Message",
                   ),
                   Container(
