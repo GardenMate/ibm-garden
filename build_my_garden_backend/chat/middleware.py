@@ -1,17 +1,20 @@
 from django.contrib.auth.models import AnonymousUser
-
 from rest_framework.authtoken.models import Token
-
 from channels.auth import AuthMiddlewareStack
+from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
+
 
 import urllib.parse
 
 @database_sync_to_async
 def get_user(token):
     try:
+        Token.objects.all()
         token = Token.objects.get(key=token)
+    
         return token.user
+
     except Token.DoesNotExist:
         return AnonymousUser()
 
@@ -37,6 +40,7 @@ class TokenAuthMiddlewareInstance:
         if b'token' in decoded_qs:
           token = decoded_qs.get(b'token').pop().decode()
           self.scope['user'] = await get_user(token)
+        
         return await self.inner(self.scope, receive, send)
 
 

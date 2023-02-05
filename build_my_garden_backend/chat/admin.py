@@ -1,8 +1,15 @@
 from django.contrib import admin
-from .models import ChatUserList, Messages, ChatList, TokenManager
-# Register your models here.
+from chat.models import Messages, Thread
 
-admin.site.register(ChatUserList)
-admin.site.register(Messages)
-admin.site.register(ChatList)
-admin.site.register(TokenManager)
+
+class MessageInline(admin.StackedInline):
+    model = Messages
+    fields = ('sender', 'text', 'timestamp')
+    readonly_fields = ('sender', 'text', 'created_at')
+
+
+class ThreadAdmin(admin.ModelAdmin):
+    model = Thread
+    inlines = (MessageInline,)
+
+admin.site.register(Thread, ThreadAdmin)
