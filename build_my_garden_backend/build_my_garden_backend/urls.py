@@ -25,6 +25,7 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),
     path('accounts/', include('accounts.urls')),
     path('api/', include('marketplace.urls')),
+    path('api/braintree/', include('braintreeAPI.urls')),
     path('chat/', include('chat.urls')),
 ]
 

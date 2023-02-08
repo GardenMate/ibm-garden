@@ -45,6 +45,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28", 'ws://127
 # Application definition
 
 INSTALLED_APPS = [
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -72,6 +73,9 @@ INSTALLED_APPS = [
     'location_field.apps.DefaultConfig',
     # Money model
     'djmoney',
+    # Braintree
+    'braintreeAPI.apps.BraintreeapiConfig',
+    'braintree',
     # Chat model
     'chat',
     # Include channels
@@ -121,7 +125,6 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer",
     }
 }
-
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -231,3 +234,11 @@ LOCATION_FIELD = {
     'provider.google.api_libraries': '',
     'provider.google.map.type': 'ROADMAP',
 }
+
+# BrainTree Settings
+if DEBUG:
+    
+    BT_ENVIRONMENT = 'sandbox'
+    BT_MERCHANT_ID = config("BT_MERCHANT_ID")
+    BT_PUBLIC_KEY = config("BT_PUBLIC_KEY")
+    BT_PRIVATE_KEY = config("BT_PRIVATE_KEY")
