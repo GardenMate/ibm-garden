@@ -34,6 +34,15 @@ class PlantSerializer(serializers.ModelSerializer):
 
         #     return plant
 
+class PlantGETSerializer(serializers.ModelSerializer):
+    class Meta:
+        # user = UserSerializer()
+        plant_type = PlantTypeSerializer()
+        model = Plant
+        fields = '__all__'
+
+    harvest_length = serializers.DurationField(source='plant_type.plant_harvest_length')
+
 class SoilSerializer(serializers.ModelSerializer):
     class Meta:
         model = Soil

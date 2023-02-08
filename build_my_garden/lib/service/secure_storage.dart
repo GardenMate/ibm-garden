@@ -9,6 +9,14 @@ class SecureStorage {
 
   static final _storage = FlutterSecureStorage();
 
+  // To store user id
+  static Future setUserName(String userName) async =>
+      await _storage.write(key: 'userName', value: userName);
+
+  // To access stored user id
+  static Future<String?> getUserName() async =>
+      await _storage.read(key: 'userName');
+
   // To store access token
   static Future setToken(String token) async =>
       await _storage.write(key: 'token', value: token);

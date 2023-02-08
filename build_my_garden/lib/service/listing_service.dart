@@ -128,7 +128,10 @@ class ListOfListing {
   }
 }
 
+// Adding a class called listing 
+// This class will be used to store the data from the API
 class Listing {
+  // Different variables that will be used to store the data from the API
   int id;
   String title;
   String description;
@@ -144,6 +147,7 @@ class Listing {
   String address;
   String image;
 
+  // Constructor for the class
   Listing({
     required this.id,
     required this.title,
@@ -161,6 +165,7 @@ class Listing {
     required this.image,
   });
 
+  // This function will be used to convert the json data from the API into a class
   factory Listing.fromJson(map) {
     return Listing(
       id: map['id'],
@@ -181,6 +186,7 @@ class Listing {
   }
 }
 
+// Adding a class called listing
 class AddListingResponse {
   dynamic id;
 
@@ -191,6 +197,7 @@ class AddListingResponse {
   }
 }
 
+// Adding a class called listing
 class SingleListing {
   int id;
   String title;

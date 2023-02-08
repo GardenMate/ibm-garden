@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 # from build_my_garden_backend.main.models import PlantType
 from main.models import Plant, Soil, PlantType
-from .serializers import PlantSerializer, SoilSerializer, PlantTypeSerializer
+from .serializers import PlantGETSerializer, PlantSerializer, SoilSerializer, PlantTypeSerializer
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
@@ -73,7 +73,7 @@ class PlantViews(APIView):
         Return all the plants of the user
         """
         plants = Plant.objects.filter(user=request_user)
-        serializer = PlantSerializer(plants,many=True)
+        serializer = PlantGETSerializer(plants,many=True)
         return Response(serializer.data)
 
 # Creating a GET request for the Soil Model
@@ -153,7 +153,7 @@ class PlantSearch(APIView):
         search = request.query_params.get('search')
         if search:
             plants = Plant.objects.filter(Q(plant_type__plant_name__icontains=search) | Q(plant_type__plant_description__icontains = search))
-            serializer = PlantSerializer(plants, many=True)
+            serializer = PlantGETSerializer(plants, many=True)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
 

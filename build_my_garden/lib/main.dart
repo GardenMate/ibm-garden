@@ -19,7 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   bool? isSignedIn = await SecureStorage.getIsSignedIn();
   if (isSignedIn != null) {
-    isSignedIn ? runApp(MainApp()) : runApp(WelcomeApp());
+    isSignedIn ? runApp(WelcomeApp()) : runApp(WelcomeApp());
   }
   // Allows the app to be full screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
@@ -183,22 +183,22 @@ class _BottomNavState extends State<BottomNav> {
           BottomNavigationBarItem(
             icon: Icon(Icons.library_books),
             label: 'Learn',
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.blueGrey,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_florist_outlined),
             label: 'Your Plants',
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.redAccent,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_bag_rounded),
             label: 'Marketplace',
-            backgroundColor: Colors.yellow,
+            backgroundColor: Colors.yellowAccent,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             label: 'Account',
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.greenAccent,
           ),
         ]);
   }

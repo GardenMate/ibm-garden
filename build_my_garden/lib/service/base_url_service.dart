@@ -5,3 +5,7 @@
 
 // For Testing level
 String baseUrl = "http://10.0.2.2:8000";
+
+// Base url for websocket
+String baseUrlWebsocket = "ws://10.0.2.2:8000";
+

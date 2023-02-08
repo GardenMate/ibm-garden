@@ -11,7 +11,10 @@ import 'package:image_picker/image_picker.dart';
 //   print(listOfPlants.plants[0].user);
 // }
 
+
+// Plant Service Class
 class PlantService {
+  // These are the attributes of the PlantService class
   File? image;
   final _picker = ImagePicker();
   bool showSpinner = false;
@@ -29,6 +32,7 @@ class PlantService {
     }
   }
 
+  // This is the method to post a plant from the user side
   Future<void> uploadPlant(
       String plant_type,
       String soil_planted,
@@ -68,6 +72,9 @@ class PlantService {
     }
   }
 
+  // This is the method to get all the plants from the user side
+
+  // This is the method to get all the plants from the user side and display them in the app
   Future<ListOfPlants> getPlant() async {
     String? token = await SecureStorage.getToken();
 
@@ -76,6 +83,7 @@ class PlantService {
       'Authorization': 'Token $token',
     });
     print(response.body);
+
     return ListOfPlants.fromList(jsonDecode(response.body));
   }
 
@@ -123,6 +131,7 @@ class Plant {
   double plant_current_size_spread;
   String planted_date;
   String image;
+  String harvest_length;
 
   Plant({
     required this.user,
@@ -132,6 +141,7 @@ class Plant {
     required this.plant_current_size_spread,
     required this.planted_date,
     required this.image,
+    required this.harvest_length,
   });
 
   factory Plant.fromJson(map) {
@@ -142,6 +152,7 @@ class Plant {
         plant_current_size_height: map['plant_current_size_height'].toDouble(),
         plant_current_size_spread: map['plant_current_size_spread'].toDouble(),
         planted_date: map['planted_date'],
-        image: map['image']);
+        image: map['image'],
+        harvest_length: map['harvest_length']);
   }
 }
