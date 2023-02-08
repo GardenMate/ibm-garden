@@ -39,7 +39,7 @@ CORS_ORIGIN_WHITELIST = [
     "http://ec2-52-55-157-28.compute-1.amazonaws.com",  # aws server address
 ]
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', "10.0.2.2", "52.55.157.28", 'ws://127.0.0.1:8000', "ws://10.0.2.2:8000"]
 
 
 # Application definition
@@ -76,6 +76,10 @@ INSTALLED_APPS = [
     # Braintree
     'braintreeAPI.apps.BraintreeapiConfig',
     'braintree',
+    # Chat model
+    'chat',
+    # Include channels
+    'channels',
 ]
 
 SITE_ID = 1
@@ -111,8 +115,16 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'build_my_garden_backend.wsgi.application'
+# WSGI_APPLICATION = 'build_my_garden_backend.wsgi.application'
 
+ASGI_APPLICATION = 'build_my_garden_backend.asgi.application'
+
+# Channel layer
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
