@@ -47,7 +47,7 @@ void showNonce(
   showDialog(
     context: context,
     builder: (_) => AlertDialog(
-      title: Text('Payment method nonce:'),
+      title: Text('Payment Report'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -55,8 +55,6 @@ void showNonce(
           Text('Result: ${response.result}'),
           SizedBox(height: 16),
           Text('Message: ${response.message}'),
-          SizedBox(height: 16),
-          Text('Nonce: ${nonce.nonce}'),
           SizedBox(height: 16),
           Text('Type label: ${nonce.typeLabel}'),
           SizedBox(height: 16),

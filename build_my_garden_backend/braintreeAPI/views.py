@@ -78,7 +78,7 @@ class PaymentView(APIView):
             user = user
 
             return HttpResponse(
-                json.dumps({"result": "Purchase Complete"}),
+                json.dumps({"result": "Purchase Complete", "message": "Success"}),
                 content_type="application/json"
             )
         
