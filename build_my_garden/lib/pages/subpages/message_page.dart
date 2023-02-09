@@ -87,7 +87,9 @@ class _ChatSystemState extends State<ChatSystem> {
               builder: (context, snapshot) {
                 print(snapshot.data);
                 // The snapshot data is json encoded so we need to decode it to get the message
-                return Text(snapshot.hasData ? '${jsonDecode(snapshot.data.toString())['message']}' : '');
+                return Text(snapshot.hasData
+                    ? '${jsonDecode(snapshot.data.toString())['message']}'
+                    : '');
               },
             ),
           ],

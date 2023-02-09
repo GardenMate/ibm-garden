@@ -9,17 +9,21 @@ import 'package:build_my_garden/service/base_url_service.dart';
 import 'package:build_my_garden/service/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 void main() async {
   /// Runs the app after checking if the user has previously signed in
   /// If not the user will go through the welcome page
 
+  // Load env file into flutter
+  await dotenv.load(fileName: "lib/.env");
+
   // Helps the await to fully run before starting the app
   WidgetsFlutterBinding.ensureInitialized();
   bool? isSignedIn = await SecureStorage.getIsSignedIn();
   if (isSignedIn != null) {
-    isSignedIn ? runApp(WelcomeApp()) : runApp(WelcomeApp());
+    isSignedIn ? runApp(MainApp()) : runApp(WelcomeApp());
   }
   // Allows the app to be full screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
