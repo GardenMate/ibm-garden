@@ -1,5 +1,7 @@
 ## IBM-Garden
 
+**Deprecated** - We have moved this to a private repository
+
 # Build Your Garden
 
 # Onboarding
